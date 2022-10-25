@@ -4,15 +4,53 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Rigidbody2D myBody;
+    CircleCollider2D myCollider;
+    bool isGrounded = true;
+
+    [SerializeField]
+    private float _speed = 10f;
+    public float Speed
     {
-        
+        get { return _speed; }
+        set { _speed = value; }
+    }
+    [SerializeField]
+    private float _jumpForce = 11f;
+    public float JumpForce
+    {
+        get { return _jumpForce; }
+        set { _jumpForce = value; }
+    }
+    // Start is called before the first frame update
+    void Awake()
+    {
+        myBody = GetComponent<Rigidbody2D>();
+        myCollider = GetComponent<CircleCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        float xMove = Input.GetAxisRaw("Horizontal");
+
+        Vector2 pos = transform.position;
+
+        pos.x += xMove * Time.deltaTime * Speed;
+
+        transform.position = pos;
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            isGrounded = false;
+            myBody.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") && myCollider.IsTouching(collision.collider))
+        {
+            isGrounded = true;
+        }
     }
 }
