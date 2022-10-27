@@ -15,13 +15,23 @@ public class Player : MonoBehaviour
         get { return _speed; }
         set { _speed = value; }
     }
+
     [SerializeField]
-    private float _jumpForce = 11f;
+    private float _jumpForce = 20f;
     public float JumpForce
     {
         get { return _jumpForce; }
         set { _jumpForce = value; }
     }
+
+    [SerializeField]
+    private float _maxVelocity = 20f;
+    public float MaxVelocity
+    {
+        get { return _maxVelocity; }
+        set { _maxVelocity = value; }
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,11 +44,10 @@ public class Player : MonoBehaviour
     {
         float xMove = Input.GetAxisRaw("Horizontal");
 
-        Vector2 pos = transform.position;
-
-        pos.x += xMove * Time.deltaTime * Speed;
-
-        transform.position = pos;
+        if ((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0))
+        {
+            myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
