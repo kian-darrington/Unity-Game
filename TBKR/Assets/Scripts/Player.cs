@@ -6,7 +6,11 @@ public class Player : MonoBehaviour
 {
     Rigidbody2D myBody;
     CircleCollider2D myCollider;
+    CapsuleCollider2D sideCollider;
+
     bool isGrounded = true;
+    bool wallJump = false;
+    bool onWall = false; 
 
     [SerializeField]
     private float _speed = 10f;
@@ -37,6 +41,7 @@ public class Player : MonoBehaviour
     {
         myBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<CircleCollider2D>();
+        sideCollider = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -49,10 +54,17 @@ public class Player : MonoBehaviour
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
 
+
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             isGrounded = false;
             myBody.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+            Debug.Log("jumped");
+        }
+        else if (Input.GetButtonDown("Jump") && onWall && wallJump && xMove != 0)
+        {
+            wallJump = false;
+            myBody.AddForce(new Vector2((JumpForce / 2) * (0 + xMove), JumpForce), ForceMode2D.Impulse);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -60,6 +72,26 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") && myCollider.IsTouching(collision.collider))
         {
             isGrounded = true;
+            Debug.Log("Is touching ground");
+        }
+        if (collision.gameObject.CompareTag("Ground") && sideCollider.IsTouching(collision.collider))
+        {
+            onWall = true;
+            wallJump = true;
+            Debug.Log("Is on wall");
         }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") && !myCollider.IsTouching(collision.collider))
+        {
+            isGrounded = false;
+        }
+        if (collision.gameObject.CompareTag("Ground") && !sideCollider.IsTouching(collision.collider))
+        {
+            onWall = false;
+        }
+    }
+
 }
