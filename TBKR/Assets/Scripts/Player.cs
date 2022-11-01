@@ -10,7 +10,15 @@ public class Player : MonoBehaviour
 
     bool isGrounded = true;
     bool wallJump = false;
-    bool onWall = false; 
+    bool onWall = false;
+
+    [SerializeField]
+    private float _timeBuffer = 0.1f;
+    public float TimeBuffer
+    {
+        get { return _timeBuffer; }
+        set { _timeBuffer = value; }
+    }
 
     [SerializeField]
     private float _speed = 10f;
@@ -59,26 +67,25 @@ public class Player : MonoBehaviour
         {
             isGrounded = false;
             myBody.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
-            Debug.Log("jumped");
         }
-        else if (Input.GetButtonDown("Jump") && onWall && wallJump && xMove != 0)
+        else if (Input.GetButtonDown("Jump") && onWall && wallJump)
         {
             wallJump = false;
-            myBody.AddForce(new Vector2((JumpForce / 2) * (0 + xMove), JumpForce), ForceMode2D.Impulse);
+            myBody.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") && myCollider.IsTouching(collision.collider))
         {
+            StopCoroutine("DelayJumpGround");
             isGrounded = true;
-            Debug.Log("Is touching ground");
         }
         if (collision.gameObject.CompareTag("Ground") && sideCollider.IsTouching(collision.collider))
         {
+            StopCoroutine("DelayJumpWall");
             onWall = true;
             wallJump = true;
-            Debug.Log("Is on wall");
         }
     }
 
@@ -86,12 +93,22 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground") && !myCollider.IsTouching(collision.collider))
         {
-            isGrounded = false;
+            StartCoroutine("DelayJumpGround");
         }
         if (collision.gameObject.CompareTag("Ground") && !sideCollider.IsTouching(collision.collider))
         {
-            onWall = false;
+            StartCoroutine("DelayJumpWall");
         }
+    }
+    IEnumerator DelayJumpGround()
+    {
+        yield return new WaitForSeconds(TimeBuffer);
+        isGrounded = false;
+    }
+    IEnumerator DelayJumpWall()
+    {
+        yield return new WaitForSeconds(TimeBuffer);
+        onWall = false;
     }
 
 }
