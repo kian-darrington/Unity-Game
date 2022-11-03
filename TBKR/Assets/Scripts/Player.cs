@@ -44,6 +44,14 @@ public class Player : MonoBehaviour
         set { _maxVelocity = value; }
     }
 
+    [SerializeField]
+    private float _airDrag = 0.99f;
+    public float AirDrag
+    {
+        get { return _airDrag; }
+        set { _airDrag = value; }
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -55,23 +63,30 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float xMove = Input.GetAxisRaw("Horizontal");
+        float xMove = Input.GetAxis("Horizontal");
 
-        if ((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0))
+        if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && Input.GetButton("Horizontal"))
         {
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
 
+        if(!isGrounded && !Input.GetButton("Horizontal"))
+        {
+            myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             isGrounded = false;
-            myBody.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+            myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
         }
         else if (Input.GetButtonDown("Jump") && onWall && wallJump)
         {
             wallJump = false;
-            myBody.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+            myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
+            isGrounded = false;
+            StopCoroutine("DelayJumpGround");
+            
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
