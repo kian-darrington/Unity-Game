@@ -4,15 +4,43 @@ using UnityEngine;
 
 public class MenuControl : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public GameObject maincam;
+    public GameObject settingcam;
+    public GameObject creditscam;
+    public GameObject loadcam;
+
+    public void Continue()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Load()
     {
-        
+
+    }
+
+    public void NewGame()
+    {
+
+    }
+
+    public void Credits()
+    {
+
+    }
+
+    public void Settings()
+    {
+        settingcam.SetActive(true);
+        maincam.SetActive(false);
+    }
+
+    public void Back()
+    {
+        maincam.SetActive(true);
+        settingcam.SetActive(false);
+        creditscam.SetActive(false);
+        loadcam.SetActive(false);
     }
 }
