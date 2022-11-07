@@ -91,11 +91,11 @@ public class Player : MonoBehaviour
             StopCoroutine("DelayJumpGround");
         }
 
-        if (myBody.velocity.x > 0)
+        if (Input.GetAxisRaw("Horizontal") > 0)
         {
             mySprite.flipX = false;
         }
-        else
+        else if (Input.GetAxisRaw("Horizontal") < 0)
         {
             mySprite.flipX = true;
         }
