@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     Rigidbody2D myBody;
     CircleCollider2D myCollider;
     CapsuleCollider2D sideCollider;
+    SpriteRenderer mySprite;
+
 
     bool isGrounded = true;
     bool wallJump = false;
@@ -58,6 +60,7 @@ public class Player : MonoBehaviour
         myBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<CircleCollider2D>();
         sideCollider = GetComponent<CapsuleCollider2D>();
+        mySprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -86,7 +89,15 @@ public class Player : MonoBehaviour
             myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
             isGrounded = false;
             StopCoroutine("DelayJumpGround");
-            
+        }
+
+        if (myBody.velocity.x > 0)
+        {
+            mySprite.flipX = false;
+        }
+        else
+        {
+            mySprite.flipX = true;
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
