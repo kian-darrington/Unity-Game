@@ -9,15 +9,39 @@ public class MenuControl : MonoBehaviour
     public GameObject settingcam;
     public GameObject creditscam;
     public GameObject loadcam;
+    public GameObject SettingsCan;
+    public GameObject MainCan;
+    public GameObject CreditsCan;
+    public GameObject LoadCan;
+
+
+    void Start()
+    {
+        settingcam.SetActive(false);
+        creditscam.SetActive(false);
+        loadcam.SetActive(false);
+
+        SettingsCan.SetActive(false);
+        LoadCan.SetActive(false);
+        CreditsCan.SetActive(false);
+    }
 
     public void Continue()
     {
-
+        
     }
 
     public void Load()
     {
+        maincam.SetActive(false);
+        settingcam.SetActive(false);
+        creditscam.SetActive(false);
+        loadcam.SetActive(true);
 
+        MainCan.SetActive(false);
+        SettingsCan.SetActive(false);
+        LoadCan.SetActive(true);
+        CreditsCan.SetActive(false);
     }
 
     public void NewGame()
@@ -27,13 +51,28 @@ public class MenuControl : MonoBehaviour
 
     public void Credits()
     {
+        maincam.SetActive(false);
+        settingcam.SetActive(false);
+        creditscam.SetActive(true);
+        loadcam.SetActive(false);
 
+        MainCan.SetActive(false);
+        SettingsCan.SetActive(false);
+        LoadCan.SetActive(false);
+        CreditsCan.SetActive(true);
     }
 
     public void Settings()
     {
         settingcam.SetActive(true);
         maincam.SetActive(false);
+        creditscam.SetActive(false);
+        loadcam.SetActive(false);
+
+        MainCan.SetActive(false);
+        SettingsCan.SetActive(true);
+        LoadCan.SetActive(false);
+        CreditsCan.SetActive(false);
     }
 
     public void Back()
@@ -42,5 +81,10 @@ public class MenuControl : MonoBehaviour
         settingcam.SetActive(false);
         creditscam.SetActive(false);
         loadcam.SetActive(false);
+
+        MainCan.SetActive(true);
+        SettingsCan.SetActive(false);
+        LoadCan.SetActive(false);
+        CreditsCan.SetActive(false);
     }
 }
