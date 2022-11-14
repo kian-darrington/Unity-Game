@@ -39,6 +39,14 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField]
+    private float _wallJumpForce = 20f;
+    public float WallJumpForce
+    {
+        get { return _wallJumpForce; }
+        set { _wallJumpForce = value; }
+    }
+
+    [SerializeField]
     private float _maxVelocity = 20f;
     public float MaxVelocity
     {
@@ -46,13 +54,7 @@ public class Player : MonoBehaviour
         set { _maxVelocity = value; }
     }
 
-    [SerializeField]
-    private float _airDrag = 0.99f;
-    public float AirDrag
-    {
-        get { return _airDrag; }
-        set { _airDrag = value; }
-    }
+    private float AirDrag = 0.99f;
 
     // Start is called before the first frame update
     void Awake()
@@ -78,15 +80,15 @@ public class Player : MonoBehaviour
             myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded)
         {
             isGrounded = false;
             myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
         }
-        else if (Input.GetButtonDown("Jump") && onWall && wallJump)
+        else if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && onWall && wallJump)
         {
             wallJump = false;
-            myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
+            myBody.velocity = new Vector2(myBody.velocity.x, WallJumpForce);
             isGrounded = false;
             StopCoroutine("DelayJumpGround");
         }
