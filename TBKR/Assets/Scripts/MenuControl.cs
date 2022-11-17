@@ -31,19 +31,6 @@ public class MenuControl : MonoBehaviour
         
     }
 
-    public void Load()
-    {
-        maincam.SetActive(false);
-        settingcam.SetActive(false);
-        creditscam.SetActive(false);
-        loadcam.SetActive(true);
-
-        MainCan.SetActive(false);
-        SettingsCan.SetActive(false);
-        LoadCan.SetActive(true);
-        CreditsCan.SetActive(false);
-    }
-
     public void NewGame()
     {
 
