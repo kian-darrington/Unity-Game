@@ -15,11 +15,11 @@ public class Player : MonoBehaviour
     bool onWall = false;
 
     [SerializeField]
-    private float _timeBuffer = 0.1f;
-    public float TimeBuffer
+    private float _airTimeBuffer = 0.1f;
+    public float AirTimeBuffer
     {
-        get { return _timeBuffer; }
-        set { _timeBuffer = value; }
+        get { return _airTimeBuffer; }
+        set { _airTimeBuffer = value; }
     }
 
     [SerializeField]
@@ -70,21 +70,25 @@ public class Player : MonoBehaviour
     {
         float xMove = Input.GetAxis("Horizontal");
 
+        // Controlls smooth horizontal movement
         if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && Input.GetButton("Horizontal"))
         {
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
 
+        // Creates false air drag to make mid air controll easier
         if(!isGrounded && !Input.GetButton("Horizontal"))
         {
             myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
         }
 
+        // Jumping mechanism
         if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded)
         {
             isGrounded = false;
             myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
         }
+        // Wall jumping mechanism
         else if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && onWall && wallJump)
         {
             wallJump = false;
@@ -93,6 +97,7 @@ public class Player : MonoBehaviour
             StopCoroutine("DelayJumpGround");
         }
 
+        // Sprite flipping according to button pressed
         if (Input.GetAxisRaw("Horizontal") > 0)
         {
             mySprite.flipX = false;
@@ -102,6 +107,8 @@ public class Player : MonoBehaviour
             mySprite.flipX = true;
         }
     }
+
+    // Ground and wall collision checks
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") && myCollider.IsTouching(collision.collider))
@@ -117,6 +124,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Ground and wall decollisions
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") && !myCollider.IsTouching(collision.collider))
@@ -128,14 +136,17 @@ public class Player : MonoBehaviour
             StartCoroutine("DelayJumpWall");
         }
     }
+
+
+    // Method of creating a delay for coyote time
     IEnumerator DelayJumpGround()
     {
-        yield return new WaitForSeconds(TimeBuffer);
+        yield return new WaitForSeconds(AirTimeBuffer);
         isGrounded = false;
     }
     IEnumerator DelayJumpWall()
     {
-        yield return new WaitForSeconds(TimeBuffer);
+        yield return new WaitForSeconds(AirTimeBuffer);
         onWall = false;
     }
 

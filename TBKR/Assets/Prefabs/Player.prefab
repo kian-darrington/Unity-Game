@@ -122,11 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f23e4a9d7a447fe9d74b215555c843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeBuffer: 0.1
+  _airTimeBuffer: 0.1
   _speed: 1
   _jumpForce: 20
+  _wallJumpForce: 20
   _maxVelocity: 10
-  _airDrag: 0.99
 --- !u!70 &554839549
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
