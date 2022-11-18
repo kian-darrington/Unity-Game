@@ -8,21 +8,17 @@ public class MenuControl : MonoBehaviour
     public GameObject maincam;
     public GameObject settingcam;
     public GameObject creditscam;
-    public GameObject loadcam;
     public GameObject SettingsCan;
     public GameObject MainCan;
     public GameObject CreditsCan;
-    public GameObject LoadCan;
 
 
     void Start()
     {
         settingcam.SetActive(false);
         creditscam.SetActive(false);
-        loadcam.SetActive(false);
 
         SettingsCan.SetActive(false);
-        LoadCan.SetActive(false);
         CreditsCan.SetActive(false);
     }
 
@@ -41,11 +37,9 @@ public class MenuControl : MonoBehaviour
         maincam.SetActive(false);
         settingcam.SetActive(false);
         creditscam.SetActive(true);
-        loadcam.SetActive(false);
 
         MainCan.SetActive(false);
         SettingsCan.SetActive(false);
-        LoadCan.SetActive(false);
         CreditsCan.SetActive(true);
     }
 
@@ -54,11 +48,9 @@ public class MenuControl : MonoBehaviour
         settingcam.SetActive(true);
         maincam.SetActive(false);
         creditscam.SetActive(false);
-        loadcam.SetActive(false);
 
         MainCan.SetActive(false);
         SettingsCan.SetActive(true);
-        LoadCan.SetActive(false);
         CreditsCan.SetActive(false);
     }
 
@@ -67,11 +59,9 @@ public class MenuControl : MonoBehaviour
         maincam.SetActive(true);
         settingcam.SetActive(false);
         creditscam.SetActive(false);
-        loadcam.SetActive(false);
 
         MainCan.SetActive(true);
         SettingsCan.SetActive(false);
-        LoadCan.SetActive(false);
         CreditsCan.SetActive(false);
     }
 }
