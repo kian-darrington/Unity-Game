@@ -15,39 +15,39 @@ public class Inventory : MonoBehaviour
             return;
         }
         instance = this;
+
+        items = itemsParent.GetComponentsInChildren<InventorySlot>();
     }
 
     #endregion
+    public Transform itemsParent;
 
-    public delegate void OnItemChanged();
-    public OnItemChanged onItemChangedCallback;
+    public InventorySlot[] items;
 
-    public int space = 6;
-
-    public List<Item> items = new List<Item>();
-
-    public bool Add (Item item)
+    public void ClearSlot(int SlotNum)
     {
-        if (items.Count >= space)
-        {
-            Debug.Log("Not enough room");
-            return false;
-        }
-
-        items.Add(item);
-
-       if (onItemChangedCallback != null)
-            onItemChangedCallback.Invoke();
-
-        return true;
+        items[SlotNum].ClearSlot();
+        items[SlotNum].Item = null;
     }
 
-    public void Remove(Item item)
+    public void AddItem(int SlotNum)
     {
-        items.Remove(item);
+        items[SlotNum].AddItem(InBetween.instance.item);
+        InBetween.instance.enabled = false;
+    }
 
-        if (onItemChangedCallback != null)
-            onItemChangedCallback.Invoke();
-    } 
-
+    public bool ItemPickUp(Item item)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].Item == null)
+            {
+                items[i].AddItem(item);
+                return true;
+                Debug.Log("Picked up Item");
+            }
+        }
+        Debug.Log("Unable to pick up Item");
+        return false;
+    }
 }

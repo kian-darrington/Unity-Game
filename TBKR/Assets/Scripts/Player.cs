@@ -76,6 +76,14 @@ public class Player : MonoBehaviour
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
 
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (HoldingScript.instance.enabled)
+                HoldingScript.instance.enabled = false;
+            else
+                HoldingScript.instance.enabled = true;
+        }
+
         // Creates false air drag to make mid air controll easier
         if(!isGrounded && !Input.GetButton("Horizontal"))
         {
