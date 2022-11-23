@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CATFranken-Deutsch Atlas Material
-  m_Shader: {fileID: 4800000, guid: 583e2a4794ef847fe9edd29be5885a22, type: 3}
+  m_Shader: {fileID: 4800000, guid: ce4214b6ddd584482b004ac33fdadfa1, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -357,6 +357,20 @@ MonoBehaviour:
       m_Height: 64
     m_Scale: 1
     m_AtlasIndex: 0
+  - m_Index: 51
+    m_Metrics:
+      m_Width: 29.421875
+      m_Height: 62.1875
+      m_HorizontalBearingX: 1.171875
+      m_HorizontalBearingY: 62.375
+      m_HorizontalAdvance: 31.765625
+    m_GlyphRect:
+      m_X: 911
+      m_Y: 88
+      m_Width: 30
+      m_Height: 63
+    m_Scale: 1
+    m_AtlasIndex: 0
   - m_Index: 52
     m_Metrics:
       m_Width: 24.84375
@@ -424,6 +438,20 @@ MonoBehaviour:
       m_X: 469
       m_Y: 91
       m_Width: 30
+      m_Height: 44
+    m_Scale: 1
+    m_AtlasIndex: 0
+  - m_Index: 65
+    m_Metrics:
+      m_Width: 24.65625
+      m_Height: 43.109375
+      m_HorizontalBearingX: 1.078125
+      m_HorizontalBearingY: 43.203125
+      m_HorizontalAdvance: 26.90625
+    m_GlyphRect:
+      m_X: 988
+      m_Y: 10
+      m_Width: 25
       m_Height: 44
     m_Scale: 1
     m_AtlasIndex: 0
@@ -553,34 +581,6 @@ MonoBehaviour:
       m_Height: 63
     m_Scale: 1
     m_AtlasIndex: 0
-  - m_Index: 65
-    m_Metrics:
-      m_Width: 24.65625
-      m_Height: 43.109375
-      m_HorizontalBearingX: 1.078125
-      m_HorizontalBearingY: 43.203125
-      m_HorizontalAdvance: 26.90625
-    m_GlyphRect:
-      m_X: 988
-      m_Y: 10
-      m_Width: 25
-      m_Height: 44
-    m_Scale: 1
-    m_AtlasIndex: 0
-  - m_Index: 51
-    m_Metrics:
-      m_Width: 29.421875
-      m_Height: 62.1875
-      m_HorizontalBearingX: 1.171875
-      m_HorizontalBearingY: 62.375
-      m_HorizontalAdvance: 31.765625
-    m_GlyphRect:
-      m_X: 911
-      m_Y: 88
-      m_Width: 30
-      m_Height: 63
-    m_Scale: 1
-    m_AtlasIndex: 0
   m_CharacterTable:
   - m_ElementType: 1
     m_Unicode: 32
@@ -655,6 +655,10 @@ MonoBehaviour:
     m_GlyphIndex: 1
     m_Scale: 1
   - m_ElementType: 1
+    m_Unicode: 100
+    m_GlyphIndex: 51
+    m_Scale: 1
+  - m_ElementType: 1
     m_Unicode: 101
     m_GlyphIndex: 52
     m_Scale: 1
@@ -679,6 +683,10 @@ MonoBehaviour:
     m_GlyphIndex: 62
     m_Scale: 1
   - m_ElementType: 1
+    m_Unicode: 114
+    m_GlyphIndex: 65
+    m_Scale: 1
+  - m_ElementType: 1
     m_Unicode: 115
     m_GlyphIndex: 66
     m_Scale: 1
@@ -697,14 +705,6 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 8230
     m_GlyphIndex: 104
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 114
-    m_GlyphIndex: 65
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 100
-    m_GlyphIndex: 51
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: 2932206361310214022}

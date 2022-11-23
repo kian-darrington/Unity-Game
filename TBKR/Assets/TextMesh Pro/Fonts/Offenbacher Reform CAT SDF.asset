@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Offenbacher Reform CAT Atlas Material
-  m_Shader: {fileID: 4800000, guid: c7e56e78e24c340adabe3f2296362916, type: 3}
+  m_Shader: {fileID: 4800000, guid: ce4214b6ddd584482b004ac33fdadfa1, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
