@@ -16,15 +16,8 @@ public class HoldingScript : MonoBehaviour
         }
         instance = this;
 
-    }
-
-    #endregion
-
-    private void OnDisable()
-    {
         this.gameObject.SetActive(false);
     }
 
-
-
+    #endregion
 }

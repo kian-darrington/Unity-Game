@@ -44,7 +44,6 @@ public class Inventory : MonoBehaviour
             {
                 items[i].AddItem(item);
                 return true;
-                Debug.Log("Picked up Item");
             }
         }
         Debug.Log("Unable to pick up Item");

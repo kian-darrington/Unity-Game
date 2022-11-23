@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     bool isGrounded = true;
     bool wallJump = false;
     bool onWall = false;
+    bool inventoryOpen = false;
 
     [SerializeField]
     private float _airTimeBuffer = 0.1f;
@@ -71,17 +72,23 @@ public class Player : MonoBehaviour
         float xMove = Input.GetAxis("Horizontal");
 
         // Controlls smooth horizontal movement
-        if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && Input.GetButton("Horizontal"))
+        if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && Input.GetButton("Horizontal") && !inventoryOpen)
         {
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (HoldingScript.instance.enabled)
-                HoldingScript.instance.enabled = false;
+            if (HoldingScript.instance.isActiveAndEnabled)
+            {
+                HoldingScript.instance.gameObject.SetActive(false);
+                inventoryOpen = false;
+            }
             else
-                HoldingScript.instance.enabled = true;
+            {
+                HoldingScript.instance.gameObject.SetActive(true);
+                inventoryOpen = true;
+            }
         }
 
         // Creates false air drag to make mid air controll easier
@@ -91,13 +98,13 @@ public class Player : MonoBehaviour
         }
 
         // Jumping mechanism
-        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded)
+        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)
         {
             isGrounded = false;
             myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
         }
         // Wall jumping mechanism
-        else if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && onWall && wallJump)
+        else if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && onWall && wallJump && !inventoryOpen)
         {
             wallJump = false;
             myBody.velocity = new Vector2(myBody.velocity.x, WallJumpForce);

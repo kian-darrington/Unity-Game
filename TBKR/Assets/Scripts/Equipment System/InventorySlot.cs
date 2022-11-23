@@ -50,13 +50,13 @@ public class InventorySlot : MonoBehaviour
 
     public void ClickedOn()
     {
-        if (Item != null)
+        if (Item != null && !InBetween.instance.enabled)
         {
             InBetween.instance.enabled = true;
             InBetween.instance.item = Item;
             Inventory.instance.ClearSlot(SlotNum);
         }
-        else if (InBetween.instance.enabled)
+        else if (InBetween.instance.enabled && Item == null)
         {
             Inventory.instance.AddItem(SlotNum);
         }

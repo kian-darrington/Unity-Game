@@ -24,11 +24,11 @@ public class InBetween : MonoBehaviour
 
     public Image icon;
 
-    public Item item;
+    public Item item = null;
 
     private void OnEnable()
     {
-        if (!item)
+        if (item != null)
         {
             icon.sprite = item.icon;
         }
@@ -36,6 +36,6 @@ public class InBetween : MonoBehaviour
 
     private void Update()
     {
-        myTransform.position = Input.mousePosition;
+        transform.position = new Vector3(0f, 0f, 0f);
     }
 }
