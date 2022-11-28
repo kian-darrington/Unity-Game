@@ -8,6 +8,13 @@ public class ItemPickup : MonoBehaviour
 
     public Item item;
 
+    public SpriteRenderer Sprite;
+
+    private void Start()
+    {
+        Sprite = GetComponent<SpriteRenderer>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -34,7 +41,6 @@ public class ItemPickup : MonoBehaviour
 
     void PickUp()
     {
-        // Add to inventory
         bool wasPickedUp = Inventory.instance.ItemPickUp(item);
         if (wasPickedUp)
             Destroy(gameObject);

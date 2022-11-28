@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I) && isGrounded)
         {
             if (HoldingScript.instance.isActiveAndEnabled)
             {
@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
             else
             {
                 HoldingScript.instance.gameObject.SetActive(true);
+                Inventory.instance.GetPlayerPos(transform.position);
                 inventoryOpen = true;
             }
         }
@@ -151,7 +152,6 @@ public class Player : MonoBehaviour
             StartCoroutine("DelayJumpWall");
         }
     }
-
 
     // Method of creating a delay for coyote time
     IEnumerator DelayJumpGround()

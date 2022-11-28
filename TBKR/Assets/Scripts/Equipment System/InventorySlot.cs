@@ -45,7 +45,7 @@ public class InventorySlot : MonoBehaviour
 
     public void OnRemoveButton()
     {
-        Inventory.instance.ClearSlot(SlotNum);
+        Inventory.instance.RemoveButton(SlotNum);
     }
 
     public void ClickedOn()

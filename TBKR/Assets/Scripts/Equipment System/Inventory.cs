@@ -24,6 +24,12 @@ public class Inventory : MonoBehaviour
 
     public InventorySlot[] items;
 
+    public ItemPickup ItemReference;
+
+    ItemPickup NewDroppedItem;
+
+    Vector3 PlayerPos;
+
     public void ClearSlot(int SlotNum)
     {
         items[SlotNum].ClearSlot();
@@ -48,5 +54,19 @@ public class Inventory : MonoBehaviour
         }
         Debug.Log("Unable to pick up Item");
         return false;
+    }
+
+    public void GetPlayerPos(Vector3 pos)
+    {
+        PlayerPos = pos;
+    }
+
+    public void RemoveButton(int SlotNum)
+    {
+        NewDroppedItem = Instantiate(ItemReference);
+        NewDroppedItem.item = items[SlotNum].Item;
+        NewDroppedItem.transform.position = PlayerPos;
+        NewDroppedItem.Sprite.sprite = NewDroppedItem.item.icon;
+        ClearSlot(SlotNum);
     }
 }
