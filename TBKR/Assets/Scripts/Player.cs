@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I) && isGrounded)
         {
-            if (HoldingScript.instance.isActiveAndEnabled)
+            if (HoldingScript.instance.isActiveAndEnabled && !InBetween.instance.enabled)
             {
                 HoldingScript.instance.gameObject.SetActive(false);
                 inventoryOpen = false;

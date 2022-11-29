@@ -2100,7 +2100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 166850074911068292, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.59
+      value: 0.93
       objectReference: {fileID: 0}
     - target: {fileID: 166850074911068292, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2291,10 +2291,6 @@ PrefabInstance:
     - target: {fileID: 6269124159889017976, guid: 6ff2019d01a6841ebbfde1b3e68fb0a1, type: 3}
       propertyPath: m_Name
       value: Tilemap_Ground
-      objectReference: {fileID: 0}
-    - target: {fileID: 6269124159889017976, guid: 6ff2019d01a6841ebbfde1b3e68fb0a1, type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ff2019d01a6841ebbfde1b3e68fb0a1, type: 3}
