@@ -22,17 +22,8 @@ public class InBetween : MonoBehaviour
 
     #endregion
 
-    public Image icon;
 
     public Item item = null;
-
-    private void OnEnable()
-    {
-        if (item != null)
-        {
-            icon.sprite = item.icon;
-        }
-    }
 
     private void Update()
     {
