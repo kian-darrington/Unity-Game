@@ -11,6 +11,7 @@ public class InBetween : MonoBehaviour
     private void Awake()
     {
         myTransform = GetComponent<Transform>();
+        mySprite = GetComponent<SpriteRenderer>();
         if (instance != null)
         {
             Debug.LogWarning("More than one istance of Inventory found!");
@@ -22,7 +23,7 @@ public class InBetween : MonoBehaviour
 
     #endregion
 
-    public Image icon;
+    SpriteRenderer mySprite;
 
     public Item item = null;
 
@@ -30,12 +31,19 @@ public class InBetween : MonoBehaviour
     {
         if (item != null)
         {
-            icon.sprite = item.icon;
+            mySprite.sprite = item.icon;
+            mySprite.color = new Color(255f, 255f, 255f, 255f);
         }
+    }
+
+    private void OnDisable()
+    {
+        mySprite.sprite = null;
+        mySprite.color = new Color(255f, 255f, 255f, 0f);
     }
 
     private void Update()
     {
-        transform.position = new Vector3(0f, 0f, 0f);
+        transform.position = new Vector3(Input.mousePosition.x / 32f, Input.mousePosition.y / 32f, Input.mousePosition.z / 32f);
     }
 }
