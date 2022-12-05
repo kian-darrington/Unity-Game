@@ -947,6 +947,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d3984e64f2a4313b22794d9e39c645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CameraTransform: {fileID: 1365249285}
+  divisionFactor: 64
+  offsetx: 0
+  offsety: 0
   item: {fileID: 0}
 --- !u!212 &1327148606
 SpriteRenderer:
@@ -986,9 +990,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 206229785
+  m_SortingLayer: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1000,6 +1004,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &1365249285 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9105987974117180207, guid: 6c6e3d73e6b1b48dd9ad3b9e059eae20, type: 3}
+  m_PrefabInstance: {fileID: 9105987973623479215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1376146265
 PrefabInstance:
   m_ObjectHideFlags: 0

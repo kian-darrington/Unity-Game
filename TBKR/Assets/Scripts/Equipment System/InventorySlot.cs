@@ -52,8 +52,8 @@ public class InventorySlot : MonoBehaviour
     {
         if (Item != null && !InBetween.instance.enabled)
         {
-            InBetween.instance.enabled = true;
             InBetween.instance.item = Item;
+            InBetween.instance.enabled = true;
             Inventory.instance.ClearSlot(SlotNum);
         }
         else if (InBetween.instance.enabled && Item == null)
