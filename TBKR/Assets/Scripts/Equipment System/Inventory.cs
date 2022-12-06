@@ -65,7 +65,7 @@ public class Inventory : MonoBehaviour
     {
         NewDroppedItem = Instantiate(ItemReference);
         NewDroppedItem.item = items[SlotNum].Item;
-        NewDroppedItem.transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 0.5f, PlayerPos.x);
+        NewDroppedItem.transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 0.5f);
         NewDroppedItem.Sprite.sprite = NewDroppedItem.item.icon;
         ClearSlot(SlotNum);
     }
