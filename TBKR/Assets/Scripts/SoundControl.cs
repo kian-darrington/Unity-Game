@@ -6,31 +6,34 @@ using UnityEngine.UI;
 public class SoundControl : MonoBehaviour
 {
     public GameObject Music;
-    public GameObject Sound;
-    GameObject MusicSetting;
-    GameObject SoundSetting;
+    public GameObject MusicSetting;
+    public GameObject SoundSetting;
 
     void Start()
     {
+
         CheckMusic();
         CheckSound();
-        MusicSetting = GameObject.Find("Music Toggle");
-        SoundSetting = GameObject.Find("Sound Toggle");
     }
 
     public void CheckMusic()
     {
+        
         if(PlayerPrefs.HasKey("MusicOn"))
         {
             if (PlayerPrefs.GetInt("MusicOn") > 0)
             {
                 Music.SetActive(true);
-                MusicSetting.GetComponent<Toggle>().isOn = true;
+
+                Toggle T = MusicSetting.GetComponent<Toggle>();
+                T.isOn = true;
+
             }
             else
             {
                 Music.SetActive(false);
-                MusicSetting.GetComponent<Toggle>().isOn = false;
+                Toggle T = MusicSetting.GetComponent<Toggle>();
+                T.isOn = false;
             }
         }
         else
@@ -46,19 +49,33 @@ public class SoundControl : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("SoundOn") > 0)
             {
-                Sound.SetActive(true);
+                //Sound.SetActive(true);
                 SoundSetting.GetComponent<Toggle>().isOn = true;
             }
             else
             {
-                Sound.SetActive(false);
+                //Sound.SetActive(false);
                 SoundSetting.GetComponent<Toggle>().isOn = false;
             }
         }
         else
         {
             PlayerPrefs.SetInt("SoundOn", 1);
-            Sound.SetActive(true);
+            //Sound.SetActive(true);
+        }
+    }
+
+    public void SetMusic()
+    {
+        if(PlayerPrefs.GetInt("MusicOn") > 0)
+        {
+            Music.SetActive(false);
+            PlayerPrefs.SetInt("MusicOn", 0);
+        }
+        else
+        {
+            Music.SetActive(true);
+            PlayerPrefs.SetInt("MusicOn", 1);
         }
     }
    
