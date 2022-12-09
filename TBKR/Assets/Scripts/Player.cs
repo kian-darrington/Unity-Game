@@ -9,13 +9,13 @@ public class Player : MonoBehaviour
     CapsuleCollider2D sideCollider;
     SpriteRenderer mySprite;
 
+    List<Item> items = new List<Item>();
 
     bool isGrounded = true;
     bool wallJump = false;
     bool onWall = false;
     bool inventoryOpen = false;
 
-    [SerializeField]
     private float _airTimeBuffer = 0.1f;
     public float AirTimeBuffer
     {
@@ -23,15 +23,13 @@ public class Player : MonoBehaviour
         set { _airTimeBuffer = value; }
     }
 
-    [SerializeField]
-    private float _speed = 10f;
+    private float _speed = 1f;
     public float Speed
     {
         get { return _speed; }
         set { _speed = value; }
     }
 
-    [SerializeField]
     private float _jumpForce = 20f;
     public float JumpForce
     {
@@ -39,7 +37,6 @@ public class Player : MonoBehaviour
         set { _jumpForce = value; }
     }
 
-    [SerializeField]
     private float _wallJumpForce = 20f;
     public float WallJumpForce
     {
@@ -47,8 +44,7 @@ public class Player : MonoBehaviour
         set { _wallJumpForce = value; }
     }
 
-    [SerializeField]
-    private float _maxVelocity = 20f;
+    private float _maxVelocity = 10f;
     public float MaxVelocity
     {
         get { return _maxVelocity; }
@@ -64,6 +60,11 @@ public class Player : MonoBehaviour
         myCollider = GetComponent<CircleCollider2D>();
         sideCollider = GetComponent<CapsuleCollider2D>();
         mySprite = GetComponent<SpriteRenderer>();
+
+        Inventory.inventoryChangedInfo += InventoryChanged;
+
+        for (int i = 0; i < 4; i++)
+            items.Add(Inventory.instance.items[i].Item);
     }
 
     // Update is called once per frame
@@ -163,6 +164,12 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(AirTimeBuffer);
         onWall = false;
+    }
+
+    void InventoryChanged()
+    {
+        for (int i = 0; i < 4; i++)
+            items[i] = Inventory.instance.items[i].Item;
     }
 
 }

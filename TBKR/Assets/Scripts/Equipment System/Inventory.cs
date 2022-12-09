@@ -30,16 +30,26 @@ public class Inventory : MonoBehaviour
 
     Vector3 PlayerPos;
 
+    public delegate void InventoryChanged();
+    public static event InventoryChanged inventoryChangedInfo;
+
     public void ClearSlot(int SlotNum)
     {
         items[SlotNum].ClearSlot();
         items[SlotNum].Item = null;
+
+        if (inventoryChangedInfo != null && SlotNum < 4)
+            inventoryChangedInfo();
     }
 
     public void AddItem(int SlotNum)
     {
         items[SlotNum].AddItem(InBetween.instance.item);
+
         InBetween.instance.enabled = false;
+
+        if (inventoryChangedInfo != null && SlotNum < 4)
+            inventoryChangedInfo();
     }
 
     public bool ItemPickUp(Item item)
@@ -49,6 +59,9 @@ public class Inventory : MonoBehaviour
             if (items[i].Item == null)
             {
                 items[i].AddItem(item);
+
+                if (inventoryChangedInfo != null && i < 4)
+                    inventoryChangedInfo();
                 return true;
             }
         }
@@ -67,6 +80,10 @@ public class Inventory : MonoBehaviour
         NewDroppedItem.item = items[SlotNum].Item;
         NewDroppedItem.transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 0.5f);
         NewDroppedItem.Sprite.sprite = NewDroppedItem.item.icon;
+
         ClearSlot(SlotNum);
+
+        if (inventoryChangedInfo != null && SlotNum < 4)
+            inventoryChangedInfo();
     }
 }
