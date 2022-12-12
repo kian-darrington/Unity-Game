@@ -9,42 +9,51 @@ public class Player : MonoBehaviour
     CapsuleCollider2D sideCollider;
     SpriteRenderer mySprite;
 
-    List<Item> items = new List<Item>();
+    public List<Item> items = new List<Item>();
 
     bool isGrounded = true;
     bool wallJump = false;
     bool onWall = false;
     bool inventoryOpen = false;
 
-    private float _airTimeBuffer = 0.1f;
+    const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f;
+
+    const float LimblessSpeed = 0.25f, LimblessJump = 5f, LimblessWallJump = 0f, LimblessMaxVelocity = 2.5f;
+
+    [SerializeField]
+    private float _airTimeBuffer = BaseAirTimeBuffer;
     public float AirTimeBuffer
     {
         get { return _airTimeBuffer; }
         set { _airTimeBuffer = value; }
     }
 
-    private float _speed = 1f;
+    [SerializeField]
+    private float _speed = LimblessSpeed;
     public float Speed
     {
         get { return _speed; }
         set { _speed = value; }
     }
 
-    private float _jumpForce = 20f;
+    [SerializeField]
+    private float _jumpForce = LimblessJump;
     public float JumpForce
     {
         get { return _jumpForce; }
         set { _jumpForce = value; }
     }
 
-    private float _wallJumpForce = 20f;
+    [SerializeField]
+    private float _wallJumpForce = LimblessWallJump;
     public float WallJumpForce
     {
         get { return _wallJumpForce; }
         set { _wallJumpForce = value; }
     }
 
-    private float _maxVelocity = 10f;
+    [SerializeField]
+    private float _maxVelocity = LimblessMaxVelocity;
     public float MaxVelocity
     {
         get { return _maxVelocity; }
@@ -61,10 +70,12 @@ public class Player : MonoBehaviour
         sideCollider = GetComponent<CapsuleCollider2D>();
         mySprite = GetComponent<SpriteRenderer>();
 
+        LimblessStatReset();
+
         Inventory.inventoryChangedInfo += InventoryChanged;
 
         for (int i = 0; i < 4; i++)
-            items.Add(Inventory.instance.items[i].Item);
+            items.Add(new Item());
     }
 
     // Update is called once per frame
@@ -166,10 +177,46 @@ public class Player : MonoBehaviour
         onWall = false;
     }
 
+    void LimblessStatReset()
+    {
+        AirTimeBuffer = BaseAirTimeBuffer;
+        Speed = LimblessSpeed;
+        MaxVelocity = LimblessMaxVelocity;
+        JumpForce = LimblessJump;
+        WallJumpForce = LimblessWallJump;
+    }
+
+    void AddLegStats(Item item)
+    {
+        JumpForce += item.jumpForce;
+        MaxVelocity += item.maxVelocity;
+        Speed += item.speed;
+    }
+
+    void AddArmStats(Item item)
+    {
+        WallJumpForce += item.wallJumpForce;
+    }
+
     void InventoryChanged()
     {
+        LimblessStatReset();
         for (int i = 0; i < 4; i++)
+        {
             items[i] = Inventory.instance.items[i].Item;
+            if (i < 2 && items[i] != null)
+            {
+                WallJumpForce += BaseWallJump / 2f;
+                AddArmStats(items[i]);
+            }
+            else if (i > 1 && items[i] != null)
+            {
+                JumpForce += (BaseJump - LimblessJump) / 2f;
+                MaxVelocity += (BaseMaxVelocity - LimblessMaxVelocity) / 2f;
+                Speed += (BaseSpeed - LimblessSpeed) / 2f;
+                AddLegStats(items[i]);
+            }
+        }
     }
 
 }

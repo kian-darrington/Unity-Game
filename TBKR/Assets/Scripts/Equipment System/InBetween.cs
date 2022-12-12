@@ -41,7 +41,7 @@ public class InBetween : MonoBehaviour
             mySprite.sprite = item.icon;
             mySprite.color = new Color(255f, 255f, 255f, 255f);
             myTransform.localScale = new Vector3(64f, 64f, 64f);
-            transform.position = new Vector3(offsetx + CameraTransform.position.x + (Input.mousePosition.x / divisionFactor), offsety + CameraTransform.position.y + (Input.mousePosition.y / divisionFactor));
+            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1f));
         }
         else
             Debug.Log("Unable to locate sprite");
@@ -55,6 +55,6 @@ public class InBetween : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector3(offsetx +CameraTransform.position.x +(Input.mousePosition.x / divisionFactor), offsety + CameraTransform.position.y +(Input.mousePosition.y / divisionFactor));
+        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y + 0.5f, 1f));
     }
 }
