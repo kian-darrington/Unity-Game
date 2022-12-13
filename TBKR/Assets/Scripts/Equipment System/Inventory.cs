@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     #region Singleton
     public static Inventory instance;
+
+    public Sprite ghostArm, ghostLeg;
 
     private void Awake()
     {
@@ -52,6 +53,20 @@ public class Inventory : MonoBehaviour
             inventoryChangedInfo();
     }
 
+    public void SwapItem(int SlotNum)
+    {
+        Item temp = InBetween.instance.item;
+        InBetween.instance.item = items[SlotNum].Item;
+        InBetween.instance.UpdateSprite();
+
+        ClearSlot(SlotNum);
+
+        items[SlotNum].AddItem(temp);
+
+        if (inventoryChangedInfo != null && SlotNum < 4)
+            inventoryChangedInfo();
+    }
+
     public bool ItemPickUp(Item item)
     {
         for (int i = 0; i < items.Length; i++)
@@ -62,6 +77,7 @@ public class Inventory : MonoBehaviour
 
                 if (inventoryChangedInfo != null && i < 4)
                     inventoryChangedInfo();
+                items[i].icon.sprite = item.icon;
                 return true;
             }
         }

@@ -10,11 +10,6 @@ public class InBetween : MonoBehaviour
     #region Singleton
     public static InBetween instance;
 
-    public float divisionFactor = 64f;
-
-    public float offsetx = 0f;
-    public float offsety = 0f;
-
     private void Awake()
     {
         myTransform = GetComponent<Transform>();
@@ -47,6 +42,11 @@ public class InBetween : MonoBehaviour
             Debug.Log("Unable to locate sprite");
     }
 
+    public void UpdateSprite()
+    {
+        mySprite.sprite = item.icon;
+
+    }
     private void OnDisable()
     {
         mySprite.sprite = null;

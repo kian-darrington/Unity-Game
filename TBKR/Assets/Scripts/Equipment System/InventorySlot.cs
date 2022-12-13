@@ -23,23 +23,40 @@ public class InventorySlot : MonoBehaviour
             if (this == Inventory.instance.items[i])
                 SlotNum = i;
         }
+        if (SlotNum < 2)
+        {
+            icon.sprite = Inventory.instance.ghostArm;
+            icon.enabled = true;
+        }
+        else if (SlotNum > 1 && SlotNum < 4)
+        {
+            icon.sprite = Inventory.instance.ghostLeg;
+            icon.enabled = true;
+        }
     }
 
     public void AddItem (Item newItem)
     {
         Item = newItem;
 
-        icon.sprite = Item.icon;
         icon.enabled = true;
         removeButton.interactable = true;
+        icon.sprite = newItem.icon;
     }
 
     public void ClearSlot()
     {
         Item = null;
 
-        icon.sprite = null;
-        icon.enabled = false;
+        if (SlotNum > 3)
+        {
+            icon.sprite = null;
+            icon.enabled = false;
+        }
+        else if (SlotNum < 2)
+            icon.sprite = Inventory.instance.ghostArm;
+        else if (SlotNum > 1)
+            icon.sprite = Inventory.instance.ghostLeg;
         removeButton.interactable = false;
     }
 
@@ -59,6 +76,10 @@ public class InventorySlot : MonoBehaviour
         else if (InBetween.instance.enabled && Item == null)
         {
             Inventory.instance.AddItem(SlotNum);
+        }
+        else if (Item && InBetween.instance.enabled)
+        {
+            Inventory.instance.SwapItem(SlotNum);
         }
     }
 }
