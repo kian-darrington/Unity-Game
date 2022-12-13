@@ -11,7 +11,7 @@ public class MenuControl : MonoBehaviour
     public GameObject SettingsCan;
     public GameObject MainCan;
     public GameObject CreditsCan;
-
+    public GameObject background;
 
     void Start()
     {
