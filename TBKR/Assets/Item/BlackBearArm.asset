@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: BlackBearArm
   m_EditorClassIdentifier: 
   name: Black Bear Leg
-  icon: {fileID: 21300000, guid: 93abf2dd40c624f1dbecd83017d924c4, type: 3}
-  speed: 0.1
-  maxVelocity: 1.2
-  jumpForce: 2.75
+  icon: {fileID: 21300000, guid: 96a0354a6b90b4858b91b2d95124b7db, type: 3}
+  speed: 0
+  maxVelocity: 0.75
+  jumpForce: 1.5
   attackDamage: 0
-  wallJumpForce: 2
+  wallJumpForce: 4.5
   airTimeBuffer: 0
