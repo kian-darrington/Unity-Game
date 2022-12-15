@@ -6,7 +6,7 @@ public class PlayerLimb : MonoBehaviour
     Transform myTransform;
     SpriteRenderer mySprite;
     int LimbNum = 0, LeftRight = 1, direction = 1;
-    bool LimbSwing = false;
+    bool LimbSwing = false, UpdatedLimbs = false;
     float TimePassage = 0f;
     Item item;
 
@@ -39,8 +39,11 @@ public class PlayerLimb : MonoBehaviour
     private void Update()
     {
         if (Input.GetAxisRaw("Horizontal") != direction && Input.GetAxisRaw("Horizontal") != 0)
+        {
             direction = (int)Input.GetAxisRaw("Horizontal");
-        if (Input.GetAxisRaw("Horizontal") != 0)
+            UpdatedLimbs = false;
+        }
+        if (Input.GetAxisRaw("Horizontal") != 0 && !UpdatedLimbs)
         {
             LimbSwing = true;
             SpriteUpdate();
@@ -79,6 +82,7 @@ public class PlayerLimb : MonoBehaviour
                 mySprite.sprite = null;
             mySprite.sortingOrder = -LeftRight;
         }
+        UpdatedLimbs = true;
     }
 
     void InventoryChanged()
