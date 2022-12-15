@@ -5,11 +5,10 @@ public class PlayerLimb : MonoBehaviour
 {
     Transform myTransform;
     SpriteRenderer mySprite;
-    int LimbNum = 0, direction = 1;
+    int LimbNum = 0, LeftRight = 1, direction = 1;
     bool LimbSwing = false;
     float TimePassage = 0f;
     Item item;
-    bool rightKey = false, leftKey = false;
 
     Vector3 player; 
 
@@ -24,46 +23,42 @@ public class PlayerLimb : MonoBehaviour
             if (GameObject.FindWithTag("Player").GetComponentsInChildren<PlayerLimb>()[i] == this)
             {
                 LimbNum = i;
-                Debug.Log("This Limb's Number is: " + i);
+                if (LimbNum == 0)
+                    LeftRight = -1;
                 break;
             }
         }
 
         mySprite.sprite = null;
 
-        myTransform.position = new Vector3(player.x + (0.4f * (float)direction), player.y + 0.25f, 1f);
+        myTransform.position = new Vector3(player.x + (0.4f * (float)LeftRight), player.y + 0.25f, 1f);
 
         Inventory.inventoryChangedInfo += InventoryChanged;
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow) && mySprite.sprite && !leftKey)
+        if (Input.GetAxisRaw("Horizontal") != direction && Input.GetAxisRaw("Horizontal") != 0)
+            direction = (int)Input.GetAxisRaw("Horizontal");
+        if (direction == 1 && mySprite.sprite)
         {
-            direction = -1;
             LimbSwing = true;
-            rightKey = true;
+            SpriteUpdate();
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) && mySprite.sprite && !rightKey)
+        else if (direction == -1 && mySprite.sprite)
         {
-            direction = 1;
             LimbSwing = true;
-            leftKey = true;
+            SpriteUpdate();
         }
 
 
         if (LimbSwing)
         {
             TimePassage += Time.deltaTime;
-            myTransform.rotation = new Quaternion(0f, 0f, 90f * (float)Math.Sin((double)TimePassage / (180 / Math.PI))  * (float)direction, 0f);
+            myTransform.rotation = new Quaternion(0f, 0f, 90f * (float)Math.Sin((double)TimePassage / (180 / Math.PI))  * (float)LeftRight, 0f);
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-            leftKey = false;
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-            rightKey = false;
-
-        if (leftKey && rightKey)
+        if (Input.GetAxisRaw("Horizontal") == 0 && LimbSwing)
         {
             TimePassage = 0f;
             myTransform.rotation = new Quaternion(0f, 0f, 0f, 0f);
@@ -71,14 +66,30 @@ public class PlayerLimb : MonoBehaviour
         }
     }
 
+    void SpriteUpdate()
+    {
+        if (direction == -LeftRight)
+        {
+            if (item != null)
+                mySprite.sprite = item.icon;
+            else
+                mySprite.sprite = null;
+            mySprite.sortingOrder = -LeftRight;
+        }
+        else
+            mySprite.sortingOrder = LeftRight;
+    }
+
     void InventoryChanged()
     {
         if (Inventory.instance.items[LimbNum].Item != null)
         {
             item = Inventory.instance.items[LimbNum].Item;
-            mySprite.sprite = item.icon;
+            SpriteUpdate();
         }
         else
-            mySprite.sprite = null;
+        {
+            SpriteUpdate();
+        }
     }
 }
