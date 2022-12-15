@@ -33,6 +33,8 @@ public class InventorySlot : MonoBehaviour
             icon.sprite = Inventory.instance.ghostLeg;
             icon.enabled = true;
         }
+        if (Item != null)
+            icon.sprite = Item.icon;
     }
 
     public void AddItem (Item newItem)
