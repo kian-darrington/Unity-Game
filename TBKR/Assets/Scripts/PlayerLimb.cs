@@ -40,17 +40,11 @@ public class PlayerLimb : MonoBehaviour
     {
         if (Input.GetAxisRaw("Horizontal") != direction && Input.GetAxisRaw("Horizontal") != 0)
             direction = (int)Input.GetAxisRaw("Horizontal");
-        if (direction == 1 && mySprite.sprite)
+        if (Input.GetAxisRaw("Horizontal") != 0)
         {
             LimbSwing = true;
             SpriteUpdate();
         }
-        else if (direction == -1 && mySprite.sprite)
-        {
-            LimbSwing = true;
-            SpriteUpdate();
-        }
-
 
         if (LimbSwing)
         {
@@ -77,7 +71,14 @@ public class PlayerLimb : MonoBehaviour
             mySprite.sortingOrder = -LeftRight;
         }
         else
+        {
             mySprite.sortingOrder = LeftRight;
+            if (item != null)
+                mySprite.sprite = item.icon;
+            else
+                mySprite.sprite = null;
+            mySprite.sortingOrder = -LeftRight;
+        }
     }
 
     void InventoryChanged()
