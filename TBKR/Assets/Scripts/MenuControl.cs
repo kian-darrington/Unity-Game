@@ -55,6 +55,14 @@ public class MenuControl : MonoBehaviour
         CreditsCan.SetActive(false);
     }
 
+    public void Exit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
+    }
+
     public void Back()
     {
         maincam.SetActive(true);
