@@ -6,7 +6,6 @@ public class PlayerLimb : MonoBehaviour
     Transform myTransform;
     SpriteRenderer mySprite;
     int LimbNum = 0, LeftRight = 1, direction = 1;
-    bool LimbSwing = false, UpdatedLimbs = false;
     float TimePassage = 0f;
     Item item;
 
@@ -41,25 +40,19 @@ public class PlayerLimb : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") != direction && Input.GetAxisRaw("Horizontal") != 0)
         {
             direction = (int)Input.GetAxisRaw("Horizontal");
-            UpdatedLimbs = false;
-        }
-        if (Input.GetAxisRaw("Horizontal") != 0 && !UpdatedLimbs)
-        {
-            LimbSwing = true;
+            Debug.Log(direction);
             SpriteUpdate();
         }
-
-        if (LimbSwing)
+        if (Input.GetAxisRaw("Horizontal") != 0)
         {
             TimePassage += Time.deltaTime;
             myTransform.rotation = new Quaternion(0f, 0f, 90f * (float)Math.Sin((double)TimePassage / (180 / Math.PI))  * (float)LeftRight, 0f);
         }
 
-        if (Input.GetAxisRaw("Horizontal") == 0 && LimbSwing)
+        if (Input.GetAxisRaw("Horizontal") == 0)
         {
             TimePassage = 0f;
             myTransform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-            LimbSwing = false;
         }
     }
 
@@ -80,9 +73,8 @@ public class PlayerLimb : MonoBehaviour
                 mySprite.sprite = item.icon;
             else
                 mySprite.sprite = null;
-            mySprite.sortingOrder = -LeftRight;
+            mySprite.sortingOrder = LeftRight;
         }
-        UpdatedLimbs = true;
     }
 
     void InventoryChanged()
@@ -94,6 +86,7 @@ public class PlayerLimb : MonoBehaviour
         }
         else
         {
+            item = null;
             SpriteUpdate();
         }
     }
