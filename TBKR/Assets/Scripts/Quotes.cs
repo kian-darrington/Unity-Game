@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Quotes : MonoBehaviour
 {
     public GameObject Body;
     private bool climb;
-    private int time;
+    List<string> quote = new List<string> { "Tis' but a flesh wound.", "Ni!", "I'm not worthy!", "Bring out yer' dead!", "*Coconut clopping sounds*", "Violence inherent in the system!", "1... 2... 5... 3!", "Your mother was a hampster!", "European or African Swallow?", "It's a vicous rodent!" };
     
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        int r = Random.Range(0, 10);
+        TextMeshProUGUI mText = Body.GetComponent<TextMeshProUGUI>();
+        mText.text = quote[r];
+        Debug.Log("Update text");
     }
 
     // Update is called once per frame
