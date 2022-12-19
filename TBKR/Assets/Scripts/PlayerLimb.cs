@@ -58,23 +58,15 @@ public class PlayerLimb : MonoBehaviour
 
     void SpriteUpdate()
     {
-        if (direction == -LeftRight)
-        {
-            if (item != null)
-                mySprite.sprite = item.icon;
-            else
-                mySprite.sprite = null;
-            mySprite.sortingOrder = -LeftRight;
-        }
+        if (item != null)
+            mySprite.sprite = item.icon;
         else
-        {
-            mySprite.sortingOrder = LeftRight;
-            if (item != null)
-                mySprite.sprite = item.icon;
-            else
-                mySprite.sprite = null;
-            mySprite.sortingOrder = LeftRight;
-        }
+            mySprite.sprite = null;
+        mySprite.sortingOrder = -(LeftRight * direction);
+        if (direction == -1)
+            mySprite.flipX = true;
+        else
+            mySprite.flipX = false;
     }
 
     void InventoryChanged()
