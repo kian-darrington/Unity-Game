@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BearArm
   m_EditorClassIdentifier: 
   name: Bear Arm
-  icon: {fileID: 21300000, guid: ef11faee295434c7f8e7f7be68dd2b69, type: 3}
+  icon: {fileID: 21300000, guid: 3a9e5c8e2c7ff4d77a6c42751336c2ff, type: 3}
   speed: 0
   maxVelocity: 0.5
   jumpForce: 1
