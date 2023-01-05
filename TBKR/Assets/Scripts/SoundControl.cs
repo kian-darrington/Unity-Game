@@ -3,37 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundControl : MonoBehaviour
+public class SoundControl : MonoBehaviour, IDataPersistance
 {
     public GameObject Music;
     public GameObject MusicSetting;
     public GameObject SoundSetting;
+    public GameObject click;
+    private int SoundOn;
+    private int MusicOn;
+
 
     void Start()
     {
-
-        CheckMusic();
-        CheckSound();
+        //CheckMusic();
+        //CheckSound();
     }
 
     public void CheckMusic()
     {
-        
-        if(PlayerPrefs.HasKey("MusicOn"))
+
+        if (PlayerPrefs.HasKey("MusicOn"))
         {
             if (PlayerPrefs.GetInt("MusicOn") > 0)
             {
-                Music.SetActive(true);
-
                 Toggle T = MusicSetting.GetComponent<Toggle>();
                 T.isOn = true;
+
+                Music.SetActive(true);
+
+                PlayerPrefs.SetInt("MusicOn", 1);
 
             }
             else
             {
-                Music.SetActive(false);
                 Toggle T = MusicSetting.GetComponent<Toggle>();
                 T.isOn = false;
+                Music.SetActive(false);
+                PlayerPrefs.SetInt("MusicOn", 0);
             }
         }
         else
@@ -45,29 +51,33 @@ public class SoundControl : MonoBehaviour
 
     public void CheckSound()
     {
-        if(PlayerPrefs.HasKey("SoundOn"))
+        if (PlayerPrefs.HasKey("SoundOn"))
         {
             if (PlayerPrefs.GetInt("SoundOn") > 0)
             {
-                //Sound.SetActive(true);
                 SoundSetting.GetComponent<Toggle>().isOn = true;
+                click.SetActive(true);
+                PlayerPrefs.SetInt("SoundOn", 0);
+
             }
             else
             {
-                //Sound.SetActive(false);
                 SoundSetting.GetComponent<Toggle>().isOn = false;
+                click.SetActive(false);
+                PlayerPrefs.SetInt("SoundOn", 0);
             }
         }
         else
         {
             PlayerPrefs.SetInt("SoundOn", 1);
-            //Sound.SetActive(true);
+            click.SetActive(true);
         }
     }
 
     public void SetMusic()
     {
-        if(PlayerPrefs.GetInt("MusicOn") > 0)
+
+        if (PlayerPrefs.GetInt("MusicOn") > 0)
         {
             Music.SetActive(false);
             PlayerPrefs.SetInt("MusicOn", 0);
@@ -78,6 +88,39 @@ public class SoundControl : MonoBehaviour
             PlayerPrefs.SetInt("MusicOn", 1);
         }
     }
-   
 
+    public void SetSound()
+    {
+        if (PlayerPrefs.GetInt("SoundOn") > 0)
+        {
+            click.SetActive(false);
+            PlayerPrefs.SetInt("SoundOn", 0);
+        }
+        else
+        {
+            click.SetActive(true);
+            PlayerPrefs.SetInt("SoundOn", 1);
+        }
+    }
+
+    public void menuclick()
+    {
+        AudioSource buttonclick = click.GetComponent<AudioSource>();
+        if (PlayerPrefs.GetInt("SoundOn") > 0)
+        {
+            buttonclick.Play(0);
+        }
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.MusicOn = data.MusicOn;
+        this.SoundOn = data.SoundOn;
+    }
+
+    private void SaveData(ref GameData data)
+    {
+        data.MusicOn = this.MusicOn;
+        data.SoundOn = this.SoundOn;
+    }
 }

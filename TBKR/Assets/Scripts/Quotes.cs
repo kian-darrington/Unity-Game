@@ -17,7 +17,6 @@ public class Quotes : MonoBehaviour
         int r = Random.Range(0, 10);
         TextMeshProUGUI mText = Body.GetComponent<TextMeshProUGUI>();
         mText.text = quote[r];
-        Debug.Log("Update text");
     }
 
     // Update is called once per frame

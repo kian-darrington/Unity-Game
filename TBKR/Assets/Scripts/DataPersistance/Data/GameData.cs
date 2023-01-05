@@ -5,10 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public int jumpCount;
+    public int SoundOn;
+    public int MusicOn;
 
     public GameData()
     {
-        this.jumpCount = 0;
+        this.SoundOn = 1;
+        this.MusicOn = 1;
     }
 }
