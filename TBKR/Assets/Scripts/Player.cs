@@ -5,9 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody2D myBody;
+    public CircleCollider2D[] myColliders;
+    public CapsuleCollider2D[] sideColliders;
+    SpriteRenderer mySprite;
+
     CircleCollider2D myCollider;
     CapsuleCollider2D sideCollider;
-    SpriteRenderer mySprite;
 
     public List<Item> items = new List<Item>();
 
@@ -15,6 +18,7 @@ public class Player : MonoBehaviour
     bool wallJump = false;
     bool onWall = false;
     bool inventoryOpen = false;
+    bool raisedLimbs = true;
 
     const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f;
 
@@ -66,9 +70,10 @@ public class Player : MonoBehaviour
     void Awake()
     {
         myBody = GetComponent<Rigidbody2D>();
-        myCollider = GetComponent<CircleCollider2D>();
-        sideCollider = GetComponent<CapsuleCollider2D>();
+        sideColliders = GetComponents<CapsuleCollider2D>();
         mySprite = GetComponent<SpriteRenderer>();
+
+        ColliderChange(false);
 
         LimblessStatReset();
 
@@ -201,6 +206,8 @@ public class Player : MonoBehaviour
     void InventoryChanged()
     {
         LimblessStatReset();
+        List<Item> temp = items;
+        bool hasLimbs = false;
         for (int i = 0; i < 4; i++)
         {
             items[i] = Inventory.instance.items[i].Item;
@@ -215,7 +222,34 @@ public class Player : MonoBehaviour
                 MaxVelocity += (BaseMaxVelocity - LimblessMaxVelocity) / 2f;
                 Speed += (BaseSpeed - LimblessSpeed) / 2f;
                 AddLegStats(items[i]);
+                hasLimbs = true;
             }
+        }
+        ColliderChange(hasLimbs);
+    }
+
+    void ColliderChange(bool hasLimbs)
+    {
+        if (hasLimbs && !raisedLimbs)
+        {
+            myColliders[0].enabled = false;
+            sideColliders[0].enabled = false;
+            transform.position = new Vector3(transform.position.x, transform.position.y + 1f);
+            myColliders[2].enabled = true;
+            sideColliders[1].enabled = true;
+            myCollider = myColliders[2];
+            sideCollider = sideColliders[1];
+            raisedLimbs = true;
+        }
+        else if (raisedLimbs)
+        {
+            myColliders[0].enabled = true;
+            sideColliders[0].enabled = true;
+            myColliders[2].enabled = false;
+            sideColliders[1].enabled = false;
+            myCollider = myColliders[0];
+            sideCollider = sideColliders[0];
+            raisedLimbs = false;
         }
     }
 }
