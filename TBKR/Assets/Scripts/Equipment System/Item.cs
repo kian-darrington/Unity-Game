@@ -11,4 +11,5 @@ public class Item : ScriptableObject
     public float attackDamage = 0f;
     public float wallJumpForce = 0f;
     public float airTimeBuffer = 0f;
+    public int limbID = 0;
 }

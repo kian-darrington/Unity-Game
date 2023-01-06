@@ -9,8 +9,8 @@ public class SoundControl : MonoBehaviour, IDataPersistance
     public GameObject MusicSetting;
     public GameObject SoundSetting;
     public GameObject click;
-    private int SoundOn;
-    private int MusicOn;
+    private int SoundOn = 1;
+    private int MusicOn = 1;
 
 
     void Start()
@@ -81,11 +81,13 @@ public class SoundControl : MonoBehaviour, IDataPersistance
         {
             Music.SetActive(false);
             PlayerPrefs.SetInt("MusicOn", 0);
+            MusicOn = 0;
         }
         else
         {
             Music.SetActive(true);
             PlayerPrefs.SetInt("MusicOn", 1);
+            MusicOn = 1;
         }
     }
 
@@ -118,7 +120,7 @@ public class SoundControl : MonoBehaviour, IDataPersistance
         this.SoundOn = data.SoundOn;
     }
 
-    private void SaveData(ref GameData data)
+    public void SaveData(ref GameData data)
     {
         data.MusicOn = this.MusicOn;
         data.SoundOn = this.SoundOn;
