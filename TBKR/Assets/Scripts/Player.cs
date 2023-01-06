@@ -241,7 +241,7 @@ public class Player : MonoBehaviour
             sideCollider = sideColliders[1];
             raisedLimbs = true;
         }
-        else if (raisedLimbs)
+        else if (raisedLimbs && !hasLimbs)
         {
             myColliders[0].enabled = true;
             sideColliders[0].enabled = true;
