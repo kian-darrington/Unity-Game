@@ -46,9 +46,15 @@ public class PlayerLimb : MonoBehaviour
         }
         if (Input.GetAxisRaw("Horizontal") != 0 && LimbNum < 2)
         {
+            float Arm = 1f;
+            if (LimbNum == 1)
+                Arm = -1f;
             TimePassage += Time.deltaTime * 10f;
-            Debug.Log(TimePassage);
-            myTransform.rotation = new Quaternion(0f, 0f, 90f * ((float)Math.Sin((double)TimePassage / (180 / Math.PI))  * (float)LeftRight), 0f);
+
+            if ((TimePassage * 100f) % 200f > 100f)
+                myTransform.rotation = new Quaternion(0f, 0f, (100f - (TimePassage % 100f)) / 100f, 0f);
+            else
+                myTransform.rotation = new Quaternion(0f, 0f, (TimePassage * Arm) / 10f, 0f);
         }
 
         if (Input.GetAxisRaw("Horizontal") == 0 && LimbNum < 2)
@@ -56,6 +62,7 @@ public class PlayerLimb : MonoBehaviour
             TimePassage = 0f;
             myTransform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         }
+        Debug.Log(myTransform.rotation);
     }
 
     void SpriteUpdate()

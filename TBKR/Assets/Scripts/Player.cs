@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     bool onWall = false;
     bool inventoryOpen = false;
     bool raisedLimbs = true;
+    bool headBonk = false;
 
     const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f;
 
@@ -122,7 +123,7 @@ public class Player : MonoBehaviour
             myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
         }
         // Wall jumping mechanism
-        else if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && onWall && wallJump && !inventoryOpen)
+        else if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !headBonk && onWall && wallJump && !inventoryOpen)
         {
             wallJump = false;
             myBody.velocity = new Vector2(myBody.velocity.x, WallJumpForce);
@@ -148,6 +149,7 @@ public class Player : MonoBehaviour
         {
             StopCoroutine("DelayJumpGround");
             isGrounded = true;
+            headBonk = false;
         }
         if (collision.gameObject.CompareTag("Ground") && sideCollider.IsTouching(collision.collider))
         {
@@ -168,6 +170,12 @@ public class Player : MonoBehaviour
         {
             StartCoroutine("DelayJumpWall");
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            headBonk = true;
     }
 
     // Method of creating a delay for coyote time
