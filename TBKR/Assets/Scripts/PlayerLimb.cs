@@ -62,7 +62,6 @@ public class PlayerLimb : MonoBehaviour
             TimePassage = 0f;
             myTransform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         }
-        Debug.Log(myTransform.rotation);
     }
 
     void SpriteUpdate()
