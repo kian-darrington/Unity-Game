@@ -178,6 +178,12 @@ public class Player : MonoBehaviour
             headBonk = true;
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            headBonk = false;
+    }
+
     // Method of creating a delay for coyote time
     IEnumerator DelayJumpGround()
     {
