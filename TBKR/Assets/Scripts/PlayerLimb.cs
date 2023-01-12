@@ -22,15 +22,17 @@ public class PlayerLimb : MonoBehaviour
             if (GameObject.FindWithTag("Player").GetComponentsInChildren<PlayerLimb>()[i] == this)
             {
                 LimbNum = i;
-                if (LimbNum == 0)
+                if (LimbNum == 0 || LimbNum == 2)
                     LeftRight = -1;
                 break;
             }
         }
 
         mySprite.sprite = null;
-
-        myTransform.position = new Vector3(player.x + (0.4f * (float)LeftRight), player.y + 0.25f, 1f);
+        if (LimbNum < 2)
+            myTransform.position = new Vector3(player.x + (0.4f * (float)LeftRight), player.y + 0.25f, 1f);
+        else
+            myTransform.position = new Vector3(player.x + (0.32f * (float)LeftRight), player.y - 1.3f, 1f);
 
         Inventory.inventoryChangedInfo += InventoryChanged;
     }
@@ -40,41 +42,43 @@ public class PlayerLimb : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") != direction && Input.GetAxisRaw("Horizontal") != 0)
         {
             direction = (int)Input.GetAxisRaw("Horizontal");
-            Debug.Log(direction);
             SpriteUpdate();
         }
-        if (Input.GetAxisRaw("Horizontal") != 0)
+        if (Input.GetAxisRaw("Horizontal") != 0 && LimbNum < 2)
         {
-            TimePassage += Time.deltaTime;
-            myTransform.rotation = new Quaternion(0f, 0f, 90f * (float)Math.Sin((double)TimePassage / (180 / Math.PI))  * (float)LeftRight, 0f);
+            float Arm = 1f;
+            if (LimbNum == 1)
+                Arm = -1f;
+            TimePassage += Time.deltaTime * 10f;
+
+            if ((TimePassage * 100f) % 200f > 100f)
+                myTransform.rotation = new Quaternion(0f, 0f, (100f - (TimePassage % 100f)) / 100f, 0f);
+            else
+                myTransform.rotation = new Quaternion(0f, 0f, (TimePassage * Arm) / 10f, 0f);
         }
 
-        if (Input.GetAxisRaw("Horizontal") == 0)
+        if (Input.GetAxisRaw("Horizontal") == 0 && LimbNum < 2)
         {
             TimePassage = 0f;
             myTransform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         }
+        Debug.Log(myTransform.rotation);
     }
 
     void SpriteUpdate()
     {
-        if (direction == -LeftRight)
-        {
-            if (item != null)
-                mySprite.sprite = item.icon;
-            else
-                mySprite.sprite = null;
-            mySprite.sortingOrder = -LeftRight;
-        }
+        if (item != null)
+            mySprite.sprite = item.icon;
         else
-        {
-            mySprite.sortingOrder = LeftRight;
-            if (item != null)
-                mySprite.sprite = item.icon;
-            else
-                mySprite.sprite = null;
-            mySprite.sortingOrder = LeftRight;
-        }
+            mySprite.sprite = null;
+        if (LimbNum < 2)
+            mySprite.sortingOrder = -(LeftRight * (direction * (Math.Abs(direction) + 1)));
+        else
+            mySprite.sortingOrder = -(LeftRight * direction);
+        if (direction == -1)
+            mySprite.flipX = true;
+        else
+            mySprite.flipX = false;
     }
 
     void InventoryChanged()
