@@ -2254,6 +2254,7 @@ GameObject:
   - component: {fileID: 1327148604}
   - component: {fileID: 1327148605}
   - component: {fileID: 1327148606}
+  - component: {fileID: 1327148607}
   m_Layer: 5
   m_Name: InBetween
   m_TagString: Untagged
@@ -2279,7 +2280,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1327148605
 MonoBehaviour:
@@ -2347,6 +2348,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!222 &1327148607
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327148603}
+  m_CullTransparentMesh: 1
 --- !u!4 &1365249285 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9105987974117180207, guid: 6c6e3d73e6b1b48dd9ad3b9e059eae20, type: 3}
@@ -3008,7 +3017,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 206229785
   m_SortingOrder: 1
   m_TargetDisplay: 0
