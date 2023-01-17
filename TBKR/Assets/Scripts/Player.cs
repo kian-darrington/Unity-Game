@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float xMove = Input.GetAxis("Horizontal");
+        float xMove = Input.GetAxisRaw("Horizontal");
 
         // Controlls smooth horizontal movement
         if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen)
@@ -114,10 +114,7 @@ public class Player : MonoBehaviour
         if (!isGrounded && Input.GetAxisRaw("Horizontal") == 0f)
         {
             myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
-            Debug.Log("Dragging");
         }
-        else
-            Debug.Log("Not Dragging " + Input.GetAxisRaw("Horizontal"));
 
         // Jumping mechanism
         if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)
