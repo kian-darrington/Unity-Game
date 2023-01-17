@@ -23,7 +23,7 @@ public class DataPersistanceManager : MonoBehaviour
     private void Start()
     {
         this.dataPersisanceObjects = FindAllDataPersistanceObjects();
-
+        LoadGame();
     }
 
     public void NewGame()
@@ -40,11 +40,13 @@ public class DataPersistanceManager : MonoBehaviour
             Debug.Log("No data was found. Initializing data to defaults.");
             NewGame();
         }
+        Debug.Log("Checkpoint");
         //TODO - push the loaded data to all other scripts that need it
         foreach (IDataPersistance dataPersistanceObj in dataPersisanceObjects)
         {
             dataPersistanceObj.LoadData(gameData);
         }
+        Debug.Log("Loaded Music setting = " + gameData.MusicOn);
     }
 
     public void SaveGame()
@@ -54,7 +56,14 @@ public class DataPersistanceManager : MonoBehaviour
         {
             dataPersistanceObj.SaveData(ref gameData);
         }
+
+        Debug.Log("Saved Music setting = " + gameData.MusicOn);
         //TODO - save that data to a file using the datahandler
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGame();
     }
 
     private List<IDataPersistance> FindAllDataPersistanceObjects()

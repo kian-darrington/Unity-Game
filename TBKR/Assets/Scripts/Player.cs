@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
         float xMove = Input.GetAxis("Horizontal");
 
         // Controlls smooth horizontal movement
-        if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && Input.GetButton("Horizontal") && !inventoryOpen)
+        if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen)
         {
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
@@ -111,10 +111,13 @@ public class Player : MonoBehaviour
         }
 
         // Creates false air drag to make mid air controll easier
-        if(!isGrounded && !Input.GetButton("Horizontal"))
+        if (!isGrounded && Input.GetAxisRaw("Horizontal") == 0f)
         {
             myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
+            Debug.Log("Dragging");
         }
+        else
+            Debug.Log("Not Dragging " + Input.GetAxisRaw("Horizontal"));
 
         // Jumping mechanism
         if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)

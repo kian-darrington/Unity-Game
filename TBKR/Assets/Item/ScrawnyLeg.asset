@@ -14,3 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Scrawny Leg
   icon: {fileID: 21300000, guid: ac27292643c014d248b0abb239ee31d0, type: 3}
+  speed: 0
+  maxVelocity: 0
+  jumpForce: 0
+  attackDamage: 0
+  wallJumpForce: 0
+  airTimeBuffer: 0
+  limbID: 2
