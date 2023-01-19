@@ -67,6 +67,8 @@ public class Player : MonoBehaviour
 
     private float AirDrag = 0.99f;
 
+    private float AirVelocity = 0f;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -87,15 +89,20 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float xMove = Input.GetAxis("Horizontal");
+        float xMove = Input.GetAxisRaw("Horizontal");
 
         // Controlls smooth horizontal movement
-        if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen)
+        if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && isGrounded)
         {
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
-
-        if (Input.GetKeyDown(KeyCode.I) && isGrounded)
+        else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded)
+            myBody.AddForce(new Vector2(xMove * Speed * (2f / 3f), 0f), ForceMode2D.Impulse);
+        else if (!isGrounded && xMove == 0f)
+        {
+            myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
+        }
+        if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.E)) && isGrounded)
         {
             if (HoldingScript.instance.isActiveAndEnabled && !InBetween.instance.enabled)
             {
@@ -109,15 +116,6 @@ public class Player : MonoBehaviour
                 inventoryOpen = true;
             }
         }
-
-        // Creates false air drag to make mid air controll easier
-        if (!isGrounded && Input.GetAxisRaw("Horizontal") == 0f)
-        {
-            myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
-            Debug.Log("Dragging");
-        }
-        else
-            Debug.Log("Not Dragging " + Input.GetAxisRaw("Horizontal"));
 
         // Jumping mechanism
         if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)
@@ -206,6 +204,7 @@ public class Player : MonoBehaviour
         MaxVelocity = LimblessMaxVelocity;
         JumpForce = LimblessJump;
         WallJumpForce = LimblessWallJump;
+        AirVelocity = MaxVelocity * (2f / 3f);
     }
 
     void AddLegStats(Item item)
@@ -242,6 +241,7 @@ public class Player : MonoBehaviour
                 hasLimbs = true;
             }
         }
+        AirVelocity = MaxVelocity * (2f / 3f);
         ColliderChange(hasLimbs);
     }
 
