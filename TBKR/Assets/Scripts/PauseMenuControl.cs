@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuControl : MonoBehaviour
 {
@@ -15,15 +16,15 @@ public class PauseMenuControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (input.getKeyDown("Escape") && Pause.Active == false)
+        if (Input.GetButtonDown("Escape") && Pause.active == false)
         {
             Pause.SetActive(true);
-            time.timeScale = 0f;
+            Time.timeScale = 0f;
         }
-        else if (input.getKeyDown("Escape") && Pause.Active == true)
+        else if (Input.GetButtonDown("Escape") && Pause.active == true)
         {
             Pause.SetActive(false);
-            time.timeScale = 1.0f;
+            Time.timeScale = 1.0f;
         }
     }
 
@@ -35,11 +36,12 @@ public class PauseMenuControl : MonoBehaviour
     public void Resume()
     {
         Pause.SetActive(false);
-        time.timeScale = 1.0f;
+        Time.timeScale = 1.0f;
     }
 
     public void Save()
     {
-        DataPersistanceManager.instance.Save();
+        DataPersistanceManager.instance.SaveGame();
     }
+
 }
