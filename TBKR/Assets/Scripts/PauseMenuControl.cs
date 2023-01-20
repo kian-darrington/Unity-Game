@@ -4,21 +4,42 @@ using UnityEngine;
 
 public class PauseMenuControl : MonoBehaviour
 {
-
+    public GameObject Pause;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.GameObject.SetActive(false);
+        Pause.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (input.getKeyDown("Escape"))
+        if (input.getKeyDown("Escape") && Pause.Active == false)
         {
-            this.GameObject.SetActive(true);
-            
+            Pause.SetActive(true);
+            time.timeScale = 0f;
         }
+        else if (input.getKeyDown("Escape") && Pause.Active == true)
+        {
+            Pause.SetActive(false);
+            time.timeScale = 1.0f;
+        }
+    }
+
+    public void Leave()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void Resume()
+    {
+        Pause.SetActive(false);
+        time.timeScale = 1.0f;
+    }
+
+    public void Save()
+    {
+        DataPersistanceManager.instance.Save();
     }
 }
