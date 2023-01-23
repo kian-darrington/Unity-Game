@@ -9,8 +9,6 @@ public class PauseMenuControl : MonoBehaviour
     public GameObject Pause;
     public GameObject click;
 
-    //AudioSource buttonclick = click.GetComponent<AudioSource>();
-
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +23,6 @@ public class PauseMenuControl : MonoBehaviour
             Pause.SetActive(true);
             if (PlayerPrefs.GetInt("SoundOn") > 0)
             {
-                Debug.Log("Pause Click");
                 click.GetComponent<AudioSource>().Play(0);
             }
             Time.timeScale = 0f;
@@ -37,8 +34,7 @@ public class PauseMenuControl : MonoBehaviour
             Time.timeScale = 1.0f;
             if (PlayerPrefs.GetInt("SoundOn") > 0)
             {
-                Debug.Log("Pause Click");
-                //buttonclick.Play(0);
+                click.GetComponent<AudioSource>().Play(0);
             }
         }
     }

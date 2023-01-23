@@ -21,25 +21,15 @@ public class SoundControl : MonoBehaviour, IDataPersistance
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.RightBracket) && PlayerPrefs.GetInt("SoundOn") > 0)
         {
-           
-
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            
-        }
-
-        if (PlayerPrefs.GetInt("SoundOn") > 0)
-        {
-            click.SetActive(false);
             PlayerPrefs.SetInt("SoundOn", 0);
+            Debug.Log("Manueling changed sound player pref to 'OFF'/'0'");
         }
-        else
+        else if (Input.GetKeyDown(KeyCode.RightBracket) && PlayerPrefs.GetInt("SoundOn") == 0)
         {
-            click.SetActive(true);
             PlayerPrefs.SetInt("SoundOn", 1);
+            Debug.Log("Manueling changed sound player pref to 'ON'/'1'");
         }
     }
 
@@ -80,7 +70,7 @@ public class SoundControl : MonoBehaviour, IDataPersistance
             if (PlayerPrefs.GetInt("SoundOn") > 0)
             {
                 Toggle S = SoundSetting.GetComponent<Toggle>();
-                S.isOn = false;
+                S.isOn = true;
                 click.SetActive(true);
                 PlayerPrefs.SetInt("SoundOn", 1);
 
@@ -88,7 +78,7 @@ public class SoundControl : MonoBehaviour, IDataPersistance
             else
             {
                 Toggle S = SoundSetting.GetComponent<Toggle>();
-                S.isOn = true;
+                S.isOn = false;
                 click.SetActive(false);
                 PlayerPrefs.SetInt("SoundOn", 0);
             }
