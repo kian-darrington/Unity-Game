@@ -25,11 +25,13 @@ public class MenuControl : MonoBehaviour
 
     public void Continue()
     {
-        
+        PlayerPrefs.SetInt("PlayOption", 2);
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void NewGame()
     {
+        PlayerPrefs.SetInt("PlayOption", 1);
         SceneManager.LoadScene("SampleScene");
     }
 

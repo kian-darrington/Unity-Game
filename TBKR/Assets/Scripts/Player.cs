@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDataPersistance
 {
     Rigidbody2D myBody;
     public CircleCollider2D[] myColliders;
@@ -268,5 +268,15 @@ public class Player : MonoBehaviour
             sideCollider = sideColliders[0];
             raisedLimbs = false;
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = this.transform.position;
     }
 }
