@@ -16,12 +16,12 @@ public class PauseMenuControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Escape") && Pause.active == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && Pause.active == false)
         {
             Pause.SetActive(true);
             Time.timeScale = 0f;
         }
-        else if (Input.GetButtonDown("Escape") && Pause.active == true)
+        else if (Input.GetKeyDown(KeyCode.Escape) && Pause.active == true)
         {
             Pause.SetActive(false);
             Time.timeScale = 1.0f;
@@ -30,6 +30,7 @@ public class PauseMenuControl : MonoBehaviour
 
     public void Leave()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Main Menu");
     }
 
