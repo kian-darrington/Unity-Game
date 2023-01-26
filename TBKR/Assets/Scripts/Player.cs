@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
         else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded)
-            myBody.AddForce(new Vector2(xMove * Speed * (2f / 3f), 0f), ForceMode2D.Impulse);
+            myBody.AddForce(new Vector2(xMove * Speed * (4f / 5f), 0f), ForceMode2D.Impulse);
         else if (!isGrounded && xMove == 0f)
         {
             myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
