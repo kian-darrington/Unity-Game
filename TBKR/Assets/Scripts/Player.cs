@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
     public CapsuleCollider2D[] sideColliders;
     SpriteRenderer mySprite;
 
+    public Sword SwordRef;
+
+    Sword NewSword;
+
     CircleCollider2D myCollider;
     CapsuleCollider2D sideCollider;
 
@@ -21,9 +25,11 @@ public class Player : MonoBehaviour
     bool raisedLimbs = true;
     bool headBonk = false;
 
-    const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f;
+    const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f, BaseWeaponCoolDown = 2f, BaseThrowingDistance = 4f;
 
     const float LimblessSpeed = 0.25f, LimblessJump = 5f, LimblessWallJump = 0f, LimblessMaxVelocity = 2.5f;
+
+    float TimePassage = 0f;
 
     [SerializeField]
     private float _airTimeBuffer = BaseAirTimeBuffer;
@@ -65,6 +71,8 @@ public class Player : MonoBehaviour
         set { _maxVelocity = value; }
     }
 
+    float WeaponCoolDown = BaseWeaponCoolDown, ThrowingDistance = BaseThrowingDistance;
+
     private float AirDrag = 0.99f;
 
     private float AirVelocity = 0f;
@@ -90,6 +98,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         float xMove = Input.GetAxisRaw("Horizontal");
+
+        TimePassage += Time.deltaTime;
 
         // Controlls smooth horizontal movement
         if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && isGrounded)
@@ -140,6 +150,13 @@ public class Player : MonoBehaviour
         else if (Input.GetAxisRaw("Horizontal") < 0)
         {
             mySprite.flipX = true;
+        }
+
+        // Sword flinging mechanism
+        if (Input.GetKeyDown(KeyCode.K) && (items[0] != null || items[1] != null) && WeaponCoolDown - TimePassage <= 0f)
+        {
+            NewSword = Instantiate(new Sword(ThrowingDistance, ThrowingDistance / 2f));
+            TimePassage = 0f;
         }
     }
 
