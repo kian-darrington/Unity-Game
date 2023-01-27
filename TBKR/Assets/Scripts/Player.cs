@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     bool raisedLimbs = true;
     bool headBonk = false;
 
-    const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f, BaseWeaponCoolDown = 2f, BaseThrowingDistance = 4f;
+    const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f, BaseWeaponCoolDown = 1f, BaseThrowingDistance = 4f;
 
     const float LimblessSpeed = 0.25f, LimblessJump = 5f, LimblessWallJump = 0f, LimblessMaxVelocity = 2.5f;
 
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
         set { _maxVelocity = value; }
     }
 
-    float WeaponCoolDown = BaseWeaponCoolDown, ThrowingDistance = BaseThrowingDistance;
+    float WeaponCoolDown = BaseWeaponCoolDown, ThrowingDistance = 0;
 
     private float AirDrag = 0.99f;
 
@@ -153,9 +153,12 @@ public class Player : MonoBehaviour
         }
 
         // Sword flinging mechanism
-        if (Input.GetKeyDown(KeyCode.K) && (items[0] != null || items[1] != null) && WeaponCoolDown - TimePassage <= 0f)
+        if (Input.GetKey(KeyCode.K) && ThrowingDistance > 0 && WeaponCoolDown - TimePassage <= 0f)
         {
-            NewSword = Instantiate(new Sword(ThrowingDistance, ThrowingDistance / 2f));
+            NewSword = Instantiate(SwordRef);
+            NewSword.SetVelocity(ThrowingDistance, ThrowingDistance / 2f);
+            NewSword.SetPosition(transform.position);
+
             TimePassage = 0f;
         }
     }
@@ -222,6 +225,7 @@ public class Player : MonoBehaviour
         JumpForce = LimblessJump;
         WallJumpForce = LimblessWallJump;
         AirVelocity = MaxVelocity * (2f / 3f);
+        ThrowingDistance = 0;
     }
 
     void AddLegStats(Item item)
@@ -234,6 +238,7 @@ public class Player : MonoBehaviour
     void AddArmStats(Item item)
     {
         WallJumpForce += item.wallJumpForce;
+        ThrowingDistance += item.throwingDistance;
     }
 
     void InventoryChanged()
@@ -247,6 +252,7 @@ public class Player : MonoBehaviour
             if (i < 2 && items[i] != null)
             {
                 WallJumpForce += BaseWallJump / 2f;
+                ThrowingDistance += BaseThrowingDistance / 2f;
                 AddArmStats(items[i]);
             }
             else if (i > 1 && items[i] != null)

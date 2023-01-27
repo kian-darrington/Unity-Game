@@ -31,6 +31,20 @@ public class Sword : MonoBehaviour
             StartCoroutine("DespawnTime");
     }
 
+    public void SetVelocity(float f1, float f2)
+    {
+        xVelocity = f1;
+        yVelocity = f2;
+
+        myBody.AddTorque((Random.value - 0.5f) * MultiplicationFactor);
+        myBody.AddForce(new Vector2(xVelocity, yVelocity), ForceMode2D.Impulse);
+    }
+
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
+
     IEnumerator DespawnTime()
     {
         yield return new WaitForSeconds(DespawnRate);
