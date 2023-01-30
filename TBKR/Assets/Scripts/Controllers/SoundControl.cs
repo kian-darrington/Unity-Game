@@ -124,7 +124,6 @@ public class SoundControl : MonoBehaviour, IDataPersistance
 
     public void menuclick()
     {
-        Debug.Log("Click");
         AudioSource buttonclick = click.GetComponent<AudioSource>();
         if (PlayerPrefs.GetInt("SoundOn") > 0)
         {

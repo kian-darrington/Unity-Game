@@ -31,8 +31,9 @@ public class DataPersistanceManager : MonoBehaviour
     {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersisanceObjects = FindAllDataPersistanceObjects();
-        if (PlayerPrefs.GetInt("PlayOption") == 1 && SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Main Menu"))
+        if (PlayerPrefs.GetInt("PlayOption") == 2 && SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Main Menu"))
         {
+            Debug.Log("Load");
             LoadGame();
         }
     }
@@ -53,17 +54,16 @@ public class DataPersistanceManager : MonoBehaviour
             Debug.Log("No data was found. Initializing data to defaults.");
             NewGame();
         }
-        Debug.Log("Checkpoint");
         //TODO - push the loaded data to all other scripts that need it
         foreach (IDataPersistance dataPersistanceObj in dataPersisanceObjects)
         {
             dataPersistanceObj.LoadData(gameData);
         }
-        Debug.Log("Loaded Music setting = " + gameData.MusicOn);
     }
 
     public void SaveGame()
     {
+        Debug.Log("Called");
         //TODO - pass the data to the other scripts so they can update it
         foreach (IDataPersistance dataPersistanceObj in dataPersisanceObjects)
         {
