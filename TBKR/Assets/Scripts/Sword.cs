@@ -6,8 +6,9 @@ public class Sword : MonoBehaviour
 {
     Rigidbody2D myBody;
 
-    public float MultiplicationFactor = 1f;
+    public float MultiplicationFactor = 10f;
     public float DespawnRate = 5f;
+    public float SpinMax = 1300f, SpinMin = 400f;
 
     float xVelocity = 0f, yVelocity = 0f;
 
@@ -21,14 +22,8 @@ public class Sword : MonoBehaviour
     {
         myBody = GetComponent<Rigidbody2D>();
 
-        myBody.angularVelocity = (Random.value - 0.5f) * MultiplicationFactor;
+        myBody.angularVelocity = Random.Range(-1f, 1f) * MultiplicationFactor;
         myBody.velocity = new Vector3(xVelocity, yVelocity);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-            StartCoroutine("DespawnTime");
     }
 
     public void SetVelocity(float f1, float f2)
@@ -36,8 +31,13 @@ public class Sword : MonoBehaviour
         xVelocity = f1;
         yVelocity = f2;
 
-        myBody.AddTorque((Random.value - 0.5f) * MultiplicationFactor);
+        if (f1 < 0f)
+            myBody.angularVelocity = Random.Range(400f, 1300f);
+        else
+            myBody.angularVelocity = Random.Range(-1300f,-400f);
         myBody.AddForce(new Vector2(xVelocity, yVelocity), ForceMode2D.Impulse);
+
+        StartCoroutine(DespawnTime());
     }
 
     public void SetPosition(Vector3 pos)
@@ -48,6 +48,6 @@ public class Sword : MonoBehaviour
     IEnumerator DespawnTime()
     {
         yield return new WaitForSeconds(DespawnRate);
-        Destroy(this);
+        Destroy(gameObject);
     }
 }

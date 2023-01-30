@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     bool raisedLimbs = true;
     bool headBonk = false;
 
-    const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f, BaseWeaponCoolDown = 1f, BaseThrowingDistance = 4f;
+    const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f, BaseWeaponCoolDown = 1f, BaseThrowingDistance = 6f;
 
     const float LimblessSpeed = 0.25f, LimblessJump = 5f, LimblessWallJump = 0f, LimblessMaxVelocity = 2.5f;
 
@@ -156,7 +156,10 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.K) && ThrowingDistance > 0 && WeaponCoolDown - TimePassage <= 0f)
         {
             NewSword = Instantiate(SwordRef);
-            NewSword.SetVelocity(ThrowingDistance, ThrowingDistance / 2f);
+            if (!mySprite.flipX)
+                NewSword.SetVelocity(ThrowingDistance + myBody.velocity.x, ((ThrowingDistance / 3f) * 2f) + myBody.velocity.y);
+            else
+                NewSword.SetVelocity(-ThrowingDistance + myBody.velocity.x, ((ThrowingDistance / 3f) * 2f) + myBody.velocity.y);
             NewSword.SetPosition(transform.position);
 
             TimePassage = 0f;
