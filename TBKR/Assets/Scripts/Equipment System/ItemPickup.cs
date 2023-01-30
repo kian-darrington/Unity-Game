@@ -33,7 +33,7 @@ public class ItemPickup : MonoBehaviour
 
     private void Update()
     {
-        if (IsColliding && Input.GetKey(KeyCode.X))
+        if (IsColliding && Input.GetKey(KeyCode.J))
         {
             PickUp();
         }

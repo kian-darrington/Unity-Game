@@ -523,6 +523,7 @@ MonoBehaviour:
   sideColliders:
   - {fileID: 554839549}
   - {fileID: 547394513}
+  SwordRef: {fileID: 1619025188121763002, guid: 207946270dea84bd4920d0327fc56361, type: 3}
   items: []
   _airTimeBuffer: 0.1
   _speed: 1

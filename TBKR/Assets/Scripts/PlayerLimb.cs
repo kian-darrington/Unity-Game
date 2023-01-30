@@ -8,6 +8,11 @@ public class PlayerLimb : MonoBehaviour
     int LimbNum = 0, LeftRight = 1, direction = 1;
     float TimePassage = 0f;
     Item item;
+    float previousDirection;
+
+    public const float TimeMultiplier = 10f;
+    public const float TimeLimit = 2f;
+    public const float SwingAngle = 45f;
 
     Vector3 player; 
 
@@ -44,24 +49,28 @@ public class PlayerLimb : MonoBehaviour
             direction = (int)Input.GetAxisRaw("Horizontal");
             SpriteUpdate();
         }
-        if (Input.GetAxisRaw("Horizontal") != 0 && LimbNum < 2)
+        if (Input.GetAxisRaw("Horizontal") != 0)
         {
-            float Arm = 1f;
-            if (LimbNum == 1)
-                Arm = -1f;
-            TimePassage += Time.deltaTime * 10f;
+            TimePassage += Time.deltaTime * TimeMultiplier;
 
-            if ((TimePassage * 100f) % 200f > 100f)
-                myTransform.rotation = new Quaternion(0f, 0f, (100f - (TimePassage % 100f)) / 100f, 0f);
+            if (TimePassage < TimeLimit && LimbNum < 2)
+                transform.rotation = Quaternion.Euler(Vector3.forward * -SwingAngle * (float)LeftRight);
+            else if (TimePassage < (TimeLimit * 2f) && LimbNum < 2)
+                transform.rotation = Quaternion.Euler(Vector3.forward * SwingAngle * (float)LeftRight);
+            else if (TimePassage < TimeLimit)
+                transform.rotation = Quaternion.Euler(Vector3.forward * (SwingAngle * 2f / 3f) * (float)LeftRight);
+            else if (TimePassage < (TimeLimit * 2f))
+                transform.rotation = Quaternion.Euler(Vector3.forward * -(SwingAngle * 2f / 3f) * (float)LeftRight);
             else
-                myTransform.rotation = new Quaternion(0f, 0f, (TimePassage * Arm) / 10f, 0f);
+                TimePassage = 0f;
         }
 
-        if (Input.GetAxisRaw("Horizontal") == 0 && LimbNum < 2)
+        if ((Input.GetAxisRaw("Horizontal") == 0 || Input.GetAxisRaw("Horizontal") != previousDirection))
         {
-            TimePassage = 0f;
             myTransform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         }
+
+        previousDirection = Input.GetAxisRaw("Horizontal");
     }
 
     void SpriteUpdate()
@@ -78,6 +87,10 @@ public class PlayerLimb : MonoBehaviour
             mySprite.flipX = true;
         else
             mySprite.flipX = false;
+        if (mySprite.sortingOrder < 0)
+            mySprite.color = new Color(0.9f, 0.9f, 0.9f);
+        else
+            mySprite.color = Color.white;
     }
 
     void InventoryChanged()

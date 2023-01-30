@@ -9,6 +9,10 @@ public class Player : MonoBehaviour, IDataPersistance
     public CapsuleCollider2D[] sideColliders;
     SpriteRenderer mySprite;
 
+    public Sword SwordRef;
+
+    Sword NewSword;
+
     CircleCollider2D myCollider;
     CapsuleCollider2D sideCollider;
 
@@ -21,9 +25,11 @@ public class Player : MonoBehaviour, IDataPersistance
     bool raisedLimbs = true;
     bool headBonk = false;
 
-    const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f;
+    const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f, BaseWeaponCoolDown = 1f, BaseThrowingDistance = 6f;
 
     const float LimblessSpeed = 0.25f, LimblessJump = 5f, LimblessWallJump = 0f, LimblessMaxVelocity = 2.5f;
+
+    float TimePassage = 0f;
 
     [SerializeField]
     private float _airTimeBuffer = BaseAirTimeBuffer;
@@ -65,6 +71,8 @@ public class Player : MonoBehaviour, IDataPersistance
         set { _maxVelocity = value; }
     }
 
+    float WeaponCoolDown = BaseWeaponCoolDown, ThrowingDistance = 0;
+
     private float AirDrag = 0.99f;
 
     private float AirVelocity = 0f;
@@ -91,13 +99,15 @@ public class Player : MonoBehaviour, IDataPersistance
     {
         float xMove = Input.GetAxisRaw("Horizontal");
 
+        TimePassage += Time.deltaTime;
+
         // Controlls smooth horizontal movement
         if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && isGrounded)
         {
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
         else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded)
-            myBody.AddForce(new Vector2(xMove * Speed * (2f / 3f), 0f), ForceMode2D.Impulse);
+            myBody.AddForce(new Vector2(xMove * Speed * (4f / 5f), 0f), ForceMode2D.Impulse);
         else if (!isGrounded && xMove == 0f)
         {
             myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
@@ -140,6 +150,19 @@ public class Player : MonoBehaviour, IDataPersistance
         else if (Input.GetAxisRaw("Horizontal") < 0)
         {
             mySprite.flipX = true;
+        }
+
+        // Sword flinging mechanism
+        if (Input.GetKey(KeyCode.K) && ThrowingDistance > 0 && WeaponCoolDown - TimePassage <= 0f)
+        {
+            NewSword = Instantiate(SwordRef);
+            if (!mySprite.flipX)
+                NewSword.SetVelocity(ThrowingDistance + myBody.velocity.x, ((ThrowingDistance / 3f) * 2f) + myBody.velocity.y);
+            else
+                NewSword.SetVelocity(-ThrowingDistance + myBody.velocity.x, ((ThrowingDistance / 3f) * 2f) + myBody.velocity.y);
+            NewSword.SetPosition(transform.position);
+
+            TimePassage = 0f;
         }
     }
 
@@ -205,6 +228,7 @@ public class Player : MonoBehaviour, IDataPersistance
         JumpForce = LimblessJump;
         WallJumpForce = LimblessWallJump;
         AirVelocity = MaxVelocity * (2f / 3f);
+        ThrowingDistance = 0;
     }
 
     void AddLegStats(Item item)
@@ -217,6 +241,7 @@ public class Player : MonoBehaviour, IDataPersistance
     void AddArmStats(Item item)
     {
         WallJumpForce += item.wallJumpForce;
+        ThrowingDistance += item.throwingDistance;
     }
 
     void InventoryChanged()
@@ -230,6 +255,7 @@ public class Player : MonoBehaviour, IDataPersistance
             if (i < 2 && items[i] != null)
             {
                 WallJumpForce += BaseWallJump / 2f;
+                ThrowingDistance += BaseThrowingDistance / 2f;
                 AddArmStats(items[i]);
             }
             else if (i > 1 && items[i] != null)
