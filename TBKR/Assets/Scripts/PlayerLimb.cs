@@ -88,7 +88,7 @@ public class PlayerLimb : MonoBehaviour
         else
             mySprite.flipX = false;
         if (mySprite.sortingOrder < 0)
-            mySprite.color = new Color(0.9f, 0.9f, 0.9f);
+            mySprite.color = new Color(0.83f, 0.83f, 0.83f);
         else
             mySprite.color = Color.white;
     }
