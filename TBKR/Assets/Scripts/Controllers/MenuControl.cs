@@ -79,4 +79,5 @@ public class MenuControl : MonoBehaviour
         SettingsCan.SetActive(false);
         CreditsCan.SetActive(false);
     }
+
 }

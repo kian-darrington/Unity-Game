@@ -1,7 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, IDataPersistance
 {
     #region Singleton
     public static Inventory instance;
@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
-    public Transform itemsParent;
+    public Transform itemsParent;//Inventory.instance.items[i].item
 
     public InventorySlot[] items;
 
@@ -102,4 +102,15 @@ public class Inventory : MonoBehaviour
         if (inventoryChangedInfo != null && SlotNum < 4)
             inventoryChangedInfo();
     }
+
+    public void LoadData(GameData data)
+    {
+        this.items = data.itemstosave;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.itemstosave = this.items;
+    }
+
 }
