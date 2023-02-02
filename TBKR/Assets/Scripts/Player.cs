@@ -18,14 +18,19 @@ public class Player : MonoBehaviour
 
     public List<Item> items = new List<Item>();
 
+    public List<Enemy> enemies;
+
     bool isGrounded = true;
     bool wallJump = false;
     bool onWall = false;
     bool inventoryOpen = false;
     bool raisedLimbs = true;
     bool headBonk = false;
+    bool moveable = true;
 
     const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f, BaseWeaponCoolDown = 1f, BaseThrowingDistance = 6f;
+
+    const float BaseDamage = 10;
 
     const float LimblessSpeed = 0.25f, LimblessJump = 5f, LimblessWallJump = 0f, LimblessMaxVelocity = 2.5f;
 
@@ -77,6 +82,11 @@ public class Player : MonoBehaviour
 
     private float AirVelocity = 0f;
 
+    private float Damage;
+
+    public delegate void DamageChange(float Damage);
+    public static event DamageChange DamageChangeInfo;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -85,7 +95,7 @@ public class Player : MonoBehaviour
         mySprite = GetComponent<SpriteRenderer>();
 
         ColliderChange(false);
-
+ 
         LimblessStatReset();
 
         Inventory.inventoryChangedInfo += InventoryChanged;
@@ -106,7 +116,7 @@ public class Player : MonoBehaviour
         {
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
-        else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded)
+        else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded && moveable)
             myBody.AddForce(new Vector2(xMove * Speed * (4f / 5f), 0f), ForceMode2D.Impulse);
         else if (!isGrounded && xMove == 0f)
         {
@@ -174,6 +184,7 @@ public class Player : MonoBehaviour
             StopCoroutine("DelayJumpGround");
             isGrounded = true;
             headBonk = false;
+            moveable = true;
         }
         if (collision.gameObject.CompareTag("Ground") && sideCollider.IsTouching(collision.collider))
         {
@@ -200,6 +211,14 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
             headBonk = true;
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (collision.gameObject.name.Contains("Swallow"))
+            {
+                myBody.velocity = new Vector2 (-enemies[0].knockBack, enemies[0].knockBack);
+            }
+            moveable = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -229,6 +248,7 @@ public class Player : MonoBehaviour
         WallJumpForce = LimblessWallJump;
         AirVelocity = MaxVelocity * (2f / 3f);
         ThrowingDistance = 0;
+        Damage = 0;
     }
 
     void AddLegStats(Item item)
@@ -242,6 +262,7 @@ public class Player : MonoBehaviour
     {
         WallJumpForce += item.wallJumpForce;
         ThrowingDistance += item.throwingDistance;
+        Damage += item.attackDamage;
     }
 
     void InventoryChanged()
@@ -256,6 +277,7 @@ public class Player : MonoBehaviour
             {
                 WallJumpForce += BaseWallJump / 2f;
                 ThrowingDistance += BaseThrowingDistance / 2f;
+                Damage += BaseDamage / 2f;
                 AddArmStats(items[i]);
             }
             else if (i > 1 && items[i] != null)
@@ -269,6 +291,8 @@ public class Player : MonoBehaviour
         }
         AirVelocity = MaxVelocity * (2f / 3f);
         ColliderChange(hasLimbs);
+        if (DamageChangeInfo != null)
+            DamageChangeInfo(Damage);
     }
 
     void ColliderChange(bool hasLimbs)

@@ -17,7 +17,7 @@ MonoBehaviour:
   speed: 0
   maxVelocity: 0.75
   jumpForce: 1.5
-  attackDamage: 0
+  attackDamage: 5
   wallJumpForce: 4.5
   airTimeBuffer: 0
   throwingDistance: 3
