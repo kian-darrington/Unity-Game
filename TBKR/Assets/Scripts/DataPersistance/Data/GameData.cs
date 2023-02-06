@@ -15,6 +15,6 @@ public class GameData
         this.SoundOn = 1;
         this.MusicOn = 1;
         this.playerPosition = Vector3.zero;
-        itemstosave = null;
+        //itemstosave = null;
     }
 }
