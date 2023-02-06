@@ -36,6 +36,11 @@ public class DataPersistanceManager : MonoBehaviour
             Debug.Log("Load");
             LoadGame();
         }
+        if (PlayerPrefs.GetInt("PlayOption") == 1 && SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Main Menu"))
+        {
+            Debug.Log("New Game");
+            NewGame();
+        }
     }
 
     public void NewGame()
