@@ -167,9 +167,9 @@ public class Player : MonoBehaviour
         {
             NewSword = Instantiate(SwordRef);
             if (!mySprite.flipX)
-                NewSword.SetVelocity(ThrowingDistance + myBody.velocity.x, ((ThrowingDistance / 3f) * 2f) + myBody.velocity.y);
+                NewSword.SetVelocity(ThrowingDistance + myBody.velocity.x, ThrowingDistance + myBody.velocity.y);
             else
-                NewSword.SetVelocity(-ThrowingDistance + myBody.velocity.x, ((ThrowingDistance / 3f) * 2f) + myBody.velocity.y);
+                NewSword.SetVelocity(-ThrowingDistance + myBody.velocity.x, ThrowingDistance + myBody.velocity.y);
             NewSword.SetPosition(transform.position);
 
             TimePassage = 0f;
@@ -182,6 +182,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") && myCollider.IsTouching(collision.collider))
         {
             StopCoroutine("DelayJumpGround");
+            StopCoroutine("DelayControl");
             isGrounded = true;
             headBonk = false;
             moveable = true;
@@ -189,8 +190,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") && sideCollider.IsTouching(collision.collider))
         {
             StopCoroutine("DelayJumpWall");
+            StopCoroutine("DelayControl");
             onWall = true;
             wallJump = true;
+            moveable = true;
         }
     }
 
@@ -210,21 +213,31 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
             headBonk = true;
+            StartCoroutine("UnHeadBonk");
+        }
         if (collision.gameObject.CompareTag("Enemy"))
         {
             if (collision.gameObject.name.Contains("Swallow"))
             {
-                myBody.velocity = new Vector2 (-enemies[0].knockBack, enemies[0].knockBack);
+                if (collision.gameObject.transform.position.x - transform.position.x > 0)
+                    myBody.velocity = new Vector2 (-enemies[0].knockBack, enemies[0].knockBack);
+                else
+                    myBody.velocity = new Vector2(enemies[0].knockBack, enemies[0].knockBack);
             }
             moveable = false;
+            StartCoroutine("DelayControl");
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
             headBonk = false;
+            StopCoroutine("UnHeadBonk");
+        }
     }
 
     // Method of creating a delay for coyote time
@@ -237,6 +250,19 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(AirTimeBuffer);
         onWall = false;
+    }
+
+    //Fixes knockback inablility
+    IEnumerator DelayControl()
+    {
+        yield return new WaitForSeconds(0.25f);
+        moveable = true;
+    }
+
+    IEnumerator UnHeadBonk()
+    {
+        yield return new WaitForSeconds(1.5f);
+        headBonk = false;
     }
 
     void LimblessStatReset()

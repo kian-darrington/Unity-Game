@@ -13,6 +13,7 @@ public class ItemPickup : MonoBehaviour
     private void Start()
     {
         Sprite = GetComponent<SpriteRenderer>();
+        Sprite.sprite = item.icon;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

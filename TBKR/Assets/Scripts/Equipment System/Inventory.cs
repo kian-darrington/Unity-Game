@@ -94,10 +94,12 @@ public class Inventory : MonoBehaviour
     {
         NewDroppedItem = Instantiate(ItemReference);
         NewDroppedItem.item = items[SlotNum].Item;
-        NewDroppedItem.transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 0.5f);
-        NewDroppedItem.Sprite.sprite = NewDroppedItem.item.icon;
 
         ClearSlot(SlotNum);
+
+        NewDroppedItem.transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 0.5f);
+        NewDroppedItem.Sprite.sprite = NewDroppedItem.item.icon;
+        NewDroppedItem.Sprite.enabled = true;
 
         if (inventoryChangedInfo != null && SlotNum < 4)
             inventoryChangedInfo();

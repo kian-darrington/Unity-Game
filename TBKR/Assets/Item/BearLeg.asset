@@ -20,5 +20,5 @@ MonoBehaviour:
   attackDamage: 1.5
   wallJumpForce: 1
   airTimeBuffer: 0
-  throwingDistance: 1
+  throwingDistance: 0.5
   limbID: 4
