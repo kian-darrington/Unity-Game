@@ -179,7 +179,7 @@ public class Player : MonoBehaviour, IDataPersistance
     // Ground and wall collision checks
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && myCollider.IsTouching(collision.collider))
+        if ((collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Platform")) && myCollider.IsTouching(collision.collider))
         {
             StopCoroutine("DelayJumpGround");
             StopCoroutine("DelayControl");
