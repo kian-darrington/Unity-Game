@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenuControl : MonoBehaviour
 {
     public GameObject Pause;
+    public GameObject click;
 
     // Start is called before the first frame update
     void Start()
@@ -19,12 +21,21 @@ public class PauseMenuControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && Pause.active == false)
         {
             Pause.SetActive(true);
+            if (PlayerPrefs.GetInt("SoundOn") > 0)
+            {
+                click.GetComponent<AudioSource>().Play(0);
+            }
             Time.timeScale = 0f;
+
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && Pause.active == true)
         {
             Pause.SetActive(false);
             Time.timeScale = 1.0f;
+            if (PlayerPrefs.GetInt("SoundOn") > 0)
+            {
+                click.GetComponent<AudioSource>().Play(0);
+            }
         }
     }
 

@@ -21,15 +21,21 @@ public class MenuControl : MonoBehaviour
 
         SettingsCan.SetActive(false);
         CreditsCan.SetActive(false);
+
+        Debug.Log("PlayOption = " + PlayerPrefs.GetInt("PlayOption"));
     }
 
     public void Continue()
     {
-        
+        PlayerPrefs.SetInt("PlayOption", 2);
+        Debug.Log("Play option set to 2, in fact = " + PlayerPrefs.GetInt("PlayOption"));
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void NewGame()
     {
+        PlayerPrefs.SetInt("PlayOption", 1);
+        Debug.Log("Play option set to 1, in fact = " + PlayerPrefs.GetInt("PlayOption"));
         SceneManager.LoadScene("SampleScene");
     }
 
@@ -73,4 +79,5 @@ public class MenuControl : MonoBehaviour
         SettingsCan.SetActive(false);
         CreditsCan.SetActive(false);
     }
+
 }

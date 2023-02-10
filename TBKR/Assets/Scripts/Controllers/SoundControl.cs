@@ -15,8 +15,22 @@ public class SoundControl : MonoBehaviour, IDataPersistance
 
     void Start()
     {
-        //CheckMusic();
-        //CheckSound();
+        CheckMusic();
+        CheckSound();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightBracket) && PlayerPrefs.GetInt("SoundOn") > 0)
+        {
+            PlayerPrefs.SetInt("SoundOn", 0);
+            Debug.Log("Manueling changed sound player pref to 'OFF'/'0'");
+        }
+        else if (Input.GetKeyDown(KeyCode.RightBracket) && PlayerPrefs.GetInt("SoundOn") == 0)
+        {
+            PlayerPrefs.SetInt("SoundOn", 1);
+            Debug.Log("Manueling changed sound player pref to 'ON'/'1'");
+        }
     }
 
     public void CheckMusic()
@@ -55,14 +69,16 @@ public class SoundControl : MonoBehaviour, IDataPersistance
         {
             if (PlayerPrefs.GetInt("SoundOn") > 0)
             {
-                SoundSetting.GetComponent<Toggle>().isOn = true;
+                Toggle S = SoundSetting.GetComponent<Toggle>();
+                S.isOn = true;
                 click.SetActive(true);
-                PlayerPrefs.SetInt("SoundOn", 0);
+                PlayerPrefs.SetInt("SoundOn", 1);
 
             }
             else
             {
-                SoundSetting.GetComponent<Toggle>().isOn = false;
+                Toggle S = SoundSetting.GetComponent<Toggle>();
+                S.isOn = false;
                 click.SetActive(false);
                 PlayerPrefs.SetInt("SoundOn", 0);
             }
@@ -105,6 +121,7 @@ public class SoundControl : MonoBehaviour, IDataPersistance
         }
     }
 
+
     public void menuclick()
     {
         AudioSource buttonclick = click.GetComponent<AudioSource>();
@@ -113,7 +130,7 @@ public class SoundControl : MonoBehaviour, IDataPersistance
             buttonclick.Play(0);
         }
     }
-
+    
     public void LoadData(GameData data)
     {
         this.MusicOn = data.MusicOn;
@@ -125,4 +142,5 @@ public class SoundControl : MonoBehaviour, IDataPersistance
         data.MusicOn = this.MusicOn;
         data.SoundOn = this.SoundOn;
     }
+    
 }
