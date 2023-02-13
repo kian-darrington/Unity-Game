@@ -105,10 +105,15 @@ public class Inventory : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        for (int i = 0; i < 11; i++)
+        if (data.itemsaves != null)
         {
-            instance.items[i].AddItem(data.itemsaves[i]);
+            for (int i = 0; i < 11; i++)
+            {
+                instance.items[i].Item = data.itemsaves[i];
+            }
         }
+        else
+            Debug.Log("AW FRICK");
     }
 
     public void SaveData(ref GameData data)

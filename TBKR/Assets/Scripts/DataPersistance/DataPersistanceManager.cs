@@ -42,13 +42,15 @@ public class DataPersistanceManager : MonoBehaviour
 
     }
 
+
     public void NewGame()
     {
         this.gameData = new GameData();
     }
 
-    public void LoadGame()
+    IEnumerator LoadGame()
     {
+        yield return new WaitForSeconds(0.5f);
         //load any saved data from a file using the data handler
         this.gameData = dataHandler.Load();
 
