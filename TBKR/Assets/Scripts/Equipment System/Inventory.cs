@@ -105,12 +105,18 @@ public class Inventory : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-    //    this.items = data.itemstosave;
+        for (int i = 0; i < 11; i++)
+        {
+            instance.items[i].AddItem(data.itemsaves[i]);
+        }
     }
 
     public void SaveData(ref GameData data)
     {
-    //    data.itemstosave = this.items;
+        for (int i = 0; i < 11; i++)
+        {
+             data.itemsaves[i] = instance.items[i].Item;
+        }
     }
 
 }

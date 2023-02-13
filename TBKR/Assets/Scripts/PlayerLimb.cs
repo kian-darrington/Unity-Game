@@ -40,6 +40,7 @@ public class PlayerLimb : MonoBehaviour
             myTransform.position = new Vector3(player.x + (0.32f * (float)LeftRight), player.y - 1.3f, 1f);
 
         Inventory.inventoryChangedInfo += InventoryChanged;
+        InventoryChanged();
     }
 
     private void Update()

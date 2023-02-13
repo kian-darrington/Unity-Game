@@ -94,6 +94,11 @@ public class Player : MonoBehaviour, IDataPersistance
             items.Add(new Item());
     }
 
+    private void Start()
+    {
+        InventoryChanged();
+    }
+
     // Update is called once per frame
     void Update()
     {
