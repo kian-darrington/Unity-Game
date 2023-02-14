@@ -28,7 +28,6 @@ public class DataPersistanceManager : MonoBehaviour
 
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersisanceObjects = FindAllDataPersistanceObjects();
-
         if (PlayerPrefs.GetInt("PlayOption") == 2 && SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Main Menu"))
         {
             Debug.Log("Load");
@@ -41,16 +40,14 @@ public class DataPersistanceManager : MonoBehaviour
         }
 
     }
-
-
     public void NewGame()
     {
         this.gameData = new GameData();
     }
 
-    IEnumerator LoadGame()
+    public void LoadGame()
     {
-        yield return new WaitForSeconds(0.5f);
+        
         //load any saved data from a file using the data handler
         this.gameData = dataHandler.Load();
 

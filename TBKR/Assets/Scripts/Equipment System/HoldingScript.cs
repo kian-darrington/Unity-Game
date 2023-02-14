@@ -15,7 +15,10 @@ public class HoldingScript : MonoBehaviour
             return;
         }
         instance = this;
+    }
 
+    private void Start()
+    {
         this.gameObject.SetActive(false);
     }
 

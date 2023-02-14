@@ -17,7 +17,7 @@ public class PlayerLimb : MonoBehaviour
     Vector3 player; 
 
     // Start is called before the first frame update 0.4f, 0.25f, 1f
-    void Start()
+    void Awake()
     {
         myTransform = GetComponent<Transform>();
         mySprite = GetComponent<SpriteRenderer>();
@@ -40,6 +40,10 @@ public class PlayerLimb : MonoBehaviour
             myTransform.position = new Vector3(player.x + (0.32f * (float)LeftRight), player.y - 1.3f, 1f);
 
         Inventory.inventoryChangedInfo += InventoryChanged;
+    }
+
+    private void Start()
+    {
         InventoryChanged();
     }
 

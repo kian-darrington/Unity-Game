@@ -39,6 +39,6 @@ public class GameData
         this.itemAirTimeBuffer = new float[12];
         this.itemThrowingDistance = new float[12];
         */
-        this.itemsaves = new Item[11];
+        this.itemsaves = new Item[12];
     }
 }

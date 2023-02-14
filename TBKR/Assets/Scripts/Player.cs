@@ -303,13 +303,14 @@ public class Player : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        this.transform.position = data.playerPosition;
+        transform.position = data.playerPosition;
+        Debug.Log("Data: " + data.playerPosition + "This: " + transform.position);
     }
 
     public void SaveData(ref GameData data)
     {
         Debug.Log("Called Save Position");
-        data.playerPosition = this.transform.position;
-        Debug.Log("Passed");
+        data.playerPosition = transform.position;
+        Debug.Log("Passed" + data.playerPosition);
     }
 }
