@@ -1466,6 +1466,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 64641851}
   m_CullTransparentMesh: 1
+--- !u!1 &85325253 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2200770198582530403, guid: 3322b8f13af4948afbf84fad74d12441, type: 3}
+  m_PrefabInstance: {fileID: 642279053}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &106960460
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,6 +1655,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6269124159889017959, guid: 6ff2019d01a6841ebbfde1b3e68fb0a1, type: 3}
   m_PrefabInstance: {fileID: 6269124159767563319}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &158768511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2200770198582530403, guid: 3322b8f13af4948afbf84fad74d12441, type: 3}
+  m_PrefabInstance: {fileID: 2200770198558967329}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &243535762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1659,7 +1669,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1303042809062534787, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1303042809062534787, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1705,8 +1715,74 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bear-leg (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7552128539730254346, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
+--- !u!1 &244816541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 244816543}
+  - component: {fileID: 244816542}
+  m_Layer: 0
+  m_Name: WorldLimbLoad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &244816542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244816541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81ccecf36a9384abdb1674cbc2d7739e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Limbs:
+  - {fileID: 1031854026}
+  - {fileID: 1191414513}
+  - {fileID: 886198101}
+  - {fileID: 915453593}
+  - {fileID: 249468151}
+  - {fileID: 392989135}
+  - {fileID: 1803364273}
+  - {fileID: 1448990048}
+  - {fileID: 2085399793}
+  - {fileID: 559654607}
+  - {fileID: 158768511}
+  - {fileID: 85325253}
+--- !u!4 &244816543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244816541}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 46.555626, y: 4.4999475, z: -838.9351}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &249468151 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1999305875611026455, guid: 52bde51a297014e44a9b63c14cb24b66, type: 3}
+  m_PrefabInstance: {fileID: 7612905482007214962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &259390267
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,6 +2082,11 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
+--- !u!1 &392989135 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1999305875611026455, guid: 52bde51a297014e44a9b63c14cb24b66, type: 3}
+  m_PrefabInstance: {fileID: 910440635}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &486719486
 GameObject:
   m_ObjectHideFlags: 0
@@ -2072,7 +2153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &551321408
 GameObject:
@@ -2225,6 +2306,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7000547817822738415, guid: 7b5ffe06c15654544a26ee6b36382b1f, type: 3}
   m_PrefabInstance: {fileID: 586423021}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &559654607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7047526454293642169, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
+  m_PrefabInstance: {fileID: 1464543435}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &581190661
 GameObject:
   m_ObjectHideFlags: 0
@@ -2351,7 +2437,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &586423021
 PrefabInstance:
@@ -2465,6 +2551,10 @@ PrefabInstance:
     - target: {fileID: 2200770198582530403, guid: 3322b8f13af4948afbf84fad74d12441, type: 3}
       propertyPath: m_Name
       value: Scrawny-Leg-S.png (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200770198582530403, guid: 3322b8f13af4948afbf84fad74d12441, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
       objectReference: {fileID: 0}
     - target: {fileID: 2200770198582530407, guid: 3322b8f13af4948afbf84fad74d12441, type: 3}
       propertyPath: m_RootOrder
@@ -3351,7 +3441,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &797028608 stripped
 RectTransform:
@@ -3392,6 +3482,19 @@ MonoBehaviour:
   itemsParent: {fileID: 259390268}
   items: []
   ItemReference: {fileID: 8396989537750521644, guid: b7c192c972fb34e398c04e239e3b2e53, type: 3}
+  saveditems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &810132047
 Transform:
   m_ObjectHideFlags: 0
@@ -3407,6 +3510,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &886198101 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6913382525770444322, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
+  m_PrefabInstance: {fileID: 919500747}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &910440635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3418,9 +3526,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bear-arm (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1999305875611026455, guid: 52bde51a297014e44a9b63c14cb24b66, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
+      objectReference: {fileID: 0}
     - target: {fileID: 6992495104645974882, guid: 52bde51a297014e44a9b63c14cb24b66, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6992495104645974882, guid: 52bde51a297014e44a9b63c14cb24b66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3464,6 +3576,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52bde51a297014e44a9b63c14cb24b66, type: 3}
+--- !u!1 &915453593 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6913382525770444322, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
+  m_PrefabInstance: {fileID: 8662340392338076769}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &919500747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3473,7 +3590,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4925385050307108204, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4925385050307108204, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3518,6 +3635,10 @@ PrefabInstance:
     - target: {fileID: 6913382525770444322, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
       propertyPath: m_Name
       value: Black Bear Arm (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6913382525770444322, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
@@ -3637,6 +3758,11 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
+--- !u!1 &1031854026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4147955875770426244, guid: 10481b184e871479e8ddeff6476258b9, type: 3}
+  m_PrefabInstance: {fileID: 1793224775}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1039414053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3987,6 +4113,11 @@ CanvasRenderer:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 294347041162468166, guid: 27682a72eadc3489086936847d2592ae, type: 3}
   m_PrefabInstance: {fileID: 1376146265}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1191414513 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4147955875770426244, guid: 10481b184e871479e8ddeff6476258b9, type: 3}
+  m_PrefabInstance: {fileID: 838871621615649160}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1327148603
 GameObject:
@@ -4356,6 +4487,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1448990048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7552128539730254346, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
+  m_PrefabInstance: {fileID: 243535762}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1464543435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4365,7 +4501,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 166850074911068292, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 166850074911068292, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4410,6 +4546,10 @@ PrefabInstance:
     - target: {fileID: 7047526454293642169, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
       propertyPath: m_Name
       value: ScrawnyArm (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047526454293642169, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
@@ -5214,7 +5354,7 @@ RectTransform:
   - {fileID: 352669374}
   - {fileID: 1327148604}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5531,9 +5671,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Black Bear leg (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4147955875770426244, guid: 10481b184e871479e8ddeff6476258b9, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
+      objectReference: {fileID: 0}
     - target: {fileID: 5321209562553566476, guid: 10481b184e871479e8ddeff6476258b9, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5321209562553566476, guid: 10481b184e871479e8ddeff6476258b9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5577,6 +5721,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10481b184e871479e8ddeff6476258b9, type: 3}
+--- !u!1 &1803364273 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7552128539730254346, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
+  m_PrefabInstance: {fileID: 6069691669823566329}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1860270080
 GameObject:
   m_ObjectHideFlags: 0
@@ -5806,7 +5955,7 @@ RectTransform:
   - {fileID: 701962551}
   - {fileID: 1150946486}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6110,8 +6259,13 @@ Transform:
   - {fileID: 146980944}
   - {fileID: 35164072}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2085399793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7047526454293642169, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
+  m_PrefabInstance: {fileID: 5167490720689724943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &838871621615649160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6123,9 +6277,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Black Bear leg
       objectReference: {fileID: 0}
+    - target: {fileID: 4147955875770426244, guid: 10481b184e871479e8ddeff6476258b9, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
+      objectReference: {fileID: 0}
     - target: {fileID: 5321209562553566476, guid: 10481b184e871479e8ddeff6476258b9, type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5321209562553566476, guid: 10481b184e871479e8ddeff6476258b9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6182,7 +6340,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2022289697804247181, guid: 4ac9371a9cd22404fb45fa5ddffe1c24, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2022289697804247181, guid: 4ac9371a9cd22404fb45fa5ddffe1c24, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6237,9 +6395,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scrawny-Leg-S.png
       objectReference: {fileID: 0}
+    - target: {fileID: 2200770198582530403, guid: 3322b8f13af4948afbf84fad74d12441, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
+      objectReference: {fileID: 0}
     - target: {fileID: 2200770198582530407, guid: 3322b8f13af4948afbf84fad74d12441, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2200770198582530407, guid: 3322b8f13af4948afbf84fad74d12441, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6292,7 +6454,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 166850074911068292, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 166850074911068292, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6337,6 +6499,10 @@ PrefabInstance:
     - target: {fileID: 7047526454293642169, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
       propertyPath: m_Name
       value: ScrawnyArm (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047526454293642169, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c85fe0799e4d4fdb96d69bc578f18eb, type: 3}
@@ -6446,7 +6612,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1303042809062534787, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1303042809062534787, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6491,6 +6657,10 @@ PrefabInstance:
     - target: {fileID: 7552128539730254346, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
       propertyPath: m_Name
       value: Bear-leg
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552128539730254346, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61d06dbd8ec8749f38a187ce880a6c49, type: 3}
@@ -6562,9 +6732,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bear-arm
       objectReference: {fileID: 0}
+    - target: {fileID: 1999305875611026455, guid: 52bde51a297014e44a9b63c14cb24b66, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
+      objectReference: {fileID: 0}
     - target: {fileID: 6992495104645974882, guid: 52bde51a297014e44a9b63c14cb24b66, type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6992495104645974882, guid: 52bde51a297014e44a9b63c14cb24b66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6617,7 +6791,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4925385050307108204, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4925385050307108204, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6663,6 +6837,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Black Bear Arm
       objectReference: {fileID: 0}
+    - target: {fileID: 6913382525770444322, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
+      propertyPath: m_TagString
+      value: WorldLimb
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba656ee431274443b88f0c4cb80c1783, type: 3}
 --- !u!1001 &9105987973623479215
@@ -6674,7 +6852,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9105987974117180207, guid: 6c6e3d73e6b1b48dd9ad3b9e059eae20, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 9105987974117180207, guid: 6c6e3d73e6b1b48dd9ad3b9e059eae20, type: 3}
       propertyPath: m_LocalPosition.x

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Sword
+  - WorldLimb
   layers:
   - Default
   - TransparentFX
