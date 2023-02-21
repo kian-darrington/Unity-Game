@@ -10,7 +10,10 @@ public class WorldLimbLoad : MonoBehaviour, IDataPersistance
     {
         for (int i = 0; i < data.worldLimbs.Length; i++)
         {
-            this.Limbs[i] = data.worldLimbs[i];
+            if (data.worldLimbs[i] == false)
+            {
+                Destroy(Limbs[i]);
+            }
         }
     }
 
@@ -18,7 +21,10 @@ public class WorldLimbLoad : MonoBehaviour, IDataPersistance
     {
         for (int i = 0; i < data.worldLimbs.Length; i++)
         {
-            data.worldLimbs[i] = this.Limbs[i];
+            if (Limbs[i] != null)
+            {
+                data.worldLimbs[i] = 1;
+            }
         }
     }
 }
