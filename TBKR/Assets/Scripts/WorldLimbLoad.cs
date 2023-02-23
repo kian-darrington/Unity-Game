@@ -23,7 +23,7 @@ public class WorldLimbLoad : MonoBehaviour, IDataPersistance
         {
             if (Limbs[i] != null)
             {
-                data.worldLimbs[i] = 1;
+                data.worldLimbs[i] = true;
             }
         }
     }
