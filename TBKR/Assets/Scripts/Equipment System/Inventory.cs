@@ -104,6 +104,7 @@ public class Inventory : MonoBehaviour, IDataPersistance
     public void RemoveButton(int SlotNum)
     {
         NewDroppedItem = Instantiate(ItemReference);
+        NewDroppedItem.ItemSetup();
         NewDroppedItem.item = items[SlotNum].Item;
         NewDroppedItem.transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 0.5f);
         NewDroppedItem.Sprite.sprite = NewDroppedItem.item.icon;
