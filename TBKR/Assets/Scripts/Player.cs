@@ -100,7 +100,7 @@ public class Player : MonoBehaviour, IDataPersistance
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float xMove = Input.GetAxisRaw("Horizontal");
 
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour, IDataPersistance
         }
 
         // Jumping mechanism
-        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)
+        if ((Input.GetButton("Jump") || Input.GetKey(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)
         {
             isGrounded = false;
             myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
