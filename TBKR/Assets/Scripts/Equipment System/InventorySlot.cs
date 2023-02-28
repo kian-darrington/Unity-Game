@@ -22,7 +22,6 @@ public class InventorySlot : MonoBehaviour
 
     public void Start()
     {
-        Debug.Log("Initialized Inventory Slot");
         for (int i = 0; i < Inventory.instance.items.Length; i++)
         {
             if (this == Inventory.instance.items[i])

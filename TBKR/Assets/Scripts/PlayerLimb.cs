@@ -4,7 +4,7 @@ using System;
 public class PlayerLimb : MonoBehaviour
 {
     Transform myTransform;
-    SpriteRenderer mySprite;
+    public SpriteRenderer mySprite;
     int LimbNum = 0, LeftRight = 1, direction = 1;
     float TimePassage = 0f;
     Item item;
@@ -20,7 +20,6 @@ public class PlayerLimb : MonoBehaviour
     void Awake()
     {
         myTransform = GetComponent<Transform>();
-        mySprite = GetComponent<SpriteRenderer>();
 
         player =  GameObject.FindWithTag("Player").transform.position;
         for (int i = 0; i < GameObject.FindWithTag("Player").GetComponentsInChildren<PlayerLimb>().Length; i++) {
@@ -44,6 +43,8 @@ public class PlayerLimb : MonoBehaviour
 
     private void Start()
     {
+	mySprite = GetComponent<SpriteRenderer>();
+
         InventoryChanged();
     }
 

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IDataPersistance
     public CircleCollider2D[] myColliders;
     public CapsuleCollider2D[] sideColliders;
     SpriteRenderer mySprite;
+    public HoldingScript HoldingScript1;
 
     public Sword SwordRef;
 
@@ -119,14 +120,14 @@ public class Player : MonoBehaviour, IDataPersistance
         }
         if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.E)) && isGrounded)
         {
-            if (HoldingScript.instance.isActiveAndEnabled && !InBetween.instance.enabled)
+            if (HoldingScript1.isActiveAndEnabled && !InBetween.instance.enabled)
             {
-                HoldingScript.instance.gameObject.SetActive(false);
+                HoldingScript1.gameObject.SetActive(false);
                 inventoryOpen = false;
             }
             else
             {
-                HoldingScript.instance.gameObject.SetActive(true);
+                HoldingScript1.gameObject.SetActive(true);
                 Inventory.instance.GetPlayerPos(transform.position);
                 inventoryOpen = true;
             }

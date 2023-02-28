@@ -6334,6 +6334,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1036692150414211687, guid: 4ac9371a9cd22404fb45fa5ddffe1c24, type: 3}
+      propertyPath: HoldingScript1
+      value: 
+      objectReference: {fileID: 259390271}
     - target: {fileID: 2022289697804247168, guid: 4ac9371a9cd22404fb45fa5ddffe1c24, type: 3}
       propertyPath: m_Name
       value: Player
