@@ -41,7 +41,7 @@ public class InBetween : MonoBehaviour
             transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1f));
 
             text.text = item.name + "\n\n" + "Arm Stats:\n\n";
-            text.text += "Wall Jump " + item.wallJumpForce + "\nAttack Damage " + item.attackDamage + "\n\nLeg Stats\n\n";
+            text.text += "Wall Jump " + item.wallJumpForce + "\nAttack Damage " + item.attackDamage + "\nThrowing Power " + item.throwingDistance + "\n\nLeg Stats\n\n";
             text.text += "Jump " + item.jumpForce + "\nSpeed " + item.maxVelocity + "\nAcceleration " + item.speed;
         }
         else
@@ -52,7 +52,7 @@ public class InBetween : MonoBehaviour
     {
         mySprite.sprite = item.icon;
         text.text = item.name + "\n\n" + "Arm Stats:\n\n";
-        text.text += "Wall Jump " + item.wallJumpForce + "\nAttack Damage " + item.attackDamage + "\n\nLeg Stats\n\n";
+        text.text += "Wall Jump " + item.wallJumpForce + "\nAttack Damage " + item.attackDamage + "\nThrowing Power " + item.throwingDistance +"\n\nLeg Stats\n\n";
         text.text += "Jump " + item.jumpForce + "\nSpeed " + item.maxVelocity + "\nAcceleration " + item.speed;
 
     }
