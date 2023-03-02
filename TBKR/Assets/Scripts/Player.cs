@@ -19,19 +19,14 @@ public class Player : MonoBehaviour, IDataPersistance
 
     public List<Item> items = new List<Item>();
 
-    public List<Enemy> enemies;
-
     bool isGrounded = true;
     bool wallJump = false;
     bool onWall = false;
     bool inventoryOpen = false;
     bool raisedLimbs = true;
     bool headBonk = false;
-    bool moveable = true;
 
     const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f, BaseWeaponCoolDown = 1f, BaseThrowingDistance = 6f;
-
-    const float BaseDamage = 10;
 
     const float LimblessSpeed = 0.25f, LimblessJump = 5f, LimblessWallJump = 0f, LimblessMaxVelocity = 2.5f;
 
@@ -83,11 +78,6 @@ public class Player : MonoBehaviour, IDataPersistance
 
     private float AirVelocity = 0f;
 
-    private float Damage;
-
-    public delegate void DamageChange(float Damage);
-    public static event DamageChange DamageChangeInfo;
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -96,7 +86,7 @@ public class Player : MonoBehaviour, IDataPersistance
         mySprite = GetComponent<SpriteRenderer>();
 
         ColliderChange(false);
- 
+
         LimblessStatReset();
 
         Inventory.inventoryChangedInfo += InventoryChanged;
@@ -122,7 +112,7 @@ public class Player : MonoBehaviour, IDataPersistance
         {
             myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
         }
-        else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded && moveable)
+        else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded)
             myBody.AddForce(new Vector2(xMove * Speed * (4f / 5f), 0f), ForceMode2D.Impulse);
         else if (!isGrounded && xMove == 0f)
         {
@@ -173,9 +163,9 @@ public class Player : MonoBehaviour, IDataPersistance
         {
             NewSword = Instantiate(SwordRef);
             if (!mySprite.flipX)
-                NewSword.SetVelocity(ThrowingDistance + myBody.velocity.x, ThrowingDistance + myBody.velocity.y);
+                NewSword.SetVelocity(ThrowingDistance + myBody.velocity.x, ((ThrowingDistance / 3f) * 2f) + myBody.velocity.y);
             else
-                NewSword.SetVelocity(-ThrowingDistance + myBody.velocity.x, ThrowingDistance + myBody.velocity.y);
+                NewSword.SetVelocity(-ThrowingDistance + myBody.velocity.x, ((ThrowingDistance / 3f) * 2f) + myBody.velocity.y);
             NewSword.SetPosition(transform.position);
 
             TimePassage = 0f;
@@ -185,21 +175,17 @@ public class Player : MonoBehaviour, IDataPersistance
     // Ground and wall collision checks
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Platform")) && myCollider.IsTouching(collision.collider))
+        if (collision.gameObject.CompareTag("Ground") && myCollider.IsTouching(collision.collider))
         {
             StopCoroutine("DelayJumpGround");
-            StopCoroutine("DelayControl");
             isGrounded = true;
             headBonk = false;
-            moveable = true;
         }
         if (collision.gameObject.CompareTag("Ground") && sideCollider.IsTouching(collision.collider))
         {
             StopCoroutine("DelayJumpWall");
-            StopCoroutine("DelayControl");
             onWall = true;
             wallJump = true;
-            moveable = true;
         }
     }
 
@@ -219,31 +205,13 @@ public class Player : MonoBehaviour, IDataPersistance
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
-        {
             headBonk = true;
-            StartCoroutine("UnHeadBonk");
-        }
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if (collision.gameObject.name.Contains("Swallow"))
-            {
-                if (collision.gameObject.transform.position.x - transform.position.x > 0)
-                    myBody.velocity = new Vector2 (-enemies[0].knockBack, enemies[0].knockBack);
-                else
-                    myBody.velocity = new Vector2(enemies[0].knockBack, enemies[0].knockBack);
-            }
-            moveable = false;
-            StartCoroutine("DelayControl");
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
-        {
             headBonk = false;
-            StopCoroutine("UnHeadBonk");
-        }
     }
 
     // Method of creating a delay for coyote time
@@ -258,19 +226,6 @@ public class Player : MonoBehaviour, IDataPersistance
         onWall = false;
     }
 
-    //Fixes knockback inablility
-    IEnumerator DelayControl()
-    {
-        yield return new WaitForSeconds(0.25f);
-        moveable = true;
-    }
-
-    IEnumerator UnHeadBonk()
-    {
-        yield return new WaitForSeconds(1.5f);
-        headBonk = false;
-    }
-
     void LimblessStatReset()
     {
         AirTimeBuffer = BaseAirTimeBuffer;
@@ -280,7 +235,6 @@ public class Player : MonoBehaviour, IDataPersistance
         WallJumpForce = LimblessWallJump;
         AirVelocity = MaxVelocity * (2f / 3f);
         ThrowingDistance = 0;
-        Damage = 0;
     }
 
     void AddLegStats(Item item)
@@ -294,7 +248,6 @@ public class Player : MonoBehaviour, IDataPersistance
     {
         WallJumpForce += item.wallJumpForce;
         ThrowingDistance += item.throwingDistance;
-        Damage += item.attackDamage;
     }
 
     void InventoryChanged()
@@ -309,7 +262,6 @@ public class Player : MonoBehaviour, IDataPersistance
             {
                 WallJumpForce += BaseWallJump / 2f;
                 ThrowingDistance += BaseThrowingDistance / 2f;
-                Damage += BaseDamage / 2f;
                 AddArmStats(items[i]);
             }
             else if (i > 1 && items[i] != null)
@@ -323,8 +275,6 @@ public class Player : MonoBehaviour, IDataPersistance
         }
         AirVelocity = MaxVelocity * (2f / 3f);
         ColliderChange(hasLimbs);
-        if (DamageChangeInfo != null)
-            DamageChangeInfo(Damage);
     }
 
     void ColliderChange(bool hasLimbs)

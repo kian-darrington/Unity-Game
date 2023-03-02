@@ -530,8 +530,6 @@ MonoBehaviour:
   HoldingScript1: {fileID: 0}
   SwordRef: {fileID: 1619025188121763002, guid: 207946270dea84bd4920d0327fc56361, type: 3}
   items: []
-  enemies:
-  - {fileID: 11400000, guid: 608d34a66f8f54bff8f43ebd8c379388, type: 2}
   _airTimeBuffer: 0.1
   _speed: 1
   _jumpForce: 20

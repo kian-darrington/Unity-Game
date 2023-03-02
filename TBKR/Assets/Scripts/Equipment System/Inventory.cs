@@ -106,12 +106,10 @@ public class Inventory : MonoBehaviour, IDataPersistance
         NewDroppedItem = Instantiate(ItemReference);
         NewDroppedItem.ItemSetup();
         NewDroppedItem.item = items[SlotNum].Item;
-
-        ClearSlot(SlotNum);
-
         NewDroppedItem.transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 0.5f);
         NewDroppedItem.Sprite.sprite = NewDroppedItem.item.icon;
-        NewDroppedItem.Sprite.enabled = true;
+
+        ClearSlot(SlotNum);
 
         if (inventoryChangedInfo != null && SlotNum < 4)
             inventoryChangedInfo();
