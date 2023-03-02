@@ -15,8 +15,17 @@ public class HoldingScript : MonoBehaviour
             return;
         }
         instance = this;
+    }
 
-        this.gameObject.SetActive(false);
+    private void Start()
+    {
+        StartCoroutine("DelaySettingStuffInactive");
+    }
+
+    IEnumerator DelaySettingStuffInactive()
+    {
+        yield return new WaitForSeconds(0.1f);
+        gameObject.SetActive(false);
     }
 
     #endregion

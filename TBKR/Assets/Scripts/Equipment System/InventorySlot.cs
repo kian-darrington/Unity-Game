@@ -17,6 +17,9 @@ public class InventorySlot : MonoBehaviour
 
     }
 
+    public delegate Item InventoryLoad(int slotNum);
+    public static event InventoryLoad inventoryLoadInfo;
+
     public void Start()
     {
         for (int i = 0; i < Inventory.instance.items.Length; i++)
@@ -36,6 +39,21 @@ public class InventorySlot : MonoBehaviour
         }
         if (Item != null)
             icon.sprite = Item.icon;
+        if (inventoryLoadInfo != null)
+        {
+            Item temp = inventoryLoadInfo(SlotNum);
+            Debug.Log("Checking Item Save or sum junk like that.");
+            if (temp != null)
+            {
+                Debug.Log("Checking Item Save or sum junk like that. 1");
+                if (temp.name != null)
+                {
+                    Inventory.instance.AddItem(SlotNum, temp);
+                    Debug.Log("LOADED!!!!! :)");
+
+                }
+            }
+        }
     }
 
     public void AddItem (Item newItem)

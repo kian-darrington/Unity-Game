@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IDataPersistance
     public CircleCollider2D[] myColliders;
     public CapsuleCollider2D[] sideColliders;
     SpriteRenderer mySprite;
+    public HoldingScript HoldingScript1;
 
     public Sword SwordRef;
 
@@ -104,8 +105,13 @@ public class Player : MonoBehaviour, IDataPersistance
             items.Add(new Item());
     }
 
+    private void Start()
+    {
+        InventoryChanged();
+    }
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float xMove = Input.GetAxisRaw("Horizontal");
 
@@ -124,21 +130,21 @@ public class Player : MonoBehaviour, IDataPersistance
         }
         if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.E)) && isGrounded)
         {
-            if (HoldingScript.instance.isActiveAndEnabled && !InBetween.instance.enabled)
+            if (HoldingScript1.isActiveAndEnabled && !InBetween.instance.enabled)
             {
-                HoldingScript.instance.gameObject.SetActive(false);
+                HoldingScript1.gameObject.SetActive(false);
                 inventoryOpen = false;
             }
             else
             {
-                HoldingScript.instance.gameObject.SetActive(true);
+                HoldingScript1.gameObject.SetActive(true);
                 Inventory.instance.GetPlayerPos(transform.position);
                 inventoryOpen = true;
             }
         }
 
         // Jumping mechanism
-        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)
+        if ((Input.GetButton("Jump") || Input.GetKey(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)
         {
             isGrounded = false;
             myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
@@ -348,13 +354,14 @@ public class Player : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        this.transform.position = data.playerPosition;
+        transform.position = data.playerPosition;
+        Debug.Log("Data: " + data.playerPosition + "This: " + transform.position);
     }
 
     public void SaveData(ref GameData data)
     {
         Debug.Log("Called Save Position");
-        data.playerPosition = this.transform.position;
-        Debug.Log("Passed");
+        data.playerPosition = transform.position;
+        Debug.Log("Passed" + data.playerPosition);
     }
 }

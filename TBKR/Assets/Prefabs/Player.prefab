@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32083159b11644b5ac4379a20740756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySprite: {fileID: 1454191379}
 --- !u!1 &1512092026
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32083159b11644b5ac4379a20740756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySprite: {fileID: 1512092029}
 --- !u!1 &1677040581
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32083159b11644b5ac4379a20740756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySprite: {fileID: 1677040584}
 --- !u!1 &2007111482
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32083159b11644b5ac4379a20740756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySprite: {fileID: 2007111485}
 --- !u!1 &2022289697804247168
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +527,7 @@ MonoBehaviour:
   sideColliders:
   - {fileID: 554839549}
   - {fileID: 547394513}
+  HoldingScript1: {fileID: 0}
   SwordRef: {fileID: 1619025188121763002, guid: 207946270dea84bd4920d0327fc56361, type: 3}
   items: []
   enemies:

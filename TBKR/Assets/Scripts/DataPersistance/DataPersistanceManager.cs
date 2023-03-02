@@ -25,10 +25,7 @@ public class DataPersistanceManager : MonoBehaviour
             Debug.LogError("Found More than one Data Persistance Manager in the scene.");
         }
         instance = this;
-    }
 
-    private void Start()
-    {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersisanceObjects = FindAllDataPersistanceObjects();
         if (PlayerPrefs.GetInt("PlayOption") == 2 && SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Main Menu"))
@@ -41,8 +38,8 @@ public class DataPersistanceManager : MonoBehaviour
             Debug.Log("New Game");
             NewGame();
         }
-    }
 
+    }
     public void NewGame()
     {
         this.gameData = new GameData();
@@ -50,6 +47,7 @@ public class DataPersistanceManager : MonoBehaviour
 
     public void LoadGame()
     {
+        
         //load any saved data from a file using the data handler
         this.gameData = dataHandler.Load();
 

@@ -18,6 +18,7 @@ public class Inventory : MonoBehaviour, IDataPersistance
         instance = this;
 
         items = itemsParent.GetComponentsInChildren<InventorySlot>();
+        InventorySlot.inventoryLoadInfo += LoadItem;
     }
 
     #endregion
@@ -46,6 +47,16 @@ public class Inventory : MonoBehaviour, IDataPersistance
     public void AddItem(int SlotNum)
     {
         items[SlotNum].AddItem(InBetween.instance.item);
+
+        InBetween.instance.enabled = false;
+
+        if (inventoryChangedInfo != null && SlotNum < 4)
+            inventoryChangedInfo();
+    }
+
+    public void AddItem(int SlotNum, Item item)
+    {
+        items[SlotNum].AddItem(item);
 
         InBetween.instance.enabled = false;
 
@@ -93,6 +104,7 @@ public class Inventory : MonoBehaviour, IDataPersistance
     public void RemoveButton(int SlotNum)
     {
         NewDroppedItem = Instantiate(ItemReference);
+        NewDroppedItem.ItemSetup();
         NewDroppedItem.item = items[SlotNum].Item;
 
         ClearSlot(SlotNum);
@@ -105,14 +117,29 @@ public class Inventory : MonoBehaviour, IDataPersistance
             inventoryChangedInfo();
     }
 
+    public Item[] saveditems = new Item[12];
+
     public void LoadData(GameData data)
     {
-    //    this.items = data.itemstosave;
+        if (data.itemsaves != null)
+        {
+            saveditems = data.itemsaves;
+        }
+        else
+            Debug.Log("AW FRICK");
     }
 
     public void SaveData(ref GameData data)
     {
-    //    data.itemstosave = this.items;
+        for (int i = 0; i < instance.items.Length; i++)
+        {
+             data.itemsaves[i] = instance.items[i].Item;
+        }
+    }
+
+    public Item LoadItem(int SlotNum)
+    {
+        return saveditems[SlotNum];
     }
 
 }
