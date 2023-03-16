@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Swallow : MonoBehaviour
+public class Swallow : EnemyInfo
 {
     public List<Sprite> Animations;
 
@@ -18,25 +18,16 @@ public class Swallow : MonoBehaviour
 
     float TimePassage = 0f;
 
-    float CurrentPlayerDamage = 0;
-
     int CurrentFrame = 0;
-
-    float Health = 20;
 
     Rigidbody2D myBody;
 
     SpriteRenderer mySprite;
 
-    private void Awake()
+    private void Start()
     {
         myBody = GetComponent<Rigidbody2D>();
         mySprite = GetComponent<SpriteRenderer>();
-    }
-
-    private void Start()
-    {
-        Player.DamageChangeInfo += GetDamage;
         transform.position = Point1;
 
         float xDistance = Point2.x - Point1.x;
@@ -62,16 +53,7 @@ public class Swallow : MonoBehaviour
             xSpeed *= -1f;
         myBody.velocity = new Vector2(xSpeed * FlightSpeed, ySpeed * FlightSpeed);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Sword"))
-        {
-            Destroy(collision.gameObject);
-            Health -= CurrentPlayerDamage;
-            if (Health <= 0)
-                Destroy(gameObject);
-        }
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -97,9 +79,5 @@ public class Swallow : MonoBehaviour
             mySprite.sprite = Animations[CurrentFrame];
             TimePassage = 0f;
         }
-    }
-    void GetDamage(float Damage)
-    {
-        CurrentPlayerDamage = Damage;
     }
 }

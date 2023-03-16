@@ -201,6 +201,25 @@ public class Player : MonoBehaviour, IDataPersistance
             wallJump = true;
             moveable = true;
         }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (collision.gameObject.name.Contains("Swallow"))
+            {
+                if (collision.gameObject.transform.position.x - transform.position.x > 0)
+                    myBody.velocity = new Vector2(-enemies[0].knockBack, enemies[0].knockBack);
+                else
+                    myBody.velocity = new Vector2(enemies[0].knockBack, enemies[0].knockBack);
+            }
+            else if (collision.gameObject.name.Contains("Wolf"))
+            {
+                if (collision.gameObject.transform.position.x - transform.position.x > 0)
+                    myBody.velocity = new Vector2(-enemies[1].knockBack, enemies[1].knockBack);
+                else
+                    myBody.velocity = new Vector2(enemies[1].knockBack, enemies[1].knockBack);
+            }
+            moveable = false;
+            StartCoroutine("DelayControl");
+        }
     }
 
     // Ground and wall decollisions
@@ -223,18 +242,7 @@ public class Player : MonoBehaviour, IDataPersistance
             headBonk = true;
             StartCoroutine("UnHeadBonk");
         }
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if (collision.gameObject.name.Contains("Swallow"))
-            {
-                if (collision.gameObject.transform.position.x - transform.position.x > 0)
-                    myBody.velocity = new Vector2 (-enemies[0].knockBack, enemies[0].knockBack);
-                else
-                    myBody.velocity = new Vector2(enemies[0].knockBack, enemies[0].knockBack);
-            }
-            moveable = false;
-            StartCoroutine("DelayControl");
-        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
