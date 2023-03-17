@@ -18,7 +18,7 @@ public class Wolf : EnemyInfo
 
     Transform PlayerTransform;
 
-    float MaxSpeed = 4f, Speed = 2.5f;
+    float MaxSpeed = 4f, Speed = 0.15f;
 
     bool SeePlayer = false;
 
@@ -38,17 +38,15 @@ public class Wolf : EnemyInfo
         if (SeePlayer)
         {
             TimePassage += Time.deltaTime;
-            if (myBody.velocity.x > -MaxSpeed && myBody.velocity.x < MaxSpeed) {
-                if (transform.position.x - PlayerTransform.position.x > 0)
-                {
-                    myBody.AddForce(new Vector2(-Speed, 0f), ForceMode2D.Impulse);
-                    mySprite.flipX = true;
-                }
-                else
-                {
-                    myBody.AddForce(new Vector2(Speed, 0f), ForceMode2D.Impulse);
-                    mySprite.flipX = false;
-                }
+            if (transform.position.x - PlayerTransform.position.x > 0 && myBody.velocity.x > -MaxSpeed)
+            {
+                myBody.AddForce(new Vector2(-Speed, 0f), ForceMode2D.Impulse);
+                mySprite.flipX = true;
+            }
+            else if (transform.position.x - PlayerTransform.position.x < 0 && myBody.velocity.x < MaxSpeed)
+            {
+                myBody.AddForce(new Vector2(Speed, 0f), ForceMode2D.Impulse);
+                mySprite.flipX = false;
             }
 
             if (TimePassage > FrameRate)
@@ -64,6 +62,8 @@ public class Wolf : EnemyInfo
         {
             if (myBody.velocity.x != 0)
                 myBody.velocity = new Vector2(0, myBody.velocity.y);
+            if (mySprite.sprite != Animations[0])
+                mySprite.sprite = Animations[0];
         }
     }
 
