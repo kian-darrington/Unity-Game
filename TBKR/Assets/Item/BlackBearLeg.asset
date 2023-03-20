@@ -22,3 +22,4 @@ MonoBehaviour:
   airTimeBuffer: 0
   throwingDistance: 1.5
   limbID: 5
+  health: 7.5

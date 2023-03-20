@@ -49,6 +49,15 @@ public class Wolf : EnemyInfo
                 mySprite.flipX = false;
             }
 
+            if (transform.position.x - PlayerTransform.position.x > 0 && myBody.velocity.x < -MaxSpeed)
+            {
+                myBody.velocity = new Vector2(-MaxSpeed, myBody.velocity.y);
+            }
+            else if (transform.position.x - PlayerTransform.position.x < 0 && myBody.velocity.x > MaxSpeed)
+            {
+                myBody.velocity = new Vector2(MaxSpeed, myBody.velocity.y);
+            }
+
             if (TimePassage > FrameRate)
             {
                 CurrentFrame++;

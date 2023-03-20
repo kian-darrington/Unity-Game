@@ -12,6 +12,8 @@ public class Player : MonoBehaviour, IDataPersistance
 
     public Sword SwordRef;
 
+    public TMPro.TextMeshProUGUI text;
+
     Sword NewSword;
 
     CircleCollider2D myCollider;
@@ -31,11 +33,21 @@ public class Player : MonoBehaviour, IDataPersistance
 
     const float BaseSpeed = 1f, BaseJump = 15f, BaseWallJump = 10f, BaseAirTimeBuffer = 0.1f, BaseMaxVelocity = 8f, BaseWeaponCoolDown = 1f, BaseThrowingDistance = 6f;
 
-    const float BaseDamage = 10;
+    const float BaseDamage = 10, BaseHealth = 20f;
 
-    const float LimblessSpeed = 0.25f, LimblessJump = 5f, LimblessWallJump = 0f, LimblessMaxVelocity = 2.5f;
+    const float LimblessSpeed = 0.25f, LimblessJump = 5f, LimblessWallJump = 0f, LimblessMaxVelocity = 2.5f, LimblessHealth = 30f;
 
     float TimePassage = 0f;
+
+    float CurrentHealth = LimblessHealth;
+
+    [SerializeField]
+    private float _maxhealth = LimblessHealth;
+    public float MaxHealth
+    {
+        get { return _maxhealth; }
+        set { _maxhealth = value; }
+    }
 
     [SerializeField]
     private float _airTimeBuffer = BaseAirTimeBuffer;
@@ -134,6 +146,8 @@ public class Player : MonoBehaviour, IDataPersistance
             {
                 HoldingScript1.gameObject.SetActive(false);
                 inventoryOpen = false;
+                if (CurrentHealth > MaxHealth)
+                    CurrentHealth = MaxHealth;
             }
             else
             {
@@ -203,20 +217,18 @@ public class Player : MonoBehaviour, IDataPersistance
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            int enemyNumber = 0;
             if (collision.gameObject.name.Contains("Swallow"))
-            {
-                if (collision.gameObject.transform.position.x - transform.position.x > 0)
-                    myBody.velocity = new Vector2(-enemies[0].knockBack, enemies[0].knockBack);
-                else
-                    myBody.velocity = new Vector2(enemies[0].knockBack, enemies[0].knockBack);
-            }
+                enemyNumber = 0;
             else if (collision.gameObject.name.Contains("Wolf"))
-            {
-                if (collision.gameObject.transform.position.x - transform.position.x > 0)
-                    myBody.velocity = new Vector2(-enemies[1].knockBack, enemies[1].knockBack);
-                else
-                    myBody.velocity = new Vector2(enemies[1].knockBack, enemies[1].knockBack);
-            }
+                enemyNumber = 1;
+
+            if (collision.gameObject.transform.position.x - transform.position.x > 0)
+                myBody.velocity = new Vector2(-enemies[enemyNumber].knockBack, enemies[enemyNumber].knockBack);
+            else
+                myBody.velocity = new Vector2(enemies[enemyNumber].knockBack, enemies[enemyNumber].knockBack);
+            CurrentHealth -= enemies[enemyNumber].attackDamage;
+            HealthUIUpdate();
             moveable = false;
             StartCoroutine("DelayControl");
         }
@@ -287,8 +299,10 @@ public class Player : MonoBehaviour, IDataPersistance
         JumpForce = LimblessJump;
         WallJumpForce = LimblessWallJump;
         AirVelocity = MaxVelocity * (2f / 3f);
+        MaxHealth = LimblessHealth;
         ThrowingDistance = 0;
         Damage = 0;
+        HealthUIUpdate();
     }
 
     void AddLegStats(Item item)
@@ -296,6 +310,7 @@ public class Player : MonoBehaviour, IDataPersistance
         JumpForce += item.jumpForce;
         MaxVelocity += item.maxVelocity;
         Speed += item.speed;
+        MaxHealth += item.health;
     }
 
     void AddArmStats(Item item)
@@ -303,6 +318,7 @@ public class Player : MonoBehaviour, IDataPersistance
         WallJumpForce += item.wallJumpForce;
         ThrowingDistance += item.throwingDistance;
         Damage += item.attackDamage;
+        MaxHealth += item.health;
     }
 
     void InventoryChanged()
@@ -318,6 +334,7 @@ public class Player : MonoBehaviour, IDataPersistance
                 WallJumpForce += BaseWallJump / 2f;
                 ThrowingDistance += BaseThrowingDistance / 2f;
                 Damage += BaseDamage / 2f;
+                MaxHealth += BaseHealth / 4f;
                 AddArmStats(items[i]);
             }
             else if (i > 1 && items[i] != null)
@@ -325,10 +342,12 @@ public class Player : MonoBehaviour, IDataPersistance
                 JumpForce += (BaseJump - LimblessJump) / 2f;
                 MaxVelocity += (BaseMaxVelocity - LimblessMaxVelocity) / 2f;
                 Speed += (BaseSpeed - LimblessSpeed) / 2f;
+                MaxHealth += BaseHealth / 4f;
                 AddLegStats(items[i]);
                 hasLimbs = true;
             }
         }
+        HealthUIUpdate();
         AirVelocity = MaxVelocity * (2f / 3f);
         ColliderChange(hasLimbs);
         if (DamageChangeInfo != null)
@@ -371,5 +390,10 @@ public class Player : MonoBehaviour, IDataPersistance
         Debug.Log("Called Save Position");
         data.playerPosition = transform.position;
         Debug.Log("Passed" + data.playerPosition);
+    }
+
+    void HealthUIUpdate()
+    {
+        text.text = "Health: " + CurrentHealth + "/" + MaxHealth;
     }
 }

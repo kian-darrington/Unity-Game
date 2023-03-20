@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Wolf
   knockBack: 12
-  attackDamage: 7
+  attackDamage: 3

@@ -13,4 +13,5 @@ public class Item : ScriptableObject
     public float airTimeBuffer = 0f;
     public float throwingDistance = 0f;
     public int limbID = 0;
+    public float health = 0f;
 }
