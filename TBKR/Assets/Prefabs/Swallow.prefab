@@ -146,6 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91691441c69847749307712cde8e466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HealthOrbMin: 0
+  HealthOrbMax: 2
+  Health: 20
+  HealthDropRef: {fileID: 3703973752319229893, guid: 5a886c20193ea4e578f12d7d33b804c5, type: 3}
   Animations:
   - {fileID: 1667863432, guid: 1afec55aebdd04f2ab9c994336a12e17, type: 3}
   - {fileID: 490687172, guid: 1afec55aebdd04f2ab9c994336a12e17, type: 3}

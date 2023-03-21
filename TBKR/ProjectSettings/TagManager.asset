@@ -9,6 +9,7 @@ TagManager:
   - WorldLimb
   - Sword
   - Platform
+  - Health
   layers:
   - Default
   - TransparentFX

@@ -26,6 +26,8 @@ public class Swallow : EnemyInfo
 
     private void Start()
     {
+        
+        HealthOrbMax = 1;
         myBody = GetComponent<Rigidbody2D>();
         mySprite = GetComponent<SpriteRenderer>();
         transform.position = Point1;

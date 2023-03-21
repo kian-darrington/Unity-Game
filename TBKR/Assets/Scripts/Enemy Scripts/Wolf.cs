@@ -25,6 +25,8 @@ public class Wolf : EnemyInfo
     // Start is called before the first frame update
     void Start()
     {
+        HealthOrbMax = 3;
+        HealthOrbMin = 1;
         Health = 30;
         mySprite = GetComponent<SpriteRenderer>();
         myBody = GetComponent<Rigidbody2D>();

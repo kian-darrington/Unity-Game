@@ -147,7 +147,10 @@ public class Player : MonoBehaviour, IDataPersistance
                 HoldingScript1.gameObject.SetActive(false);
                 inventoryOpen = false;
                 if (CurrentHealth > MaxHealth)
+                {
                     CurrentHealth = MaxHealth;
+                    HealthUIUpdate();
+                }
             }
             else
             {
@@ -214,6 +217,14 @@ public class Player : MonoBehaviour, IDataPersistance
             onWall = true;
             wallJump = true;
             moveable = true;
+        }
+        if (collision.gameObject.CompareTag("Health"))
+        {
+            Destroy(collision.gameObject);
+            CurrentHealth += (int)Random.Range(MaxHealth / 4, MaxHealth / 3);
+            if (CurrentHealth > MaxHealth)
+                CurrentHealth = MaxHealth;
+            HealthUIUpdate();
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
