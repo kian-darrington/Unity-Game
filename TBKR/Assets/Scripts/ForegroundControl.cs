@@ -32,10 +32,12 @@ public class ForegroundControl : MonoBehaviour
                 if (tempPos.x - player.position.x < 0)
                 {
                     tempPos.x = player.position.x - xLimit;
+                    xLimit -= 2;
                 }
                 else
                 {
                     tempPos.x = player.position.x + xLimit;
+                    xLimit += 2;
                 }
             }
             if (Mathf.Abs(tempPos.y - player.position.y) > yLimit)
@@ -43,15 +45,16 @@ public class ForegroundControl : MonoBehaviour
                 if (tempPos.y - player.position.y < 0)
                 {
                     tempPos.y = player.position.y - yLimit;
+                    yLimit -= 2;
                 }
                 else
                 {
                     tempPos.y = player.position.y + yLimit;
+                    yLimit += 2;
                 }
             }
         }
 
         transform.position = tempPos;
     }
-}
 }

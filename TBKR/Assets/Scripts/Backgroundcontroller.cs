@@ -32,10 +32,12 @@ public class Backgroundcontroller : MonoBehaviour
                 if (tempPos.x - player.position.x < 0)
                 {
                     tempPos.x = player.position.x - xLimit;
+                    xLimit--;
                 }
                 else
                 {
                     tempPos.x = player.position.x + xLimit;
+                    xLimit++;
                 }
             }
             if (Mathf.Abs(tempPos.y - player.position.y) > yLimit)
@@ -43,15 +45,16 @@ public class Backgroundcontroller : MonoBehaviour
                 if (tempPos.y - player.position.y < 0)
                 {
                     tempPos.y = player.position.y - yLimit;
+                    yLimit--;
                 }
                 else
                 {
                     tempPos.y = player.position.y + yLimit;
+                    yLimit++;
                 }
             }
         }
 
         transform.position = tempPos;
     }
-}
 }
