@@ -23,6 +23,7 @@ public class Player : MonoBehaviour, IDataPersistance
 
     public List<Enemy> enemies;
 
+    bool Dead = false;
     bool isGrounded = true;
     bool wallJump = false;
     bool onWall = false;
@@ -100,6 +101,9 @@ public class Player : MonoBehaviour, IDataPersistance
     public delegate void DamageChange(float Damage);
     public static event DamageChange DamageChangeInfo;
 
+    public delegate void PlayerDeath();
+    public static event PlayerDeath PlayerDeathInfo;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -125,77 +129,81 @@ public class Player : MonoBehaviour, IDataPersistance
     // Update is called once per frame
     void FixedUpdate()
     {
-        float xMove = Input.GetAxisRaw("Horizontal");
+        if (!Dead)
+        {
+            float xMove = Input.GetAxisRaw("Horizontal");
 
-        TimePassage += Time.deltaTime;
+            TimePassage += Time.deltaTime;
 
-        // Controlls smooth horizontal movement
-        if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && isGrounded)
-        {
-            myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
-        }
-        else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded && moveable)
-            myBody.AddForce(new Vector2(xMove * Speed * (4f / 5f), 0f), ForceMode2D.Impulse);
-        else if (!isGrounded && xMove == 0f)
-        {
-            myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
-        }
-        if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.E)) && isGrounded)
-        {
-            if (HoldingScript1.isActiveAndEnabled && !InBetween.instance.enabled)
+            // Controlls smooth horizontal movement
+            if (((myBody.velocity.x < MaxVelocity && xMove > 0) || (myBody.velocity.x > -MaxVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && isGrounded)
             {
-                HoldingScript1.gameObject.SetActive(false);
-                inventoryOpen = false;
-                if (CurrentHealth > MaxHealth)
+                myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
+            }
+            else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded && moveable)
+                myBody.AddForce(new Vector2(xMove * Speed * (4f / 5f), 0f), ForceMode2D.Impulse);
+            else if (!isGrounded && xMove == 0f)
+            {
+                myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
+            }
+            // Inventory Opening thing
+            if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.E)) && isGrounded)
+            {
+                if (HoldingScript1.isActiveAndEnabled && !InBetween.instance.enabled)
                 {
-                    CurrentHealth = MaxHealth;
-                    HealthUIUpdate();
+                    HoldingScript1.gameObject.SetActive(false);
+                    inventoryOpen = false;
+                    if (CurrentHealth > MaxHealth)
+                    {
+                        CurrentHealth = MaxHealth;
+                        HealthUIUpdate();
+                    }
+                }
+                else
+                {
+                    HoldingScript1.gameObject.SetActive(true);
+                    Inventory.instance.GetPlayerPos(transform.position);
+                    inventoryOpen = true;
                 }
             }
-            else
+
+            // Jumping mechanism
+            if ((Input.GetButton("Jump") || Input.GetKey(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)
             {
-                HoldingScript1.gameObject.SetActive(true);
-                Inventory.instance.GetPlayerPos(transform.position);
-                inventoryOpen = true;
+                isGrounded = false;
+                myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
             }
-        }
+            // Wall jumping mechanism
+            else if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !headBonk && onWall && wallJump && !inventoryOpen)
+            {
+                wallJump = false;
+                myBody.velocity = new Vector2(myBody.velocity.x, WallJumpForce);
+                isGrounded = false;
+                StopCoroutine("DelayJumpGround");
+            }
 
-        // Jumping mechanism
-        if ((Input.GetButton("Jump") || Input.GetKey(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)
-        {
-            isGrounded = false;
-            myBody.velocity = new Vector2(myBody.velocity.x, JumpForce);
-        }
-        // Wall jumping mechanism
-        else if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !headBonk && onWall && wallJump && !inventoryOpen)
-        {
-            wallJump = false;
-            myBody.velocity = new Vector2(myBody.velocity.x, WallJumpForce);
-            isGrounded = false;
-            StopCoroutine("DelayJumpGround");
-        }
+            // Sprite flipping according to button pressed
+            if (Input.GetAxisRaw("Horizontal") > 0)
+            {
+                mySprite.flipX = false;
+            }
+            else if (Input.GetAxisRaw("Horizontal") < 0)
+            {
+                mySprite.flipX = true;
+            }
 
-        // Sprite flipping according to button pressed
-        if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            mySprite.flipX = false;
-        }
-        else if (Input.GetAxisRaw("Horizontal") < 0)
-        {
-            mySprite.flipX = true;
-        }
+            // Sword flinging mechanism
+            if (Input.GetKey(KeyCode.K) && ThrowingDistance > 0 && WeaponCoolDown - TimePassage <= 0f)
+            {
+                NewSword = Instantiate(SwordRef);
+                if (!mySprite.flipX)
+                    NewSword.SetVelocity(ThrowingDistance + myBody.velocity.x, ThrowingDistance + myBody.velocity.y);
+                else
+                    NewSword.SetVelocity(-ThrowingDistance + myBody.velocity.x, ThrowingDistance + myBody.velocity.y);
+                NewSword.SetPosition(transform.position);
 
-        // Sword flinging mechanism
-        if (Input.GetKey(KeyCode.K) && ThrowingDistance > 0 && WeaponCoolDown - TimePassage <= 0f)
-        {
-            NewSword = Instantiate(SwordRef);
-            if (!mySprite.flipX)
-                NewSword.SetVelocity(ThrowingDistance + myBody.velocity.x, ThrowingDistance + myBody.velocity.y);
-            else
-                NewSword.SetVelocity(-ThrowingDistance + myBody.velocity.x, ThrowingDistance + myBody.velocity.y);
-            NewSword.SetPosition(transform.position);
-
-            TimePassage = 0f;
+                TimePassage = 0f;
+            }
         }
     }
 
@@ -241,7 +249,10 @@ public class Player : MonoBehaviour, IDataPersistance
             CurrentHealth -= enemies[enemyNumber].attackDamage;
             HealthUIUpdate();
             moveable = false;
-            StartCoroutine("DelayControl");
+            if (CurrentHealth > 0)
+                StartCoroutine("DelayControl");
+            else
+                PlayerDied();
         }
     }
 
@@ -369,25 +380,35 @@ public class Player : MonoBehaviour, IDataPersistance
     {
         if (hasLimbs && !raisedLimbs)
         {
-            myColliders[0].enabled = false;
-            sideColliders[0].enabled = false;
-            transform.position = new Vector3(transform.position.x, transform.position.y + 1f);
-            myColliders[2].enabled = true;
-            sideColliders[1].enabled = true;
-            myCollider = myColliders[2];
-            sideCollider = sideColliders[1];
-            raisedLimbs = true;
+            RaiseLimbs();
         }
         else if (raisedLimbs && !hasLimbs)
         {
-            myColliders[0].enabled = true;
-            sideColliders[0].enabled = true;
-            myColliders[2].enabled = false;
-            sideColliders[1].enabled = false;
-            myCollider = myColliders[0];
-            sideCollider = sideColliders[0];
-            raisedLimbs = false;
+            LowerLimbs();
         }
+    }
+
+    void LowerLimbs()
+    {
+        myColliders[0].enabled = true;
+        sideColliders[0].enabled = true;
+        myColliders[2].enabled = false;
+        sideColliders[1].enabled = false;
+        myCollider = myColliders[0];
+        sideCollider = sideColliders[0];
+        raisedLimbs = false;
+    }
+
+    void RaiseLimbs()
+    {
+        myColliders[0].enabled = false;
+        sideColliders[0].enabled = false;
+        transform.position = new Vector3(transform.position.x, transform.position.y + 1f);
+        myColliders[2].enabled = true;
+        sideColliders[1].enabled = true;
+        myCollider = myColliders[2];
+        sideCollider = sideColliders[1];
+        raisedLimbs = true;
     }
 
     public void LoadData(GameData data)
@@ -406,5 +427,22 @@ public class Player : MonoBehaviour, IDataPersistance
     void HealthUIUpdate()
     {
         text.text = "Health: " + CurrentHealth + "/" + MaxHealth;
+        if (Dead)
+            text.text = "You Died Idiot";
+    }
+
+    void PlayerDied()
+    {
+        // Inventory closes
+        HoldingScript1.gameObject.SetActive(false);
+        inventoryOpen = false;
+        // You get short
+        LowerLimbs();
+        Dead = true;
+        HealthUIUpdate();
+        if (PlayerDeathInfo != null)
+        {
+            PlayerDeathInfo();
+        }
     }
 }
