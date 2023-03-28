@@ -7,6 +7,10 @@ TagManager:
   - Ground
   - Sword
   - WorldLimb
+  - Background 1
+  - Background 2
+  - Foreground 1
+  - Foreground 2
   layers:
   - Default
   - TransparentFX

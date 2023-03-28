@@ -5,54 +5,68 @@ using UnityEngine;
 public class Backgroundcontroller : MonoBehaviour
 {
 
-    Transform player;
+    Transform camera;
 
     Vector3 tempPos;
 
-    [SerializeField]
-    float yLimit = 1f;
-
-    [SerializeField]
-    float xLimit = 1f;
-
+ 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;
+        camera = GameObject.FindWithTag("Main Camera").transform;
     }
 
-    // Update is called once per frame
-    void LateUpdate()
+    public void backgroundLeft()
     {
         tempPos = transform.position;
-        if (player != null)
+
+        if (camera != null)
         {
-            if (Mathf.Abs(tempPos.x - player.position.x) > xLimit)
+            tempPos.x -= 1;
+            if ((camera.position.x - tempPos.x) > 1495)
             {
-                if (tempPos.x - player.position.x < 0)
-                {
-                    tempPos.x = player.position.x - xLimit;
-                    xLimit--;
-                }
-                else
-                {
-                    tempPos.x = player.position.x + xLimit;
-                    xLimit++;
-                }
+                tempPos.x += (1495 * 2);
             }
-            if (Mathf.Abs(tempPos.y - player.position.y) > yLimit)
+        }
+
+        transform.position = tempPos;
+    }
+
+    public void backgroundRight()
+    {
+        tempPos = transform.position;
+
+        if (camera != null)
+        {
+            tempPos.x += 1;
+            if ((tempPos.x - camera.position.x) > 1495)
             {
-                if (tempPos.y - player.position.y < 0)
-                {
-                    tempPos.y = player.position.y - yLimit;
-                    yLimit--;
-                }
-                else
-                {
-                    tempPos.y = player.position.y + yLimit;
-                    yLimit++;
-                }
+                tempPos.x -= (1495 * 2);
             }
+        }
+
+        transform.position = tempPos;
+    }
+
+    public void backgroundDown()
+    {
+        tempPos = transform.position;
+
+        if (camera != null)
+        {
+            tempPos.y -= 1;
+        }
+
+        transform.position = tempPos;
+    }
+
+    public void backgroundUp()
+    {
+        tempPos = transform.position;
+
+        if (camera != null)
+        {
+            tempPos.y += 1;
         }
 
         transform.position = tempPos;
