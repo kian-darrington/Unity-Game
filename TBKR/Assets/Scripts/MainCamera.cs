@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MainCamera : MonoBehaviour
 {
-    public GameObject background1;
-    public GameObject background2;
-    public GameObject foreground1;
-    public GameObject foreground2;
+    GameObject background1;
+    GameObject background2;
+    GameObject foreground1;
+    GameObject foreground2;
 
     Transform player;
 
@@ -23,10 +23,10 @@ public class MainCamera : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
-        background1 = FindWithTag("Background 1");
-        background2 = FindWithTag("Background 2");
-        foreground1 = FindWithTag("Foreground 1");
-        foreground2 = FindWithTag("Foreground 2");
+        background1 = GameObject.FindWithTag("Background 1");
+        background2 = GameObject.FindWithTag("Background 2");
+        foreground1 = GameObject.FindWithTag("Foreground 1");
+        foreground2 = GameObject.FindWithTag("Foreground 2");
     }
 
     // Update is called once per frame
@@ -40,10 +40,10 @@ public class MainCamera : MonoBehaviour
                 if (tempPos.x - player.position.x < 0)
                 {
                     tempPos.x = player.position.x - xLimit;
-                    background1.backgroundLeft();
-                    background2.backgroundLeft();
-                    foreground1.foregroundLeft();
-                    foreground2.foregroundLeft();
+                    background1.GetComponent<Background>().backgroundLeft();
+                    background2.GetComponent<Background2>().backgroundLeft();
+                    foreground1.GetComponent<Foreground>().foregroundLeft();
+                    foreground2.GetComponent<Foreground2>().foregroundLeft();
                 }
                 else
                 {
