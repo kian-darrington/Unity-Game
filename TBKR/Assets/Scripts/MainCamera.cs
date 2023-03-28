@@ -48,10 +48,10 @@ public class MainCamera : MonoBehaviour
                 else
                 {
                     tempPos.x = player.position.x + xLimit;
-                    background1.backgroundRight();
-                    background2.backgroundRight();
-                    foreground1.foregroundRight();
-                    foreground2.foregroundRight();
+                    background1.GetComponent<Background>().backgroundRight();
+                    background2.GetComponent<Background2>().backgroundRight();
+                    foreground1.GetComponent<Foreground>().foregroundRight();
+                    foreground2.GetComponent<Foreground2>().foregroundRight();
                 }
             }
             if (Mathf.Abs(tempPos.y - player.position.y) > yLimit)
@@ -59,18 +59,18 @@ public class MainCamera : MonoBehaviour
                 if (tempPos.y - player.position.y < 0)
                 {
                     tempPos.y = player.position.y - yLimit;
-                    background1.backgroundDown();
-                    background2.backgroundDown();
-                    foreground1.foregroundDown();
-                    foreground2.foregroundDown();
+                    background1.GetComponent<Background>().backgroundDown();
+                    background2.GetComponent<Background2>().backgroundDown();
+                    foreground1.GetComponent<Foreground>().foregroundDown();
+                    foreground2.GetComponent<Foreground2>().foregroundDown();
                 }
                 else
                 {
                     tempPos.y = player.position.y + yLimit;
-                    background1.backgroundUp();
-                    background2.backgroundUp();
-                    foreground1.foregroundUp();
-                    foreground2.foregroundUp();
+                    background1.GetComponent<Background>().backgroundUp();
+                    background2.GetComponent<Background2>().backgroundUp();
+                    foreground1.GetComponent<Foreground>().foregroundUp();
+                    foreground2.GetComponent<Foreground2>().foregroundUp();
                 }
             }
         }

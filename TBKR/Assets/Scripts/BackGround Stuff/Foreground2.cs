@@ -9,11 +9,13 @@ public class Foreground2 : MonoBehaviour
 
     Vector3 tempPos;
 
+    public float MoveValx;
+    public float MoveValy;
 
     // Start is called before the first frame update
     void Start()
     {
-        camera = GameObject.FindWithTag("Main Camera").transform;
+        camera = GameObject.FindWithTag("MainCamera").transform;
     }
 
     public void foregroundLeft()
@@ -22,7 +24,7 @@ public class Foreground2 : MonoBehaviour
 
         if (camera != null)
         {
-            tempPos.x -= 2;
+            tempPos.x -= MoveValx;
             if ((camera.position.x - tempPos.x) > 1495)
             {
                 tempPos.x += (1495 * 2);
@@ -38,7 +40,7 @@ public class Foreground2 : MonoBehaviour
 
         if (camera != null)
         {
-            tempPos.x += 2;
+            tempPos.x += MoveValx;
             if ((tempPos.x - camera.position.x) > 1495)
             {
                 tempPos.x -= (1495 * 2);
@@ -54,7 +56,7 @@ public class Foreground2 : MonoBehaviour
 
         if (camera != null)
         {
-            tempPos.y -= 2;
+            tempPos.y -= MoveValy;
         }
 
         transform.position = tempPos;
@@ -66,7 +68,7 @@ public class Foreground2 : MonoBehaviour
 
         if (camera != null)
         {
-            tempPos.y += 2;
+            tempPos.y += MoveValy;
         }
 
         transform.position = tempPos;
