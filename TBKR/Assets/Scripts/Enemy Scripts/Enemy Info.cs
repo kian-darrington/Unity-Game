@@ -32,7 +32,7 @@ public class EnemyInfo : MonoBehaviour
                 for (int i = 0; i < Random.Range(HealthOrbMin, HealthOrbMax + 1); i++)
                 {
                     newthingy = Instantiate(HealthDropRef);
-                    newthingy.transform.position = transform.position;
+                    newthingy.transform.position = new Vector3(transform.position.x + 0.25f * (float)i, transform.position.y + 0.25f);
                 }
             }
         }
