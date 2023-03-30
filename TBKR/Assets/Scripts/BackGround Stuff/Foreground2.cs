@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class Foreground2 : MonoBehaviour
 {
@@ -27,7 +26,7 @@ public class Foreground2 : MonoBehaviour
         if (camera != null)
         {
             tempPos.x -= MoveValx;
-            if ((Math.Abs(camera.position.x) - Math.Abs(tempPos.x)) > Jumpval)
+            if ((Mathf.Abs(camera.position.x) - Mathf.Abs(tempPos.x)) > Jumpval)
             {
                 tempPos.x += (Jumpval * 2);
             }
@@ -43,7 +42,7 @@ public class Foreground2 : MonoBehaviour
         if (camera != null)
         {
             tempPos.x += MoveValx;
-            if ((tempPos.x - camera.position.x) > Jumpval)
+            if ((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)) > Jumpval)
             {
                 tempPos.x -= (Jumpval * 2);
             }

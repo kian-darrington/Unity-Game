@@ -26,7 +26,7 @@ public class Background : MonoBehaviour
         if (camera != null)
         {
             tempPos.x -= MoveValx;
-            if ((camera.position.x - tempPos.x) > Jumpval)
+            if ((Mathf.Abs(camera.position.x) - Mathf.Abs(tempPos.x)) > Jumpval)
             {
                 tempPos.x += (Jumpval * 2);
             }
@@ -42,7 +42,7 @@ public class Background : MonoBehaviour
         if (camera != null)
         {
             tempPos.x += MoveValx;
-            if ((tempPos.x - camera.position.x) > Jumpval)
+            if ((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)) > Jumpval)
             {
                 tempPos.x -= (Jumpval * 2);
             }
