@@ -11,6 +11,7 @@ public class Foreground : MonoBehaviour
 
     public float MoveValx;
     public float MoveValy;
+    public float Jumpval;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +26,11 @@ public class Foreground : MonoBehaviour
         if (camera != null)
         {
             tempPos.x -= MoveValx;
-            if ((camera.position.x - tempPos.x) > 1495)
+            Debug.Log("X = " + tempPos.x);
+            if ((|camera.position.x - tempPos.x|) > Jumpval)
             {
-                tempPos.x += (1495 * 2);
+                tempPos.x += (Jumpval * 2);
+                Debug.Log("Snapped foreground left");
             }
         }
 
@@ -41,9 +44,11 @@ public class Foreground : MonoBehaviour
         if (camera != null)
         {
             tempPos.x += MoveValx;
-            if ((tempPos.x - camera.position.x) > 1495)
+            Debug.Log("X = " + tempPos.x);
+            if ((|tempPos.x - camera.position.x|) > Jumpval)
             {
-                tempPos.x -= (1495 * 2);
+                tempPos.x -= (Jumpval * 2);
+                Debug.Log("Snapped foreground right");
             }
         }
 

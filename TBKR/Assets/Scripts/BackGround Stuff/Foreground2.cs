@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Foreground2 : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Foreground2 : MonoBehaviour
 
     public float MoveValx;
     public float MoveValy;
+    public float Jumpval;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +27,9 @@ public class Foreground2 : MonoBehaviour
         if (camera != null)
         {
             tempPos.x -= MoveValx;
-            if ((camera.position.x - tempPos.x) > 1495)
+            if ((Math.Abs(camera.position.x) - Math.Abs(tempPos.x)) > Jumpval)
             {
-                tempPos.x += (1495 * 2);
+                tempPos.x += (Jumpval * 2);
             }
         }
 
@@ -41,9 +43,9 @@ public class Foreground2 : MonoBehaviour
         if (camera != null)
         {
             tempPos.x += MoveValx;
-            if ((tempPos.x - camera.position.x) > 1495)
+            if ((tempPos.x - camera.position.x) > Jumpval)
             {
-                tempPos.x -= (1495 * 2);
+                tempPos.x -= (Jumpval * 2);
             }
         }
 
