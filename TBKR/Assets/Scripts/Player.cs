@@ -229,7 +229,7 @@ public class Player : MonoBehaviour, IDataPersistance
         if (collision.gameObject.CompareTag("Health"))
         {
             Destroy(collision.gameObject);
-            CurrentHealth += (int)Random.Range(MaxHealth / 4, MaxHealth / 3);
+            CurrentHealth += (int)Random.Range(MaxHealth / 7, MaxHealth / 6);
             if (CurrentHealth > MaxHealth)
                 CurrentHealth = MaxHealth;
             HealthUIUpdate();

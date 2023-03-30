@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7377671901261336256}
   m_Layer: 0
   m_Name: Black Bear leg
-  m_TagString: Untagged
+  m_TagString: WorldLimb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ BoxCollider2D:
   m_Offset: {x: 0.020431519, y: -0.55680776}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.43120053, y: 0.869797}
+    pivot: {x: 0.41916063, y: 0.7958374}
     oldSize: {x: 2, y: 2}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
