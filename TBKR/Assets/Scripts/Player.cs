@@ -140,12 +140,21 @@ public class Player : MonoBehaviour, IDataPersistance
             {
                 myBody.AddForce(new Vector2(xMove * Speed, 0f), ForceMode2D.Impulse);
             }
+            else if (((myBody.velocity.x > MaxVelocity && xMove > 0) || (myBody.velocity.x < -MaxVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && isGrounded)
+            {
+                myBody.velocity = new Vector2(MaxVelocity * xMove, myBody.velocity.y);
+            }
             else if (((myBody.velocity.x < AirVelocity && xMove > 0) || (myBody.velocity.x > -AirVelocity && xMove < 0)) && xMove != 0 && !inventoryOpen && !isGrounded && moveable)
                 myBody.AddForce(new Vector2(xMove * Speed * (4f / 5f), 0f), ForceMode2D.Impulse);
             else if (!isGrounded && xMove == 0f)
             {
                 myBody.velocity = new Vector2(myBody.velocity.x * AirDrag, myBody.velocity.y);
             }
+            else if (isGrounded && xMove == 0 && myBody.velocity.x != 0f)
+                myBody.velocity = new Vector2(myBody.velocity.x * .9f, myBody.velocity.y);
+            // Manual friction
+            if (myBody.velocity.x < 1f && xMove == 0 && isGrounded)
+                myBody.velocity = new Vector2(0, myBody.velocity.y);
             // Inventory Opening thing
             if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.E)) && isGrounded)
             {
