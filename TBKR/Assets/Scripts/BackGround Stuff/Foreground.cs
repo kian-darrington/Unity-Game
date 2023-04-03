@@ -26,9 +26,10 @@ public class Foreground : MonoBehaviour
         if (camera != null)
         {
             tempPos.x -= MoveValx;
-            Debug.Log("X = " + tempPos.x);
-            if ((Mathf.Abs(camera.position.x) - Mathf.Abs(tempPos.x)) > Jumpval)
+            Debug.Log((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)));
+            if ((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)) > Jumpval)
             {
+                
                 tempPos.x += (Jumpval * 2);
                 Debug.Log("Snapped foreground left");
             }
@@ -44,9 +45,10 @@ public class Foreground : MonoBehaviour
         if (camera != null)
         {
             tempPos.x += MoveValx;
-            Debug.Log("X = " + tempPos.x);
+            Debug.Log((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)));
             if ((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)) > Jumpval)
             {
+                
                 tempPos.x -= (Jumpval * 2);
                 Debug.Log("Snapped foreground right");
             }
