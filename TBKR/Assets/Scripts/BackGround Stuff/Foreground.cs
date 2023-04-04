@@ -7,7 +7,10 @@ public class Foreground : MonoBehaviour
 
     Transform camera;
 
+    Transform ForG;
+
     Vector3 tempPos;
+    Vector3 Another;
 
     public float MoveValx;
     public float MoveValy;
@@ -17,6 +20,9 @@ public class Foreground : MonoBehaviour
     void Start()
     {
         camera = GameObject.FindWithTag("MainCamera").transform;
+        ForG = GameObject.FindWithTag("Foreground 2").transform;
+        Another = ForG.position;
+        Debug.Log(Another.x - transform.position.x);
     }
 
     public void foregroundLeft()
@@ -26,8 +32,8 @@ public class Foreground : MonoBehaviour
         if (camera != null)
         {
             tempPos.x -= MoveValx;
-            Debug.Log((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)));
-            if ((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)) > Jumpval)
+            //Debug.Log((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)));
+            if (((200 + camera.position.x) - (200 + tempPos.x)) > Jumpval)
             {
                 
                 tempPos.x += (Jumpval * 2);
@@ -45,8 +51,8 @@ public class Foreground : MonoBehaviour
         if (camera != null)
         {
             tempPos.x += MoveValx;
-            Debug.Log((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)));
-            if ((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)) > Jumpval)
+            //Debug.Log((Mathf.Abs(tempPos.x) - Mathf.Abs(camera.position.x)));
+            if (((200 + tempPos.x) - (200 + camera.position.x)) > Jumpval)
             {
                 
                 tempPos.x -= (Jumpval * 2);
