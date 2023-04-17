@@ -42,7 +42,7 @@ public class InventorySlot : MonoBehaviour
         if (inventoryLoadInfo != null)
         {
             Item temp = inventoryLoadInfo(SlotNum);
-            Debug.Log("Checking Item Save or sum junk like that.");
+            //Debug.Log("Checking Item Save or sum junk like that.");
             if (temp != null)
             {
                 Debug.Log("Checking Item Save or sum junk like that. 1");
