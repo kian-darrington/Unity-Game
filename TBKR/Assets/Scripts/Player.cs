@@ -126,7 +126,36 @@ public class Player : MonoBehaviour, IDataPersistance
         InventoryChanged();
     }
 
+
     // Update is called once per frame
+    void Update()
+    {
+        if (!Dead)
+        {
+            // Inventory Opening thing
+            if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.E)) && isGrounded)
+            {
+                if (HoldingScript1.isActiveAndEnabled && !InBetween.instance.enabled)
+                {
+                    HoldingScript1.gameObject.SetActive(false);
+                    inventoryOpen = false;
+                    if (CurrentHealth > MaxHealth)
+                    {
+                        CurrentHealth = MaxHealth;
+                        HealthUIUpdate();
+                    }
+                }
+                else
+                {
+                    HoldingScript1.gameObject.SetActive(true);
+                    Inventory.instance.GetPlayerPos(transform.position);
+                    inventoryOpen = true;
+                }
+            }
+        }
+    }
+
+
     void FixedUpdate()
     {
         if (!Dead)
@@ -155,26 +184,7 @@ public class Player : MonoBehaviour, IDataPersistance
             // Manual friction
             if (myBody.velocity.x < 1f && xMove == 0 && isGrounded)
                 myBody.velocity = new Vector2(0, myBody.velocity.y);
-            // Inventory Opening thing
-            if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.E)) && isGrounded)
-            {
-                if (HoldingScript1.isActiveAndEnabled && !InBetween.instance.enabled)
-                {
-                    HoldingScript1.gameObject.SetActive(false);
-                    inventoryOpen = false;
-                    if (CurrentHealth > MaxHealth)
-                    {
-                        CurrentHealth = MaxHealth;
-                        HealthUIUpdate();
-                    }
-                }
-                else
-                {
-                    HoldingScript1.gameObject.SetActive(true);
-                    Inventory.instance.GetPlayerPos(transform.position);
-                    inventoryOpen = true;
-                }
-            }
+            
 
             // Jumping mechanism
             if ((Input.GetButton("Jump") || Input.GetKey(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && isGrounded && !inventoryOpen)

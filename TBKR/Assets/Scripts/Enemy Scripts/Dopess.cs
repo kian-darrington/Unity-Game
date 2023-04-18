@@ -12,8 +12,6 @@ public class Dopess : MonoBehaviour
 
     public float FrameRate = 0.1f;
 
-    int CurrentFrame = 0;
-
     bool isGlitching = false;
 
     // Start is called before the first frame update
