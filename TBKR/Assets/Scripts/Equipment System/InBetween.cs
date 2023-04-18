@@ -43,7 +43,7 @@ public class InBetween : MonoBehaviour
             text.text = item.name + "\n\n" + "Arm Stats:\n\n";
             text.text += "Wall Jump " + item.wallJumpForce + "\nAttack Damage " + item.attackDamage + "\nThrowing Power " + item.throwingDistance + "\n\nLeg Stats\n\n";
             text.text += "Jump " + item.jumpForce + "\nSpeed " + item.maxVelocity + "\nAcceleration " + item.speed;
-            text.text += "\n\nHealth" + item.health;
+            text.text += "\n\nHealth " + item.health;
         }
         else
             Debug.Log("Unable to locate sprite");
@@ -55,7 +55,7 @@ public class InBetween : MonoBehaviour
         text.text = item.name + "\n\n" + "Arm Stats:\n\n";
         text.text += "Wall Jump " + item.wallJumpForce + "\nAttack Damage " + item.attackDamage + "\nThrowing Power " + item.throwingDistance +"\n\nLeg Stats\n\n";
         text.text += "Jump " + item.jumpForce + "\nSpeed " + item.maxVelocity + "\nAcceleration " + item.speed;
-        text.text += "\n\nHealth" + item.health;
+        text.text += "\n\nHealth " + item.health;
 
     }
     private void OnDisable()
