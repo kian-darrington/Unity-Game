@@ -138,7 +138,6 @@ public class Player : MonoBehaviour, IDataPersistance
                 if (HoldingScript1.isActiveAndEnabled && !InBetween.instance.enabled)
                 {
                     HoldingScript1.gameObject.SetActive(false);
-                    inventoryOpen = false;
                     if (CurrentHealth > MaxHealth)
                     {
                         CurrentHealth = MaxHealth;
@@ -149,9 +148,16 @@ public class Player : MonoBehaviour, IDataPersistance
                 {
                     HoldingScript1.gameObject.SetActive(true);
                     Inventory.instance.GetPlayerPos(transform.position);
-                    inventoryOpen = true;
                 }
             }
+            if (Input.GetKeyDown(KeyCode.L) && isGrounded)
+            {
+                WorldManager.instance.gameObject.SetActive(!WorldManager.instance.isActiveAndEnabled);
+            }
+            if (WorldManager.instance.isActiveAndEnabled || HoldingScript1.isActiveAndEnabled)
+                inventoryOpen = true;
+            else
+                inventoryOpen = false;
         }
     }
 
@@ -182,7 +188,7 @@ public class Player : MonoBehaviour, IDataPersistance
             else if (isGrounded && xMove == 0 && myBody.velocity.x != 0f)
                 myBody.velocity = new Vector2(myBody.velocity.x * .9f, myBody.velocity.y);
             // Manual friction
-            if (myBody.velocity.x < 1f && xMove == 0 && isGrounded)
+            if ((myBody.velocity.x < 1f && xMove == 0 && isGrounded) || inventoryOpen)
                 myBody.velocity = new Vector2(0, myBody.velocity.y);
             
 

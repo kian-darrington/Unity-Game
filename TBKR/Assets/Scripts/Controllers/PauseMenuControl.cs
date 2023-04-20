@@ -42,6 +42,7 @@ public class PauseMenuControl : MonoBehaviour
     public void Leave()
     {
         Time.timeScale = 1f;
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         SceneManager.LoadScene("Main Menu");
     }
 
