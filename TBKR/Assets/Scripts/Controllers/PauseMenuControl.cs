@@ -18,7 +18,7 @@ public class PauseMenuControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && Pause.active == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && Pause.activeSelf == false)
         {
             Pause.SetActive(true);
             if (PlayerPrefs.GetInt("SoundOn") > 0)
@@ -28,7 +28,7 @@ public class PauseMenuControl : MonoBehaviour
             Time.timeScale = 0f;
 
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && Pause.active == true)
+        else if (Input.GetKeyDown(KeyCode.Escape) && Pause.activeSelf == true)
         {
             Pause.SetActive(false);
             Time.timeScale = 1.0f;
@@ -42,7 +42,6 @@ public class PauseMenuControl : MonoBehaviour
     public void Leave()
     {
         Time.timeScale = 1f;
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         SceneManager.LoadScene("Main Menu");
     }
 

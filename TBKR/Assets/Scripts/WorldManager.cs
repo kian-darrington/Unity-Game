@@ -40,13 +40,11 @@ public class WorldManager : MonoBehaviour
 
     public void OpenTutorial()
     {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         SceneManager.LoadScene("SampleScene");
     }
 
     public void OpenW1_1()
     {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         SceneManager.LoadScene("World 1-1");
     }
 }

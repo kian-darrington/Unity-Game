@@ -59,7 +59,7 @@ public class PlayerLimb : MonoBehaviour
 
     private void Start()
     {
-	mySprite = GetComponent<SpriteRenderer>();
+	    mySprite = GetComponent<SpriteRenderer>();
 
         InventoryChanged();
     }

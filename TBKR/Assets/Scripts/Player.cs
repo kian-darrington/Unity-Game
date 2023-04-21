@@ -118,8 +118,8 @@ public class Player : MonoBehaviour, IDataPersistance
         Inventory.inventoryChangedInfo += InventoryChanged;
 
         for (int i = 0; i < 4; i++)
-            items.Add(new Item());
-    }
+            items.Add((Item)Item.CreateInstance("Item"));
+    } 
 
     private void Start()
     {
