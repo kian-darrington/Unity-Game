@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IDataPersistance
     public CapsuleCollider2D[] sideColliders;
     SpriteRenderer mySprite;
     public HoldingScript HoldingScript1;
+    public WorldManager WorldManager1;
 
     public Sword SwordRef;
 
@@ -152,9 +153,9 @@ public class Player : MonoBehaviour, IDataPersistance
             }
             if (Input.GetKeyDown(KeyCode.L) && isGrounded)
             {
-                WorldManager.instance.gameObject.SetActive(!WorldManager.instance.isActiveAndEnabled);
+                WorldManager1.gameObject.SetActive(!WorldManager1.isActiveAndEnabled);
             }
-            if (WorldManager.instance.isActiveAndEnabled || HoldingScript1.isActiveAndEnabled)
+            if (WorldManager1.isActiveAndEnabled || HoldingScript1.isActiveAndEnabled)
                 inventoryOpen = true;
             else
                 inventoryOpen = false;
@@ -415,25 +416,31 @@ public class Player : MonoBehaviour, IDataPersistance
 
     void LowerLimbs()
     {
-        myColliders[0].enabled = true;
-        sideColliders[0].enabled = true;
-        myColliders[2].enabled = false;
-        sideColliders[1].enabled = false;
-        myCollider = myColliders[0];
-        sideCollider = sideColliders[0];
-        raisedLimbs = false;
+        if (myColliders[0] != null && sideColliders[1] != null)
+        {
+            myColliders[0].enabled = true;
+            sideColliders[0].enabled = true;
+            myColliders[2].enabled = false;
+            sideColliders[1].enabled = false;
+            myCollider = myColliders[0];
+            sideCollider = sideColliders[0];
+            raisedLimbs = false;
+        }
     }
 
     void RaiseLimbs()
     {
-        myColliders[0].enabled = false;
-        sideColliders[0].enabled = false;
-        transform.position = new Vector3(transform.position.x, transform.position.y + 1f);
-        myColliders[2].enabled = true;
-        sideColliders[1].enabled = true;
-        myCollider = myColliders[2];
-        sideCollider = sideColliders[1];
-        raisedLimbs = true;
+        if (myColliders[0] != null && sideColliders[0] != null)
+        {
+            myColliders[0].enabled = false;
+            sideColliders[0].enabled = false;
+            transform.position = new Vector3(transform.position.x, transform.position.y + 1f);
+            myColliders[2].enabled = true;
+            sideColliders[1].enabled = true;
+            myCollider = myColliders[2];
+            sideCollider = sideColliders[1];
+            raisedLimbs = true;
+        }
     }
 
     public void LoadData(GameData data)

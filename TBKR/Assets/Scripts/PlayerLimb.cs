@@ -26,6 +26,7 @@ public class PlayerLimb : MonoBehaviour
         myTransform = GetComponent<Transform>();
         myBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<BoxCollider2D>();
+        mySprite = GetComponent<SpriteRenderer>();
         myCollider.enabled = false;
 
         player =  GameObject.FindWithTag("Player").transform.position;
@@ -52,9 +53,13 @@ public class PlayerLimb : MonoBehaviour
     private void PlayerDeath()
     {
         Dead = true;
-        myCollider.enabled = true;
-        myBody.bodyType = RigidbodyType2D.Dynamic;
-        myBody.angularVelocity = UnityEngine.Random.Range(-1300f, 1300f);
+        if (myCollider != null)
+            myCollider.enabled = true;
+        if (myBody != null)
+        {
+            myBody.bodyType = RigidbodyType2D.Dynamic;
+            myBody.angularVelocity = UnityEngine.Random.Range(-1300f, 1300f);
+        }
     }
 
     private void Start()
@@ -103,22 +108,25 @@ public class PlayerLimb : MonoBehaviour
 
     void SpriteUpdate()
     {
-        if (item != null)
-            mySprite.sprite = item.icon;
-        else
-            mySprite.sprite = null;
-        if (LimbNum < 2)
-            mySprite.sortingOrder = -(LeftRight * (direction * (Math.Abs(direction) + 1)));
-        else
-            mySprite.sortingOrder = -(LeftRight * direction);
-        if (direction == -1)
-            mySprite.flipX = true;
-        else
-            mySprite.flipX = false;
-        if (mySprite.sortingOrder < 0)
-            mySprite.color = new Color(0.83f, 0.83f, 0.83f);
-        else
-            mySprite.color = Color.white;
+        if (mySprite != null)
+        {
+            if (item != null)
+                mySprite.sprite = item.icon;
+            else
+                mySprite.sprite = null;
+            if (LimbNum < 2)
+                mySprite.sortingOrder = -(LeftRight * (direction * (Math.Abs(direction) + 1)));
+            else
+                mySprite.sortingOrder = -(LeftRight * direction);
+            if (direction == -1)
+                mySprite.flipX = true;
+            else
+                mySprite.flipX = false;
+            if (mySprite.sortingOrder < 0)
+                mySprite.color = new Color(0.83f, 0.83f, 0.83f);
+            else
+                mySprite.color = Color.white;
+        }
     }
 
     void InventoryChanged()
