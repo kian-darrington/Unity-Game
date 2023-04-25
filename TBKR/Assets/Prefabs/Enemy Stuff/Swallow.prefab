@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8163811131962729536}
   - component: {fileID: 8163811131962729537}
   - component: {fileID: 8163811131962729538}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Swallow
   m_TagString: Enemy
   m_Icon: {fileID: 0}

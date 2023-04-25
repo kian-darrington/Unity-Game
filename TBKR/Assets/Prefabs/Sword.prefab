@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7657637290436164642}
   - component: {fileID: 7657637290436164637}
   - component: {fileID: 1619025188121763002}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Sword
   m_TagString: Sword
   m_Icon: {fileID: 0}
@@ -162,3 +162,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MultiplicationFactor: 1
   DespawnRate: 5
+  SpinMax: 0
+  SpinMin: 0
