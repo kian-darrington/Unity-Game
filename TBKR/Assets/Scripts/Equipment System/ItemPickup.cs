@@ -14,6 +14,7 @@ public class ItemPickup : MonoBehaviour
     {
         Sprite = GetComponent<SpriteRenderer>();
         Sprite.sprite = item.icon;
+        
     }
 
     public void ItemSetup()
@@ -23,6 +24,7 @@ public class ItemPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.gameObject.CompareTag("Player"))
         {
             IsColliding = true;
@@ -31,6 +33,7 @@ public class ItemPickup : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        
         if (collision.gameObject.CompareTag("Player"))
         {
             IsColliding = false;
