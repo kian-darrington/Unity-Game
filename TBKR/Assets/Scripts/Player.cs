@@ -122,7 +122,7 @@ public class Player : MonoBehaviour, IDataPersistance
         for (int i = 0; i < 4; i++)
             items.Add(new Item());
 
-        UIArrow.setactive(false);
+        UIArrow.SetActive(false);
     }
 
     private void Start()
@@ -302,7 +302,7 @@ public class Player : MonoBehaviour, IDataPersistance
         }
         if (collision.gameObject.CompareTag("WorldLimb"))
         {
-            UIArrow.setactive(true);
+            UIArrow.SetActive(true);
         }
     }
 
@@ -315,7 +315,7 @@ public class Player : MonoBehaviour, IDataPersistance
         }
         if (collision.gameObject.CompareTag("WorldLimb"))
         {
-            UIArrow.setactive(false);
+            UIArrow.SetActive(false);
         }
     }
 

@@ -40482,6 +40482,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1591130856}
     - target: {fileID: 1036692150414211687, guid: 4ac9371a9cd22404fb45fa5ddffe1c24, type: 3}
+      propertyPath: UIArrow
+      value: 
+      objectReference: {fileID: 669873872}
+    - target: {fileID: 1036692150414211687, guid: 4ac9371a9cd22404fb45fa5ddffe1c24, type: 3}
       propertyPath: HoldingScript1
       value: 
       objectReference: {fileID: 259390271}
